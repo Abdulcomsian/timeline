@@ -1,0 +1,365 @@
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+hr {
+    background-color: #D0CDCD !important;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+input[type="date"] {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+ul {
+    padding: 0px !important;
+    margin: 0px;
+    list-style: none;
+}
+
+ul:first-child::before {
+    content: "";
+    width: 1px;
+    height: 93%;
+    background-color: #000;
+    position: absolute;
+    left: 16px;
+    z-index: -1;
+    top: 4px;
+}
+
+/*********** Header - Css **************/
+header nav.navbar {
+    height: 55.27px;
+    background-color: #4198FF;
+    padding: 0px 17px;
+}
+
+header nav.navbar .header-content a i {
+    font-size: 25px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/*********** Content - Css **************/
+main .create-timeline-div h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 49px;
+    color: #000000;
+}
+
+main .create-timeline-div p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28.8px;
+    letter-spacing: 0.3px;
+    color: #737B7D;
+    width: 100%;
+    max-width: 683px;
+}
+
+main .form-div {
+    width: 100%;
+    max-width: 550px;
+}
+
+main .form-div .label-input label {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    color: #000000;
+}
+
+main .form-div .label-input label span {
+    color: #FF0B0B;
+}
+
+main .form-div .label-input input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #D0CDCD;
+    border-radius: 6px;
+    height: 54px;
+    color: #D0CDCD;
+}
+
+main .form-div .label-input input[type="date"] {
+    text-transform: uppercase;
+}
+
+main .form-div .label-input input::placeholder {
+    color: #D0CDCD;
+}
+
+main .form-div .label-input .add-invite-people span {
+    width: 40px;
+    height: 40px;
+    background: #EDEDED;
+    border-radius: 6px;
+    right: 7px;
+    top: 6px;
+    cursor: pointer;
+}
+
+main .form-div button {
+    background: #4198FF;
+    border-radius: 6px;
+    height: 54px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22.4px;
+}
+
+.timeline-function-div {
+    margin-top: 300px !important;
+}
+
+main .time-line-screen h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 49px;
+}
+
+main .time-line-screen p {
+    font-size: 19px;
+    line-height: 28.8px;
+}
+
+.timeline-div .line {
+    width: 100%;
+    background-color: #4198FF;
+    height: 4px;
+    cursor: pointer;
+}
+
+.timeline-div .functionaility-div {
+    top: -10px;
+    transition: all .5s linear;
+}
+
+.timeline-div .functionaility-div span {
+    border: 2px solid #4198FF;
+    box-shadow: 0px 0px 1px rgb(0 0 0 / 29%);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: 12px;
+    background-color: #fff;
+}
+
+.timeline-div .event-list,
+.event-list-sub-child {
+    position: absolute;
+    bottom: 0px;
+    opacity: 0;
+    transition: all .5s linear;
+}
+
+.timeline-div .event-list ul li .list-icon-div,
+.event-list-sub-child ul li .list-icon-div {
+    background: rgba(245, 245, 245, 0.5);
+    border-radius: 70px;
+    width: 220px;
+    padding: 3px 5px;
+}
+
+.timeline-div .event-list ul li .list-icon-div span:last-child,
+.event-list-sub-child ul li .list-icon-div span:last-child {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.timeline-div .event-list ul li .list-icon-div span:first-child,
+.event-list-sub-child ul li .list-icon-div span:first-child {
+    border: 2px solid #4198FF;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.29);
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.newEventAdd {
+    position: absolute;
+    top: -10px;
+}
+
+.newEventAdd span.functionality-span {
+    border: 2px solid #4198FF;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.29);
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.subTimeLineChild {
+    position: absolute;
+    top: 25px;
+}
+
+.subTimeLineChild .vertical-line {
+    border: 2px solid #000000;
+}
+
+.subTimeLineChild .addSubChildEvent {
+    position: absolute;
+    bottom: -26px;
+    left: -10px;
+    animation: blinker 2s linear infinite;
+}
+
+.newChild {
+    position: absolute;
+    top: 18px;
+    width: 60px;
+    display: inline-flex;
+}
+
+.parentSubTimeLine .newEventAdd {
+    width: 60px;
+    display: flex;
+}
+
+.subTimeLine-List {
+    display: none;
+}
+
+/*************** Footer - CSS ***************/
+.footer {
+    text-align: right;
+    width: 100% !important;
+    max-width: 50% !important;
+    margin: auto;
+    margin-right: 0px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.footer .zoom-effect span i {
+    font-size: 25px;
+}
+
+.footer .drop-box {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+    padding: 10px;
+    display: flex;
+    width: 64%;
+    margin-left: 30px;
+}
+
+.footer .drop-box p {
+    margin-bottom: 0px;
+    width: 90%;
+    text-align: left !important;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.footer .drop-box span:first-child {
+    text-align: left !important;
+}
+
+.footer .drop-box span {
+    width: 5%;
+}
+
+.footer .drop-box span:last-child {
+    float: right;
+}
+
+.footer .col-12 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.menu-div {
+    position: absolute;
+    background: #FFFFFF;
+    width: 61.8%;
+    right: 13px;
+    bottom: 50px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+    text-align: left;
+}
+
+.menu-div .tab-content {
+    padding: 20px 27px;
+}
+
+.menu-div .tab-content p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.3px;
+    color: #000000;
+}
+.menu-div ul.nav{
+    border: 1px solid #C2C2C2;
+}
+.menu-div ul.nav li{
+    border-right: 1px solid #C2C2C2;
+}
+.menu-div .nav-pills .nav-link{
+    padding: 13px 20px;
+    border-radius: 0px;
+}
+.nav-pills .nav-link.active{
+    background-color: #4198FF !important;
+}
+.menu-div .nav-pills .nav-link{
+    color: #000000;
+}
