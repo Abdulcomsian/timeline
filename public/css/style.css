@@ -91,7 +91,9 @@ main .create-timeline-div p {
     width: 100%;
     max-width: 683px;
 }
-
+.timeline-function-div {
+    z-index: 99;
+}
 main .form-div {
     width: 100%;
     max-width: 550px;
@@ -191,10 +193,9 @@ main .time-line-screen p {
 .event-list-sub-child {
     position: absolute;
     bottom: 0px;
-    opacity: 0;
+    display: none;
     transition: all .5s linear;
 }
-
 .timeline-div .event-list ul li .list-icon-div,
 .event-list-sub-child ul li .list-icon-div {
     background: rgba(245, 245, 245, 0.5);
@@ -241,7 +242,31 @@ main .time-line-screen p {
     font-size: 12px;
     cursor: pointer;
 }
-
+.newEventAdd span.functionality-span .edit-delete{
+    position: absolute;
+    top: -28px;
+    background: #757575;
+    padding: 4px;
+    width: 50px;
+    display: flex;
+    justify-content: space-around;
+    opacity: 0;
+    transition: all .5s linear;
+    left: -15px;
+}
+.newEventAdd span.functionality-span .edit-delete span i{
+    color: #fff;
+}
+.newEventAdd span.functionality-span .event-type{
+    position: absolute;
+    bottom: -33px;
+    left: 0px;
+    border: 1px solid #eee;
+    padding: 5px;
+    font-size: 12px;
+    opacity: 0;
+    transition: all .5s linear;
+}
 .subTimeLineChild {
     position: absolute;
     top: 25px;
@@ -273,7 +298,56 @@ main .time-line-screen p {
 .subTimeLine-List {
     display: none;
 }
-
+.drop-down-input{
+    width: 76%;
+}
+.drop-down-input select{
+    right: 5px;
+    top: 5px;
+    border: none;
+    font-size: 14px;
+}
+.search-div button{
+    padding: 7px 30px;
+    border: none;
+    background: #D9D9D9;
+    border-radius: 4px;
+}
+.list-div li{
+    padding: 14px 0px;
+    border-bottom: 1px solid #D0CDCD;
+}
+.list-div .user-name .word-name{
+    background: #FFFFFF;
+    border: 1px solid #4198FF;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 100%;
+}
+.list-div .user-name .name{
+    font-size: 16px;
+    font-weight: 600;
+}
+.list-div .action-text{
+    font-size: 12px;
+    color: #D0CDCD;
+    cursor: pointer;
+}
+.menu-div ul:first-child::before{
+    content: none !important;
+}
+.modal{
+    background-color: #00000070;
+}
+.modal .btn{
+    padding: 5px 30px;
+    border: none;
+}
+.modal .btn.delete-event{
+    background-color: #f44336;
+}
 /*************** Footer - CSS ***************/
 .footer {
     text-align: right;
@@ -285,7 +359,10 @@ main .time-line-screen p {
     bottom: 30px;
     right: 30px;
 }
-
+.footer .active{
+    opacity: 1;
+    z-index: 999;
+}
 .footer .zoom-effect span i {
     font-size: 25px;
 }
@@ -334,10 +411,14 @@ main .time-line-screen p {
     bottom: 50px;
     box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
     text-align: left;
+    opacity: 0;
+    z-index: -1;
+    transition: all .5s linear;
 }
 
 .menu-div .tab-content {
     padding: 20px 27px;
+    height: 400px;
 }
 
 .menu-div .tab-content p {

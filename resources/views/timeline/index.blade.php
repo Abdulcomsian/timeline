@@ -187,7 +187,7 @@
                             <img src="{{asset('images/menu-bars.svg')}}" alt="">
                         </span>
                         <p>Details</p>
-                        <span><i class="fas fa-chevron-up"></i></span>
+                        <span class="icon-span"><i class="fas fa-chevron-up"></i></span>
                     </div>
                 </div>
                 <div class="menu-div">
@@ -216,8 +216,49 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam a, metus elit dignissim sit feugiat egestas lectus ipsum. Integer lorem arcu praesent eget. Amet, in iaculis sit tincidunt. Morbi at purus ac id ultrices. Magna morbi et sed pellentesque habitasse ac vitae ultricies mus. Nunc odio ut bibendum cursus dictum fringilla massa lobortis.</p><p>Amet, in iaculis sit tincidunt. Morbi at purus ac id ultrices. Magna morbi et sed pellentesque habitasse ac vitae ultricies mus.</p></div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                            aria-labelledby="pills-profile-tab">...</div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="search-div d-flex align-items-center justify-content-between">
+                                <div class="drop-down-input position-relative">
+                                    <input type="text" placeholder="example@email.com" class="form-control">
+                                    <select name="" id="" class="position-absolute">
+                                        <option value="View">View</option>
+                                        <option value="Edit">Edit</option>
+                                    </select>
+                                </div>
+                                <button>Add</button>
+                            </div>
+                            <div class="list-div mt-3">
+                                <ul>
+                                    <li>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="user-name d-flex align-items-center">
+                                                <span class="word-name d-flex align-items-center justify-content-center">JD</span>
+                                                <span class="name ms-3">John Doe</span>
+                                            </div>
+                                            <span class="action-text">View</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="user-name d-flex align-items-center">
+                                                <span class="word-name d-flex align-items-center justify-content-center">JD</span>
+                                                <span class="name ms-3">John Doe</span>
+                                            </div>
+                                            <span class="action-text">Edit</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="user-name d-flex align-items-center">
+                                                <span class="word-name d-flex align-items-center justify-content-center">JD</span>
+                                                <span class="name ms-3">John Doe</span>
+                                            </div>
+                                            <span class="action-text">View</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel"
                             aria-labelledby="pills-contact-tab">...</div>
                     </div>
@@ -225,5 +266,22 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal delete-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you want to delete Event?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary delete-event">Yes</button>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
