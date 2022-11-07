@@ -9,7 +9,8 @@ var subTimeLinePosition = 0;
 $(".timeline-div .line").mousemove(function (e) {
     var y = e.pageY;
     mouseXPosition = e.pageX;
-    $(".functionaility-div").css("left", mouseXPosition - 100);
+    console.log(mouseXPosition)
+    $(".functionaility-div").css("left", mouseXPosition - 100 );
     $(".event-list").css("left", mouseXPosition - 100);
 });
 $(".addEvent").click(function () {
@@ -19,6 +20,9 @@ $(".timeline-div .event-list li .subTimeLine-List li").click(function () {
     console.log($(this))
 })
 $(".timeline-div .event-list li").click(function (e) {
+    if($(".subTimeLine-List").css("display")=="block"){
+        $(".subTimeLine-List").css("display","none")
+    }
     $(".event-list-sub-child").css("display", "0");
     var val = $(this)[0].children[0].innerText;
     var selectListItem= $(this)[0].lastElementChild.lastElementChild.innerText;
@@ -35,7 +39,7 @@ $(".timeline-div .event-list li").click(function (e) {
         $(".timeline-div").append(
             "<div class='newEventAdd' style='left: " +
                 mouseXPosition +
-                "px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+val+"'></span><span class='ms-2 functionality-span'><img src=" +
+                "px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+val+"'></span><span class='ms-2 functionality-span'><img src=" +
                 imgSrc +
                 " class='img-fluid'/><span class='subTimeLineChild parentSubTimeLine'><span class='vertical-line'></span><span  class='addEvent addSubChildEvent functionality-span'><i class='fas fa-plus'></i></span></span></span></div>"
         );
@@ -84,33 +88,41 @@ $(document).on('click','.edit-btn',function(){
     console.log($(this).parent().parent().next().css('opacity',1))
 })
 $(document).on('click','.delete-btn',function(){
+    if($(".subTimeLine-List").css("display")=="block"){
+        $(".subTimeLine-List").css("display","none")
+    }
+    console.log($(this))
     deleteEvent=$(this).parent().parent().parent().parent();
+   
     $(".delete-modal").css("display",'block');
 })
 $(".delete-event").click(function(){
     deleteEvent.remove();
     $(".delete-modal").css("display",'none');
+    $(".event-list").css("display", "none");
+    $(".timeline-div .event-list-sub-child").css("display", "none");
 })
 $(".timeline-div .event-list-sub-child li").click(function (e) {
+    console.log($(this)[0].parentElement.classList[1])
     $(".event-list").css("display", "none");
     console.log("listPosition :",listPosition)
     // console.log(targetElem[0].parentElement);
     // targetElem[0].style.display='none';
     var val = $(this).find("span");
-    // var selectListItem= $(this)[0].lastElementChild.lastElementChild.innerText;
+    var selectListItem= $(this)[0].lastElementChild.lastElementChild.innerText;
     console.log(val[1].innerText, subTimeLinePosition);
     var imgSrc = $(this).find("img").attr("src");
     if (val[1].innerText == "Sub timeline") {
         $(".subTimeLine-List").css("display","block")
         $(targetElem[0].parentElement).append(
-            "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
+            "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
                 imgSrc +
                 " class='img-fluid'/><span class='subTimeLineChild'><span class='vertical-line'></span><span class='addEvent addSubChildEvent functionality-span'><i class='fas fa-plus'></i></span></span></span></div>"
         );
         count++;
     } else{
         $(targetElem[0].parentElement).append(
-            "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
+            "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
                 imgSrc +
                 " class='img-fluid'/></span></div>"
         );
