@@ -4,14 +4,20 @@ function addMoreInviatation(e) {
         "<div class='add-invite-people position-relative mb-4'><input type='text' class='form-control' placeholder='Add people'><span onclick='addMoreInviatation(this)' class='d-flex justify-content-center align-items-center position-absolute add-invite-btn'> <i class='fas fa-plus'></i></span></div>"
     );
 }
+$(document).click(function(e){
+    if($(e.target).closest(".timeline-div ").length === 0){
+        $(".timeline-div .event-list").css("display", "none"); 
+        $(".timeline-div .event-list-sub-child").css("display", "none"); 
+    }
+});
 var mouseXPosition = 0;
 var subTimeLinePosition = 0;
 $(".timeline-div .line").mousemove(function (e) {
     var y = e.pageY;
     mouseXPosition = e.pageX;
     console.log(mouseXPosition)
-    $(".functionaility-div").css("left", mouseXPosition - 100 );
-    $(".event-list").css("left", mouseXPosition - 100);
+    $(".functionaility-div").css("left", mouseXPosition - 165 );
+    $(".event-list").css("left", mouseXPosition - 165);
 });
 $(".addEvent").click(function () {
     $(".timeline-div .event-list").css("display", "block");
@@ -31,9 +37,11 @@ $(".timeline-div .event-list li").click(function (e) {
     if (val== " Sub timeline") {
         $(".subTimeLine-List").css("display","block")
         if (mouseXPosition == 0) {
+            console.log("x 1")
             mouseXPosition = mouseXPosition - 33;
         } else {
-            mouseXPosition = mouseXPosition - 130;
+            console.log("x 2")
+            mouseXPosition = mouseXPosition - 200;
         }
         subTimeLinePosition = mouseXPosition;
         $(".timeline-div").append(
@@ -45,9 +53,11 @@ $(".timeline-div .event-list li").click(function (e) {
         );
     } else {
         if (mouseXPosition == 0) {
+            console.log("x 3")
             mouseXPosition = mouseXPosition - 30;
         } else {
-            mouseXPosition = mouseXPosition - 130;
+            console.log("x 4")
+            mouseXPosition = mouseXPosition - 200;
         }
         $(".timeline-div").append(
             "<div class='newEventAdd' style='left: " +
