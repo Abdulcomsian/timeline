@@ -295,9 +295,9 @@ main .time-line-screen p {
     display: flex;
 }
 
-.subTimeLine-List {
+/*.subTimeLine-List {
     display: none;
-}
+}*/
 .drop-down-input{
     width: 76%;
 }

@@ -2,66 +2,7 @@
 @section('content')
 <div class="create-timeline-div">
     <div class="container">
-            <div class="card">
-                <div class="card-header d-flex">
-                     <h5 class="card-title"><a href="{{url('create')}}" class="btn btn-primary">Create TimeLine <i class="fas fa-plus"></i></a></h5>
-                </div>
-              <div class="card-body">
-               
-                <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#NO</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if(count($timeline)>0)
-                        @foreach($timeline as $time)
-                        <tr>
-                           
-                            @if(auth()->user()->hasRole('admin'))
-                            <td>{{$loop->index+1}}</td>
-                            <td>{{$time->name}}</td>
-                            <td>{{$time->description}}</td>
-                            <td>{{$time->start_date}}</td>
-                            <td>-</td>
-                            <td>
-                                <a href="{{url('timeline/view',$time->id)}}"><i class="fas fa-eye"></i></a>
-                            </td>
-                            @else
-                            <td>{{$loop->index+1}}</td>
-                            <td>{{$time->timeline->name}}</td>
-                            <td>{{$time->timeline->description}}</td>
-                            <td>{{$time->timeline->start_date}}</td>
-                            <td>-</td>
-                            <td>
-                                <a href="{{url('timeline/view',$time->timeline->id)}}"><i class="fas fa-eye"></i></a>
-                            </td>
-                            @endif
-                            
-                        </tr>
-
-                        @endforeach
-                     @else
-                    <tr>
-                        <td colspan="6">No Time Line</td>
-                    </tr>
-                    @endif
-                    
-                </tbody>
-               </table>
-              </div>
-            </div>
-        
-       
-            
-        </div>
-       <!--  <div class="row">
+        <div class="row">
             <div class="col-12">
                 <h1 class="title">Create Timeline</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum blandit arcu nulla tristique etiam
@@ -100,12 +41,11 @@
                                 </div>
                             </div>
                         </div>
-                        <button  type="submit" class="w-100 d-flex align-items-center justify-content-center border-0">Create
-                            Timeline</button>
+                        <button  type="submit" class="w-100 d-flex align-items-center justify-content-center border-0">Create Timeline</button>
                     </form>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 @endsection

@@ -3,9 +3,11 @@
 <div class="time-line-screen">
     <div class="container">
         <div class="row">
+            <input type="hidden" name="timelineid" value="{{$encryptid}}" id="timelineid">
             <div class="col-12 text-center">
-                <h1>Timeline</h1>
-                <p>(Jan 1, 2022 - Monday) 1:00 PM</p>
+                <h1>{{$TimeLine->name ?? 'Test TimeLine'}}</h1>
+                <p>{{isset($TimeLine->name) ? date('M d,Y - D',strtotime($TimeLine->start_date)) : '(Jan 1, 2022 - Monday) 1:00 PM'}}</p>
+                <p>{{$TimeLine->description ?? 'Test Description'}}</p>
                 <hr class="mt-5">
             </div>
             <div class="timeline-function-div d-flex justify-content-center align-items-center">
@@ -174,6 +176,61 @@
                         </div>
                     </div>
                     <div class="line"></div>
+                    @if(count($events)>0)
+                     @foreach($events as $ev)
+                        @if($ev->isParent)
+                         <div class='newEventAdd' style="left:{{$ev->postion_x}}px">
+                            <span class='functionality-span'>
+                                <span class='setting'>
+                                    <i class='fas fa-cog'></i>
+                                    <div class='edit-delete'>
+                                        <span class='edit-btn'>
+                                            <i class='fas fa-edit'></i>
+                                        </span>
+                                        <span class='delete-btn' data-event-id="{{$ev->id}}">
+                                            <i class='fas fa-trash'></i></span>
+                                    </div>
+                                </span>
+                                <input class='event-type' value='{{$ev->event_title}}'>
+                            </span>
+                            <span class='ms-2 functionality-span'>
+                                <img src="{{$ev->icon}}" class='img-fluid'/>
+                                <span class='subTimeLineChild parentSubTimeLine'>
+                                    <span class='vertical-line'></span>
+                                    <span  class='addSubChildEvent functionality-span' data-event-id="{{$ev->id}}">
+                                        <i class='fas fa-plus'></i>
+                                    </span>
+                                    <!-- append child element -->
+                                    @if(count($ev->Child)>0)
+                                      @foreach($ev->child as $ch)
+                                       @include('timeline.partials.childevent',$ch)
+                                      @endforeach
+                                    @endif
+                                </span>
+                            </span>
+                         </div>
+                        @else
+                        <div class='newEventAdd' style="left:{{$ev->postion_x}}px">
+                            <span class='functionality-span'>
+                                <span class='setting'>
+                                    <i class='fas fa-cog'></i>
+                                     <div class='edit-delete'>
+                                        <span class='edit-btn'>
+                                            <i class='fas fa-edit'></i>
+                                        </span>
+                                        <span class='delete-btn' data-event-id="{{$ev->id}}">
+                                            <i class='fas fa-trash'></i>
+                                        </span>
+                                    </div>
+                                </span>
+                                <input class='event-type' value='{{$ev->event_title}}'>
+                            </span>
+                            <span class='ms-2 functionality-span'><img src="{{$ev->icon}}" class='img-fluid'/>
+                            </span>
+                        </div>
+                        @endif
+                     @endforeach
+                    @endif
                 </div>
             </div>
             <div class="footer">
@@ -284,4 +341,112 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+//save parent Event=========================================
+function saveEvent(mouseXPosition,val,imgSrc,selectListItem)
+{
+    isParent=0;
+    if(val==" Sub timeline")
+    {
+        isParent=1;
+    }
+    $.ajax({
+        "type": "POST",
+        "url": "{{url('/events-save')}}",
+        "data": {
+            "_token": "{{ csrf_token() }}",
+            "postion":mouseXPosition,
+            "label":selectListItem,
+            "icon":imgSrc,
+            "isParent":isParent,
+            'time_line_id':$("#timelineid").val(),
+        },//Send to WebMethod
+        'async':false,
+    }).done(function (o) {
+        console.log(o);
+        if(val==" Sub timeline")
+        {
+             $(".timeline-div").append(
+                "<div class='newEventAdd' style='left: " +
+                mouseXPosition +
+                "px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn' data-event-id='"+o.id+"'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+val+"'></span><span class='ms-2 functionality-span'><img src=" +
+                imgSrc +
+                " class='img-fluid'/><span class='subTimeLineChild parentSubTimeLine'><span class='vertical-line'></span><span  class='addEvent addSubChildEvent functionality-span' data-event-id='"+o.id+"'><i class='fas fa-plus'></i></span></span></span></div>"
+            );
+        }else{
+           $(".timeline-div").append(
+           "<div class='newEventAdd' style='left: " +
+            mouseXPosition +
+            "px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn' data-event-id='"+o.id+"'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
+            imgSrc +
+            " class='img-fluid'/></span></div>"
+           ); 
+        }
+        toastr.success("Event saved successfully!");
+          
+    });
+}
+
+//save childEvent===============================
+function saveChildEvent(targetElem,selectListItem,imgSrc,eventId,val)
+{
+    $.ajax({
+        "type": "POST",
+        "url": "{{url('/child-events-save')}}",
+        "data": {
+            "_token": "{{ csrf_token() }}",
+            "postion":"1",
+            "label":selectListItem,
+            "icon":imgSrc,
+            "isParent":0,
+            "eventId":eventId,
+             'time_line_id':$("#timelineid").val(),
+        },//Send to WebMethod
+        'async':false,
+    }).done(function (o) {
+        //$(".subTimeLine-List").css("display","block")
+         if (val[1].innerText == "Sub timeline") {
+                $(targetElem[0].parentElement).append(
+                    "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn' data-event-id='"+o.id+"'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
+                        imgSrc +
+                        " class='img-fluid'/><span class='subTimeLineChild'><span class='vertical-line'></span><span class='addEvent addSubChildEvent functionality-span' data-event-id='"+o.id+"'><i class='fas fa-plus'></i></span></span></span></div>"
+                );
+            }
+            else{
+                 $(targetElem[0].parentElement).append(
+                    "<div class='newChild' style='left:-43px'><span class='functionality-span'><span class='setting'><i class='fas fa-cog'></i><div class='edit-delete'><span class='edit-btn'><i class='fas fa-edit'></i></span><span class='delete-btn' data-event-id='"+o.id+"'><i class='fas fa-trash'></i></span></div></span><input class='event-type' value='"+selectListItem+"'></span><span class='ms-2 functionality-span'><img src=" +
+                        imgSrc +
+                        " class='img-fluid'/></span></div>"
+                );
+            }
+            toastr.success("Event saved successfully!");
+        
+    });
+}
+
+//Delete Event
+function delete_Event(deleteEvent,deleteEventId)
+{
+     $.ajax({
+        "type": "POST",
+        "url": "{{url('/events-delete')}}",
+        "data": {
+            "_token": "{{ csrf_token() }}",
+            deleteEventId,
+        },//Send to WebMethod
+        'async':false,
+    }).done(function (res) {
+        if(res=="success")
+        {
+            deleteEvent.remove();
+            $(".delete-modal").css("display",'none');
+            $(".event-list").css("display", "none");
+            $(".timeline-div .event-list-sub-child").css("display", "none");
+            toastr.success("Event Deleted successfully!");
+        }
+    });
+}
+</script>
 @endsection

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\TimeLineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,8 +14,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', [TimeLineController::class,'index']);
+    Route::get('/', [TimeLineController::class,'index'])->name('home');
 
-Route::get('/', function () {
-    return view('timeline/index');
+    //create 
+     Route::get('/create', [TimeLineController::class,'create'])->name('create');
+    //save timeline
+    Route::post('timeline-save',[TimeLineController::class,'saveTimeLine']);
+    //get events
+    Route::get('timeline/view/{id}', [EventController::class,'getEvent']);
+    //save events
+    Route::post('events-save', [EventController::class,'saveEvent']);
+    //save child events
+    Route::post('child-events-save',[EventController::class,'saveChildEvent']);
+    //delete event
+    Route::post('events-delete', [EventController::class,'deleteEvent']);
+
 });
+//joit time line
+Route::get('timeline/join', [TimeLineController::class,'joinTimeLine']);
 
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
