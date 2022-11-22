@@ -11,7 +11,8 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <input type="hidden" name="key" value="@if(isset($key)){{$key}}@else{{''}}@endif" />
-                         <input type="hidden" name="key" value="@if(isset($code)){{$code}}@else{{''}}@endif" />
+                        <input type="hidden" name="code" value="@if(isset($code)){{$code}}@else{{''}}@endif" />
+                        <input type="hidden" name="type" value="@if(isset($_GET['type'])){{$_GET['type']}}@else{{''}}@endif" />
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -19,9 +20,9 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -33,9 +34,9 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                                     Register
                                 </a>
 
-                               <!--  @if (Route::has('password.request'))
+                                <!--  @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>

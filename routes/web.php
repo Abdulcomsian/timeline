@@ -14,26 +14,33 @@ use App\Http\Controllers\TimeLineController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Authenticated routes=================================================================================================
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', [TimeLineController::class,'index']);
-    Route::get('/', [TimeLineController::class,'index'])->name('home');
+    Route::get('/home', [TimeLineController::class, 'index']);
+    Route::get('/', [TimeLineController::class, 'index'])->name('home');
 
     //create 
-     Route::get('/create', [TimeLineController::class,'create'])->name('create');
+    Route::get('/create', [TimeLineController::class, 'create'])->name('create');
     //save timeline
-    Route::post('timeline-save',[TimeLineController::class,'saveTimeLine']);
+    Route::post('timeline-save', [TimeLineController::class, 'saveTimeLine']);
     //get events
-    Route::get('timeline/view/{id}', [EventController::class,'getEvent']);
+    Route::get('timeline/view/{id}', [EventController::class, 'getEvent']);
     //save events
-    Route::post('events-save', [EventController::class,'saveEvent']);
+    Route::post('events-save', [EventController::class, 'saveEvent']);
     //save child events
-    Route::post('child-events-save',[EventController::class,'saveChildEvent']);
+    Route::post('child-events-save', [EventController::class, 'saveChildEvent']);
     //delete event
-    Route::post('events-delete', [EventController::class,'deleteEvent']);
-
+    Route::post('events-delete', [EventController::class, 'deleteEvent']);
 });
-//joit time line
-Route::get('timeline/join', [TimeLineController::class,'joinTimeLine']);
+
+// without atuhenticated routes here=====================================================================================
+//join time line
+Route::get('timeline/join', [TimeLineController::class, 'joinTimeLine']);
+//invite event
+Route::post('invite/event', [EventController::class, 'InviteEvent']);
+//join event
+Route::get('event/join', [EventController::class, 'JoinEvent']);
 
 Auth::routes();
 

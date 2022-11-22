@@ -15,10 +15,12 @@ class InvitePeopleMail extends Mailable
 
     public $id;
     public $code;
-    public function __construct($id,$code)
+    public $type;
+    public function __construct($id, $code, $type)
     {
-        $this->id=$id;
-        $this->code=$code;
+        $this->id = $id;
+        $this->code = $code;
+        $this->type = $type;
     }
 
     /**
@@ -43,7 +45,6 @@ class InvitePeopleMail extends Mailable
         return new Content(
             view: 'mail.invite_people',
         );
-
     }
 
     /**

@@ -65,17 +65,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-      $user=User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
-        if($data['key'])
-        {
-            TimeLineInvitePeople::where(['time_line_id'=>$data['key'],'code'=>$data['code']])->update(['user_id'=>$user->id]);
+        if ($data['key'] && $data['type'] == "Timeline") {
+            TimeLineInvitePeople::where(['time_line_id' => $data['key'], 'code' => $data['code']])->update(['user_id' => $user->id]);
+        } else {
+            EventInvited::where(['event_id' => $data['key'], 'code' => $data['code']])->update(['user_id' => $user->id]);
         }
 
-       return $user;
+        return $user;
     }
 }

@@ -247,7 +247,7 @@ main .time-line-screen p {
     top: -28px;
     background: #757575;
     padding: 4px;
-    width: 50px;
+    width: 75px;
     display: flex;
     justify-content: space-around;
     opacity: 0;

@@ -12,7 +12,7 @@
                                         <tr>
                                             <td style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:25px 0;text-align:center;color:white;background:#131313">
                                                 <a href="http://construction.accrualhub.com/" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#bbbfc3;font-size:19px;font-weight:bold;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://demo.moray-limousines.com/&amp;source=gmail&amp;ust=1638963291925000&amp;usg=AOvVaw1hllcMnVjrBhGsusEn01lQ">
-                                                   TimeLine
+                                                    TimeLine
                                                 </a>
                                             </td>
                                         </tr>
@@ -25,10 +25,14 @@
                                                                     <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:left">Hello!</h1>
                                                                     <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">
                                                                         Welcome to the online Timeline. <br><br>
-                                                                        yout have to invited from adim Please <a href="{{url('timeline/join?id=').$id.'&code='.$code}}">Click here</a> to join the timeline. 
-                                                                        
-                                                                   </p>
-                                                                  
+                                                                        @if($type=="Timeline")
+                                                                        you have to invited from adim Please <a href="{{url('timeline/join?id=').$id.'&code='.$code.'&type=Timeline'}}">Click here</a> to join the timeline.
+                                                                        @else
+                                                                        you have to invited for subtime line <a href="{{url('event/join?id=').$id.'&code='.$code.'&type=Event'}}">Click here</a> to join the Event.
+                                                                        @endif
+
+                                                                    </p>
+
                                                                 </span>
                                                             </td>
                                                         </tr>
@@ -42,7 +46,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <td align="center" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:35px">
-                                                                <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;line-height:1.5em;margin-top:0;color:#aeaeae;font-size:12px;text-align:center">© 2022 Temporary Work Portal.  All rights reserved.</p>
+                                                                <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;line-height:1.5em;margin-top:0;color:#aeaeae;font-size:12px;text-align:center">© 2022 Temporary Work Portal. All rights reserved.</p>
                                                             </td>
                                                         </tr>
                                                     </tbody>

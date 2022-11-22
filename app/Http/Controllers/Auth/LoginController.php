@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\TimeLineInvitePeople;
+use App\Models\EventInvited;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -42,9 +43,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if(isset($request->key))
-        {
-            TimeLineInvitePeople::where(['time_line_id'=>$request->key,'code'=>$data['code']])->update(['user_id'=>$user->id]);
+        if (isset($request->key) && $request->type == "Timeline") {
+            TimeLineInvitePeople::where(['time_line_id' => $request->key, 'code' => $request->code])->update(['user_id' => $user->id]);
+        } else {
+            EventInvited::where(['event_id' => $request->key, 'code' => $request->code])->update(['user_id' => $user->id]);
         }
     }
 }
