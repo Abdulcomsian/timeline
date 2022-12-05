@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('event_title');
+            $table->string('event_title_updated')->nullable();
             $table->string('postion_x');
             $table->string('icon');
+            $table->string('back_color')->nullable();
+            $table->string('class_name')->nullable();
             $table->integer('parent_id')->nullable();
             $table->tinyInteger('isParent')->default(0);
             $table->unsignedBigInteger('user_id');

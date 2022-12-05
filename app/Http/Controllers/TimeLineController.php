@@ -9,7 +9,6 @@ use App\Mail\InvitePeopleMail;
 use Mail;
 use App\Models\{TimeLine, TimeLineInvitePeople};
 use Auth;
-use Artisan;
 
 class TimeLineController extends Controller
 {

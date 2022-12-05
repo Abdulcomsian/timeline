@@ -39,8 +39,11 @@ class EventController extends Controller
         $timelineid = Crypt::decrypt($request->time_line_id);
         $event = Event::create([
             'event_title' => $request->label,
+            'event_title_updated' => $request->label,
             'postion_x' => $request->postion,
             'icon' => $request->icon,
+            'back_color'=>$request->back_color,
+            'class_name'=>$request->class_name,
             "isParent" => $request->isParent,
             'user_id' => Auth::user()->id,
             'time_line_id' => $timelineid
@@ -56,8 +59,11 @@ class EventController extends Controller
         $timelineid = Crypt::decrypt($request->time_line_id);
         $event = Event::create([
             'event_title' => $request->label,
+            'event_title_updated' => $request->label,
             'postion_x' => $request->postion,
             'icon' => $request->icon,
+            'back_color'=>$request->back_color,
+            'class_name'=>$request->class_name,
             "isParent" => $request->isParent,
             "parent_id" => $request->eventId,
             'user_id' => Auth::user()->id,
@@ -72,14 +78,27 @@ class EventController extends Controller
     //delte event
     public function deleteEvent(Request $request)
     {
-        $eventDelete = Event::find($request->deleteEventId)->delete();
+        $eventDelete = Event::find($request->eventId)->delete();
         if ($eventDelete) {
-            $events = Event::where('parent_id', $request->deleteEventId)->get();
+            $events = Event::where('parent_id', $request->eventId)->get();
             foreach ($events as $ev) {
                 $ev->child()->delete();
                 $ev->delete();
             }
             return response()->json("success");
+        } else {
+            return response()->json("Fail");
+        }
+    }
+
+    //update event
+    public function updateEvent(Request $request)
+    {
+        $eventId=$request->eventId;
+        $res=Event::find($eventId)->update(['event_title_updated'=>$request->inputvalue]);
+        if($res)
+        {
+             return response()->json("success");
         } else {
             return response()->json("Fail");
         }

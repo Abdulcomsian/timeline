@@ -1,446 +1,415 @@
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
+.flash {
+    animation: flash 900ms ease infinite alternate;
+  }
+@keyframes flash {
+      from { opacity: 1; }	
+      to { opacity: 0; }
 }
-
-a,
-a:hover {
-    text-decoration: none;
+body,p,h1,h2,h3,h4,h5,h6,a,label,span,
+input,button{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
 }
-
-body {
-    font-family: 'Titillium Web', sans-serif !important;
+ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
 }
-
-hr {
-    background-color: #D0CDCD !important;
+i{
+    font-style: normal;
 }
-
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
+.pink{
+    background-color: #ffc0cb69;
 }
-
-input[type="date"] {
-    border: none;
-    box-sizing: border-box;
-    outline: 0;
-    padding: .75rem;
+.pink .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: pink;
+}
+.green{
+    background-color: #00800052;
+}
+.green .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: green;
+}
+.yellow{
+    background-color: #ffff0047;
+}
+.yellow .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: yellow;
+}
+.orange{
+    background-color: #ffa50047;
+}
+.orange .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: orange;
+}
+.purple{
+    background-color: #472aa54a;
+}
+.purple .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: purple;
+}
+.gray{
+    background-color: #8080803b;
+}
+.gray .img-div{
+    background-color: transparent;
+    border: 2px solid;
+    border-color: gray;
+}
+.timeline-parent{
     position: relative;
     width: 100%;
+    overflow-x: scroll;
+    height: 75vh;
+    width: 200%;
 }
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
+.timeline-functionality{
     position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
+    top: 50%;
+    left: 40px;
+    right: 40px;
+    width: 200%;
 }
-
-ul {
-    padding: 0px !important;
-    margin: 0px;
-    list-style: none;
-}
-
-ul:first-child::before {
-    content: "";
-    width: 1px;
-    height: 93%;
-    background-color: #000;
-    position: absolute;
-    left: 16px;
-    z-index: -1;
-    top: 4px;
-}
-
-/*********** Header - Css **************/
-header nav.navbar {
-    height: 55.27px;
-    background-color: #4198FF;
-    padding: 0px 17px;
-}
-
-header nav.navbar .header-content a i {
-    font-size: 25px;
-    color: #fff;
-    cursor: pointer;
-}
-
-/*********** Content - Css **************/
-main .create-timeline-div h1 {
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 49px;
-    color: #000000;
-}
-
-main .create-timeline-div p {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 28.8px;
-    letter-spacing: 0.3px;
-    color: #737B7D;
-    width: 100%;
-    max-width: 683px;
-}
-.timeline-function-div {
-    z-index: 99;
-}
-main .form-div {
-    width: 100%;
-    max-width: 550px;
-}
-
-main .form-div .label-input label {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 27px;
-    color: #000000;
-}
-
-main .form-div .label-input label span {
-    color: #FF0B0B;
-}
-
-main .form-div .label-input input {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    border: 1px solid #D0CDCD;
-    border-radius: 6px;
-    height: 54px;
-    color: #D0CDCD;
-}
-
-main .form-div .label-input input[type="date"] {
-    text-transform: uppercase;
-}
-
-main .form-div .label-input input::placeholder {
-    color: #D0CDCD;
-}
-
-main .form-div .label-input .add-invite-people span {
-    width: 40px;
-    height: 40px;
-    background: #EDEDED;
-    border-radius: 6px;
-    right: 7px;
-    top: 6px;
-    cursor: pointer;
-}
-
-main .form-div button {
-    background: #4198FF;
-    border-radius: 6px;
-    height: 54px;
-    color: #fff;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 22.4px;
-}
-
-.timeline-function-div {
-    margin-top: 300px !important;
-}
-
-main .time-line-screen h1 {
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 49px;
-}
-
-main .time-line-screen p {
-    font-size: 19px;
-    line-height: 28.8px;
-}
-
-.timeline-div .line {
-    width: 100%;
-    background-color: #4198FF;
+.timeline-parent .timeline-divider{
+    background-color: #ddd;
+    display: block;
     height: 4px;
-    cursor: pointer;
-}
-
-.timeline-div .functionaility-div {
-    top: -10px;
-    transition: all .5s linear;
-}
-
-.timeline-div .functionaility-div span {
-    border: 2px solid #4198FF;
-    box-shadow: 0px 0px 1px rgb(0 0 0 / 29%);
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100%;
-    font-size: 12px;
-    background-color: #fff;
-}
-
-.timeline-div .event-list,
-.event-list-sub-child {
-    position: absolute;
-    bottom: 0px;
-    display: none;
-    transition: all .5s linear;
-}
-.timeline-div .event-list ul li .list-icon-div,
-.event-list-sub-child ul li .list-icon-div {
-    background: rgba(245, 245, 245, 0.5);
-    border-radius: 70px;
-    width: 220px;
-    padding: 3px 5px;
-}
-
-.timeline-div .event-list ul li .list-icon-div span:last-child,
-.event-list-sub-child ul li .list-icon-div span:last-child {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-}
-
-.timeline-div .event-list ul li .list-icon-div span:first-child,
-.event-list-sub-child ul li .list-icon-div span:first-child {
-    border: 2px solid #4198FF;
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.29);
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-
-.newEventAdd {
-    position: absolute;
-    top: -10px;
-}
-
-.newEventAdd span.functionality-span {
-    border: 2px solid #4198FF;
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.29);
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-}
-.newEventAdd span.functionality-span .edit-delete{
-    position: absolute;
-    top: -28px;
-    background: #757575;
-    padding: 4px;
-    width: 75px;
-    display: flex;
-    justify-content: space-around;
-    opacity: 0;
-    transition: all .5s linear;
-    left: -15px;
-}
-.newEventAdd span.functionality-span .edit-delete span i{
-    color: #fff;
-}
-.newEventAdd span.functionality-span .event-type{
-    position: absolute;
-    bottom: -33px;
     left: 0px;
-    border: 1px solid #eee;
-    padding: 5px;
-    font-size: 12px;
-    opacity: 0;
+    position: absolute;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 0px;
+    z-index: 1;
+    top: 50%;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 200%;
+}
+.event-add{
+    z-index: 999999 !important;
+}
+.add-event-indicator{
+    position: relative;
+    z-index: 999;
+    display: inline-block;
+    cursor: pointer;
     transition: all .5s linear;
 }
-.subTimeLineChild {
+.event-add{
     position: absolute;
-    top: 25px;
-}
-
-.subTimeLineChild .vertical-line {
-    border: 2px solid #000000;
-}
-
-.subTimeLineChild .addSubChildEvent {
-    position: absolute;
-    bottom: -26px;
-    left: -10px;
-    animation: blinker 2s linear infinite;
-}
-
-.newChild {
-    position: absolute;
-    top: 18px;
-    width: 60px;
-    display: inline-flex;
-}
-
-.parentSubTimeLine .newEventAdd {
-    width: 60px;
-    display: flex;
-}
-
-/*.subTimeLine-List {
-    display: none;
-}*/
-.drop-down-input{
-    width: 76%;
-}
-.drop-down-input select{
-    right: 5px;
-    top: 5px;
-    border: none;
-    font-size: 14px;
-}
-.search-div button{
-    padding: 7px 30px;
-    border: none;
-    background: #D9D9D9;
-    border-radius: 4px;
-}
-.list-div li{
-    padding: 14px 0px;
-    border-bottom: 1px solid #D0CDCD;
-}
-.list-div .user-name .word-name{
-    background: #FFFFFF;
-    border: 1px solid #4198FF;
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-    font-weight: 600;
+    z-index: 999;
+    display: inline-block;
+    cursor: pointer;
+    transition: all .5s linear;
+    background-color: #fff;
     border-radius: 100%;
 }
-.list-div .user-name .name{
-    font-size: 16px;
-    font-weight: 600;
+.add-event-indicator::before,
+.sub-child-event-add:before{
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #d3d3d391;
+    left: -5px;
+    border-radius: 100%;
+    z-index: -1;
+    top: 7px;
 }
-.list-div .action-text{
-    font-size: 12px;
-    color: #D0CDCD;
+.sub-child-event-add{
+    position: relative;
+}
+.event-add .main-event:before,
+.new-child:before{
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #d3d3d391;
+    left: -10px;
+    border-radius: 100%;
+    z-index: -1;
+    top: 20px;
+}
+.add-event-indicator::after,
+.sub-child-event-add::after{
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #d3d3d391;
+    right: -5px;
+    border-radius: 100%;
+    z-index: -1;
+    bottom: 7px;
+}
+.event-add .main-event:after,
+.new-child:after{
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #d3d3d391;
+    right: -10px;
+    border-radius: 100%;
+    z-index: -1;
+    bottom: 20px;
+}
+.main-event.sub-timeline-event:after{
+    top: 20px;
+}
+.add-event-indicator span,
+.sub-child-event-add span{
+    border: 4px solid #fff;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d3d3d3;
+    border-radius: 100%;
+    font-size: 35px;
+}
+.event-add span{
+    border: 4px solid #fff;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: 35px;
+    opacity: .8;
+}
+.event-add span img{
+    width: 25px;
+    filter: brightness(0) invert(1);
+}
+.add-event-indicator span i{
+    position: relative;
+    top: -2px;
+    font-style: normal;
+}
+.event-list,
+.event-list-subtime-line{
+    position: absolute;
+    width: 300px;
+    bottom: 60px;
+    left: 0px;
+    transition: all .5s linear;
+    display: none;
+}
+.event-list .event-info,
+.event-list-subtime-line .event-info{
+    display: flex;
+    align-items: center;
+}
+.event-list .event-info .event-name,
+.event-list-subtime-line .event-info .event-name{
+    margin-left: 20px;
+}
+.event-list .event-info .img-div,
+.event-list-subtime-line .event-info .img-div{
+    width: 25px;
+    height: 25px;
+    display: flex;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.event-list .event-info .img-div img,
+.event-list-subtime-line .event-info .img-div img{
+    width: 15px;
+}
+.event-list li,
+.event-list-subtime-line li{
+    padding: 5px 15px 5px 5px;
+    border-radius: 70px;
+    display: inline-block;
     cursor: pointer;
+    margin-bottom: 10px;
+    width: 260px;
 }
-.menu-div ul:first-child::before{
-    content: none !important;
+.event-add.purple:after,
+.event-add.purple:before{
+    background-color: #8000803b;
+}
+.event-add.green:after,
+.event-add.green:before{
+    background-color: #0080003b;
+}
+.horizontal-right-child-line{
+    display: flex;
+    position: absolute;
+    left: -96px;
+}
+.horizontal-left-child-line{
+    display: flex;
+    position: absolute;
+    right: -96px;
+}
+.event-add .add-more-event .doted-line span,
+.horizontal-right-child-line span,
+.horizontal-left-child-line span{
+    width: 15px;
+    height: 15px;
+    background: #9333943d;
+    margin: auto;
+    position: relative;
+    bottom: 4px;
+}
+.main-event{
+    background: #fff;
+    border-radius: 100%;
+    display: inline-block;
+}
+.functionality-div .event-functionality,
+.functionality-div{
+    width: 15px !important;
+    height: 15px !important;
+    margin: auto;
+    position: absolute;
+    left: 27%;
+    bottom: -6px;
+    z-index: -1;
+    border: 2px solid #000;
+}
+.add-more-event .event-add{
+    position: relative;
+}
+.horizontal-line-right{
+    display: none;
+    position: absolute;
+    left: 25px;
+    top: 80px;
+}
+.horizontal-line-left{
+    display: none;
+    position: absolute;
+    right: 25px;
+    top: 80px;
+}
+.second-sub-event{
+    position: absolute;
+    right: -77px;
+    transform: rotateZ(320deg);
+    top: 41px;
+}
+.new-child{
+    border-radius: 100%;
+    position: relative;
+}
+.functionality-div .edit-delete-event{
+    position: absolute;
+    width: 200px;
+    top: 20px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 5px;
+    display: none;
+}
+.functionality-div .edit-delete-event ul li{
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px;
+}
+.functionality-div .edit-delete-event ul li span{
+    width: auto;
+    height: auto;
+    display: inline-block;
+    font-size: 12px;
+    position: absolute;
+    right: 8px;
+}
+.functionality-div .edit-delete-event .edit-field{
+    display: none;
+}
+.functionality-div .edit-delete-event .edit-field input,
+.sub-timeline-event .main-parent-edit-field input{
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #00000047;
+    font-size: 12px;
+    margin-top: 20px;
+}
+.sub-timeline-event .main-parent-edit-field input{
+    margin-top: 0px !important;
+}
+.functionality-div .edit-delete-event .edit-field button,
+.sub-timeline-event .main-parent-edit-field button{
+    float: right;
+    margin: 10px 0px;
+    font-size: 12px;
+    padding: 5px 10px;
+    border: none;
+    color: #FFf;
 }
 .modal{
-    background-color: #00000070;
+    background: #00000030;
+    z-index: 999999999999;
 }
-.modal .btn{
-    padding: 5px 30px;
-    border: none;
+.sub-timeline-event .main-parent{
+    position: relative;
 }
-.modal .btn.delete-event{
-    background-color: #f44336;
-}
-/*************** Footer - CSS ***************/
-.footer {
-    text-align: right;
-    width: 100% !important;
-    max-width: 50% !important;
-    margin: auto;
-    margin-right: 0px;
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-}
-.footer .active{
-    opacity: 1;
-    z-index: 999;
-}
-.footer .zoom-effect span i {
-    font-size: 25px;
-}
-
-.footer .drop-box {
-    background: #FFFFFF;
-    box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
-    padding: 10px;
-    display: flex;
-    width: 64%;
-    margin-left: 30px;
-}
-
-.footer .drop-box p {
-    margin-bottom: 0px;
-    width: 90%;
-    text-align: left !important;
-    margin-left: 15px;
-    font-weight: 600;
-}
-
-.footer .drop-box span:first-child {
-    text-align: left !important;
-}
-
-.footer .drop-box span {
-    width: 5%;
-}
-
-.footer .drop-box span:last-child {
-    float: right;
-}
-
-.footer .col-12 {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.menu-div {
+.sub-timeline-event .main-parent .functionality-div{
+    display: inline-block;
     position: absolute;
-    background: #FFFFFF;
-    width: 61.8%;
-    right: 13px;
-    bottom: 50px;
-    box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
-    text-align: left;
-    opacity: 0;
+    left: 17px;
+    bottom: -4px;
+    border: 2px solid #fff;
+    opacity: .8;
+    border-radius: 100%;
     z-index: -1;
-    transition: all .5s linear;
+}
+.sub-timeline-event .main-parent .functionality-div .event-functionality{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border: 2px solid rgb(128, 0, 128);
+    border-radius: 100%;
+}
+.sub-timeline-event .add-more-event{
+    position: absolute;
+    top: 80px !important;
+    z-index: -2 !important;
+}
+.edit-sublime-modal .modal-body{
+    display: flex;
+    justify-content: space-between;
+}
+.edit-sublime-modal .modal-body button{
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+}
+.sub-timeline-event .main-parent-edit-field{
+    position: absolute;
+    width: 200px;
+    top: -94px;
+    left: -60px;
+    box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
+    border-radius: 8px;
+    padding: 5px;
+    display: none;
 }
 
-.menu-div .tab-content {
-    padding: 20px 27px;
-    height: 400px;
-}
-
-.menu-div .tab-content p {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 160%;
-    letter-spacing: 0.3px;
-    color: #000000;
-}
-.menu-div ul.nav{
-    border: 1px solid #C2C2C2;
-}
-.menu-div ul.nav li{
-    border-right: 1px solid #C2C2C2;
-}
-.menu-div .nav-pills .nav-link{
-    padding: 13px 20px;
-    border-radius: 0px;
-}
-.nav-pills .nav-link.active{
-    background-color: #4198FF !important;
-}
-.menu-div .nav-pills .nav-link{
-    color: #000000;
+header{
+    background: #5997DD;
+    width: auto;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 }

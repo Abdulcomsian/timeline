@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('child-events-save', [EventController::class, 'saveChildEvent']);
     //delete event
     Route::post('events-delete', [EventController::class, 'deleteEvent']);
+    //update event name
+    Route::post('events-update', [EventController::class, 'updateEvent']);
 });
 
 // without atuhenticated routes here=====================================================================================
