@@ -5,7 +5,7 @@
 @section('content')
  <input type="hidden" name="timelineid" value="{{$encryptid}}" id="timelineid">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row">
             <div class="col-12 text-center">
                 <h1>{{$TimeLine->name ?? 'Test TimeLine'}}</h1>
                 <p>{{isset($TimeLine->name) ? date('M d,Y - D',strtotime($TimeLine->start_date)) : '(Jan 1, 2022 - Monday) 1:00 PM'}}</p>
