@@ -71,7 +71,7 @@ i{
     position: relative;
     width: 100%;
     overflow-x: scroll;
-    height: 75vh;
+    height: 130vh;
     width: 200%;
 }
 .timeline-functionality{
@@ -415,5 +415,5 @@ header{
 }
 
 .container{
-    margin-top:20px;
+    margin-top:30px;
 }
