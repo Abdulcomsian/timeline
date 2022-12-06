@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <button type="submit" class="w-100 d-flex align-items-center justify-content-center border-0">Create Timeline</button>
+                        <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center border-0">Create Timeline</button>
                     </form>
                 </div>
             </div>
