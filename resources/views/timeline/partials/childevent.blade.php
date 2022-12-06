@@ -45,7 +45,7 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
-                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
+                           <!--  <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li> -->
                         </ul>
                         <div class='edit-field editfield'>
                             <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
@@ -100,7 +100,7 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
-                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
+                            <!-- <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li> -->
                         </ul>
                         <div class='edit-field editfield'>
                             <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
