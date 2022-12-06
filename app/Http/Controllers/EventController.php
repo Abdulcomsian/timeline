@@ -21,12 +21,14 @@ class EventController extends Controller
         if ($TimeLine) {
             if (Auth::user()->hasRole('admin')) {
                 $events = Event::whereNull('parent_id')->where(['time_line_id' => $id])->get();
+                $ventids=[];
             } else {
                 $ventids = EventInvited::select('event_id')->where('user_id', Auth::user()->id)->pluck('event_id');
                 $events = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->get();
+                $ventids=$ventids->toArray();
             }
             $encryptid = crypt::encrypt($id);
-            return view('timeline/index', compact('events', 'TimeLine', 'encryptid'));
+            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids'));
         } else {
             toastr()->error('No Timeline Created');
             return Redirect::back();
@@ -56,67 +58,122 @@ class EventController extends Controller
     //save child event
     public function saveChildEvent(Request $request)
     {
-        $timelineid = Crypt::decrypt($request->time_line_id);
-        $event = Event::create([
-            'event_title' => $request->label,
-            'event_title_updated' => $request->label,
-            'postion_x' => $request->postion,
-            'icon' => $request->icon,
-            'back_color'=>$request->back_color,
-            'class_name'=>$request->class_name,
-            "isParent" => $request->isParent,
-            "parent_id" => $request->eventId,
-            'user_id' => Auth::user()->id,
-            'time_line_id' => $timelineid
-        ]);
+        try {
+            $timelineid = Crypt::decrypt($request->time_line_id);
+            $event = Event::create([
+                'event_title' => $request->label,
+                'event_title_updated' => $request->label,
+                'postion_x' => $request->postion,
+                'icon' => $request->icon,
+                'back_color'=>$request->back_color,
+                'class_name'=>$request->class_name,
+                "isParent" => $request->isParent,
+                "parent_id" => $request->eventId,
+                'user_id' => Auth::user()->id,
+                'time_line_id' => $timelineid
+            ]);
 
-        $childeventCount = Event::where('parent_id', $request->eventId)->count();
+            $childeventCount = Event::where('parent_id', $request->eventId)->count();
+            return response()->json([
+                    'status' => 'Success',
+                    'message' => 'Event saved successfully',
+                    'event' =>$event,
+                    'count'=>$childeventCount,
+                 ]);
 
-        return response()->json(['event' => $event, 'count' => $childeventCount]);
+        } catch (\Exception $exception) {
+             return response()->json([
+                    'status' => 'Error',
+                    'message' => 'Something Went Wrong!',
+                 ]);
+        }
     }
 
     //delte event
     public function deleteEvent(Request $request)
     {
-        $eventDelete = Event::find($request->eventId)->delete();
-        if ($eventDelete) {
-            $events = Event::where('parent_id', $request->eventId)->get();
-            foreach ($events as $ev) {
-                $ev->child()->delete();
-                $ev->delete();
+        $res=Event::where(['id'=>$request->eventId,'user_id'=>Auth::user()->id])->first();
+        if($res)
+        {
+            $eventDelete = Event::find($request->eventId)->delete();
+            if ($eventDelete) 
+            {
+                $events = Event::where('parent_id', $request->eventId)->get();
+                foreach ($events as $ev) {
+                    $ev->child()->delete();
+                    $ev->delete();
+                }
+                return response()->json([
+                    'status' => 'Success',
+                    'message' => 'Event deleted successfully',
+                    'data' => null,
+                 ]);
+            } else {
+                return response()->json([
+                    'status' => 'Error',
+                    'message' => 'Something Went Wrong',
+                    'data' => null,
+                 ]);
             }
-            return response()->json("success");
-        } else {
-            return response()->json("Fail");
+        }
+        else{
+            return response()->json([
+            'status' => 'Error',
+            'message' => 'You are not allowed to do it',
+            'data' => null,
+             ]);
         }
     }
 
     //update event
     public function updateEvent(Request $request)
     {
-        $eventId=$request->eventId;
-        $res=Event::find($eventId)->update(['event_title_updated'=>$request->inputvalue]);
-        if($res)
-        {
-             return response()->json("success");
-        } else {
-            return response()->json("Fail");
+        try {
+            $eventId=$request->eventId;
+            $res=Event::where(['id'=>$request->eventId,'user_id'=>Auth::user()->id])->first();
+            if($res)
+            {
+                Event::find($eventId)->update(['event_title_updated'=>$request->inputvalue]);
+                 return response()->json([
+                    'status' => 'Success',
+                    'message' => 'Event updated successfully',
+                    'data' => null,
+                 ]); 
+            }
+            else{
+                return response()->json([
+                'status' => 'Error',
+                'message' => 'You are not allowed to do it',
+                'data' => null,
+                 ]);
+            }
+            
+            
+        } catch (\Exception $exception) {
+            return response()->json([
+                    'status' => 'Error',
+                    'message' => 'Something Went Wrong',
+                    'data' => null,
+                 ]);
         }
     }
 
     //Invite Event to user
     public function InviteEvent(Request $request)
     {
-        $EventId = $request->EventId;
-        $code = random_int(100000, 999999);
-        $model = new EventInvited();
-        $model->code = $code;
-        $model->event_id =  $EventId;
-        if ($model->save()) {
-            $type = "Event";
-            Mail::to('admin@gmail.com')->send(new InvitePeopleMail($EventId, $code, $type));
-            toastr()->success('Event Invited Successfully');
-            return Redirect::back();
+        try {
+            $EventId = $request->eventId;
+            $code = random_int(100000, 999999);
+            $model = new EventInvited();
+            $model->code = $code;
+            $model->event_id =  $EventId;
+            if ($model->save()) {
+                $type = "Event";
+                Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));
+                return response()->json("success");
+            }
+        } catch (\Exception $exception) {
+             return response()->json("error");
         }
     }
 

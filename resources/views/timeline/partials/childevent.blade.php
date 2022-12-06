@@ -45,10 +45,15 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
+                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
                         </ul>
-                        <div class='edit-field'>
-                            <input class='form-control' id="inputeventid{{$event->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
-                            <button onClick="updateEvent({{$event->id}})" style='background-color: {{$ch->back_color}}'>Save</button>
+                        <div class='edit-field editfield'>
+                            <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
+                            <button onClick="updateEvent({{$ch->id}},event)" style='background-color: {{$ch->back_color}}'>Save</button>
+                        </div>
+                        <div class='edit-field sharefield'>
+                            <input class='form-control' id="inputshareeventid{{$ch->id}}" placeholder='Enter Email'/>
+                            <button  onClick="shareEvent({{$ch->id}})" style='background-color:{{$ch->back_color}}'>Share Event</button>
                         </div>
                     </div>
                     </span>
@@ -95,10 +100,15 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
+                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
                         </ul>
-                        <div class='edit-field'>
+                        <div class='edit-field editfield'>
                             <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
-                            <button onClick="updateEvent({{$ch->id}})" style='background-color: {{$ch->back_color}}'>Save</button>
+                            <button onClick="updateEvent({{$ch->id}},event)" style='background-color: {{$ch->back_color}}'>Save</button>
+                        </div>
+                        <div class='edit-field sharefield'>
+                            <input class='form-control' id="inputshareeventid{{$ch->id}}" placeholder='Enter Email'/>
+                            <button  onClick="shareEvent({{$ch->id}})" style='background-color:{{$ch->back_color}}'>Share Event</button>
                         </div>
                     </div>
                 </span>

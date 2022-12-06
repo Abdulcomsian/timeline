@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TimeLineInvitePeople;
+use App\Models\EventInvited;
 
 class RegisterController extends Controller
 {

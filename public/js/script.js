@@ -69,6 +69,7 @@ $(".event-list li").click(function (e) {
 /******************* Subtime - Line - Event - Add - More Child - Click */
 $(document).on('click','.main-parent-add-child',function(){
     $(".edit-sublime-modal").css("display",'block');
+    $(".sub-timeline-event .main-parent-edit-field ").css('display','none');
     subtimelineThis=$(this);
     eventId=$(this).attr('data-event-id');
 });
@@ -89,10 +90,15 @@ $('.edit-sublime-modal button').click(function(){
         }
     }
     else if(btnVal=="Edit Event"){
-        $(".sub-timeline-event .main-parent-edit-field").css('display','block');
+        $(".editmodal"+eventId+"").css('display','block');
+        // $(".sub-timeline-event .main-parent-edit-field ").css('display','block');
     } else if(btnVal=="Delete Event"){
         deleteEvent=$(subtimelineThis).parent().parent();
         Eventdelete(deleteEvent,eventId);
+    }
+    else if(btnVal=="Share Event")
+    {
+        $(".sharemodal"+eventId+"").css('display','block');
     }
 })
 $(document).on('click',".main-parent-edit-field button",function(){
@@ -151,11 +157,20 @@ $(document).on('click','.functionality-div .event-functionality',function(e){
 /******************* Functionality - Div - List - Item - Click */
 $(document).on('click','.edit-delete-event ul li',function(e){
     e.stopPropagation();
-    let val = $(this).text();
+
+    let val = $(this).text().trim();
+    console.log(val);
     eventId=$(this).attr('data-event-id');
-    if(val=="Edit Event "){
-        $(".functionality-div .edit-delete-event .edit-field").css('display','block')
-    }else{
+    if(val=="Edit Event"){
+        $(".functionality-div .edit-delete-event .editfield").css('display','block');
+        $(".functionality-div .edit-delete-event .sharefield").css('display','none');
+    }else if(val=="Share Event")
+    {
+         $(".functionality-div .edit-delete-event .sharefield").css('display','block');
+         $(".functionality-div .edit-delete-event .editfield").css('display','none');
+    }
+    else{
+
         deleteEvent=$(this).parent().parent().parent().parent().parent();
         $(".functionality-div .edit-delete-event .edit-field").css('display','none');
         $(".delete-modal").css("display",'block');
