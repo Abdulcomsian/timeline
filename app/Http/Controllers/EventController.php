@@ -162,11 +162,19 @@ class EventController extends Controller
     public function InviteEvent(Request $request)
     {
         try {
+            //check if user exist or not
+            $user=User::where(['email'=>$request->inputvalue])->first();
+            $user_id=NULL;
+            if($user)
+            {
+                $user_id=$user->id;
+            }
             $EventId = $request->eventId;
             $code = random_int(100000, 999999);
             $model = new EventInvited();
             $model->code = $code;
             $model->event_id =  $EventId;
+            $model->user_id=$user_id;
             if ($model->save()) {
                 $type = "Event";
                 Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));

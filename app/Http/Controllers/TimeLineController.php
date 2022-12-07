@@ -20,9 +20,9 @@ class TimeLineController extends Controller
         // } else {
         //     $timeline = TimeLineInvitePeople::with('timeline')->get();
         // }
-        $timeline = TimeLine::where(['user_id' => Auth::user()->id])->first();
-        if ($timeline) {
-            return redirect()->to('timeline/view/' . $timeline->id);
+        $timeline = TimeLine::where(['user_id' => Auth::user()->id])->orderBy('id','asc')->limit(1)->get();
+        if (count($timeline)>0) {
+            return redirect()->to('timeline/view/' . $timeline[0]->id);
         } else {
             return view('home', compact('timeline'));
         }

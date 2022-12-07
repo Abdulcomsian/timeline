@@ -70,7 +70,7 @@ i{
 .timeline-parent{
     position: relative;
     width: 100%;
-    overflow-x: scroll;
+    /*overflow-x: scroll;*/
     height: 130vh;
     width: 200%;
 }

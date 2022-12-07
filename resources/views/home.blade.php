@@ -4,9 +4,13 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex">
+                @if(Auth::user()->hasRole('admin'))
                 <h5 class="card-title"><a href="{{url('create')}}" class="btn btn-primary">Create LifeTime TimeLine <i class="fas fa-plus"></i></a></h5>
+                @elseif(count($timeline)<=0)
+                <h5 class="card-title"><a href="{{url('create')}}" class="btn btn-primary">Create LifeTime TimeLine <i class="fas fa-plus"></i></a></h5>
+                @endif
             </div>
-            {{-- <div class="card-body">
+             <div class="card-body">
                
                 <table class="table table-hover">
                 <thead>
@@ -26,36 +30,36 @@
                            
                             @if(auth()->user()->hasRole('admin'))
                             <td>{{$loop->index+1}}</td>
-            <td>{{$time->name}}</td>
-            <td>{{$time->description}}</td>
-            <td>{{$time->start_date}}</td>
-            <td>-</td>
-            <td>
-                <a href="{{url('timeline/view',$time->id)}}"><i class="fas fa-eye"></i></a>
-            </td>
-            @else
-            <td>{{$loop->index+1}}</td>
-            <td>{{$time->timeline->name}}</td>
-            <td>{{$time->timeline->description}}</td>
-            <td>{{$time->timeline->start_date}}</td>
-            <td>-</td>
-            <td>
-                <a href="{{url('timeline/view',$time->timeline->id)}}"><i class="fas fa-eye"></i></a>
-            </td>
-            @endif
+                            <td>{{$time->name}}</td>
+                            <td>{{$time->description}}</td>
+                            <td>{{$time->start_date}}</td>
+                            <td>-</td>
+                            <td>
+                                <a href="{{url('timeline/view',$time->id)}}"><i class="fas fa-eye"></i></a>
+                            </td>
+                            @else
+                            <td>{{$loop->index+1}}</td>
+                            <td>{{$time->timeline->name}}</td>
+                            <td>{{$time->timeline->description}}</td>
+                            <td>{{$time->timeline->start_date}}</td>
+                            <td>-</td>
+                            <td>
+                                <a href="{{url('timeline/view',$time->timeline->id)}}"><i class="fas fa-eye"></i></a>
+                            </td>
+                            @endif
 
-            </tr>
+                        </tr>
 
-            @endforeach
-            @else
-            <tr>
-                <td colspan="6">No Time Line</td>
-            </tr>
-            @endif
+                        @endforeach
+                        @else
+                        <tr>
+                            <td colspan="6">No Time Line</td>
+                        </tr>
+                        @endif
 
-            </tbody>
+                </tbody>
             </table>
-        </div> --}}
+        </div> 
     </div>
 
 
