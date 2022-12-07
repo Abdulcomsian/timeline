@@ -7,7 +7,7 @@ var targetElem,subTimeLineLeft,deleteEvent,subtimelineThis;
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion=0;
-var eventId;
+var eventId,parentposition;
 
 $('.timeline-parent').scroll(function () { 
     if(oldScrollTop == $(window).scrollTop()) {
@@ -72,6 +72,8 @@ $(document).on('click','.main-parent-add-child',function(){
     $(".sub-timeline-event .main-parent-edit-field ").css('display','none');
     subtimelineThis=$(this);
     eventId=$(this).attr('data-event-id');
+    parentposition=$(this).attr('parent-position');
+    console.log("here",parentposition)
 });
 $('.edit-sublime-modal button').click(function(){
     $(".edit-sublime-modal").css("display",'none');
@@ -82,11 +84,11 @@ $('.edit-sublime-modal button').click(function(){
             let totalLeft= total_child.length/2;
             totalLeft=totalLeft-1;
             let pixel=120+(totalLeft*120);
-            $(subtimelineThis).parent().append("<div style='position: absolute; right: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-left-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+            $(subtimelineThis).parent().append("<div style='position: absolute; right: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-left-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
         } else{
             let totalRight=Math.floor(total_child.length/2);
-            let pixel=120+(totalRight*120);
-            $(subtimelineThis).parent().append("<div style='position: absolute; left: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-right-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+            let pixel=120+(totalRight*120); 
+            $(subtimelineThis).parent().append("<div style='position: absolute; left: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-right-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
         }
     }
     else if(btnVal=="Edit Event"){
@@ -111,11 +113,11 @@ $(document).on('click',".functionality-div .edit-delete-event button",function()
 
 /******************* Child - Add - More - Event - Click */
 $(document).on('click','.sub-child-event-add',function(){
-      subTimeLineLeft=$(this).parents().find(".event-add")[0].style.left;
-
-
+    console.log("Psotion",parentposition)
+    parentposition=$(this).attr('parent-position')
+    // subTimeLineLeft=$(this).parent().find(".event-add")[0].style.left;
     $(".event-list-subtime-line").css("display", "block");
-    $(".event-list-subtime-line").css("left", subTimeLineLeft);
+    $(".event-list-subtime-line").css("left", parentposition+"px");
     targetElem=$(this);
     eventId=$(this).attr('data-event-id');
 });

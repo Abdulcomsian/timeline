@@ -155,7 +155,7 @@
                     @if($event->event_title=="Sub timeline")
                         <div class="event-add animate__bounceOut {{$event->class_name}}"  style="left:{{$event->postion_x}}px">
                             <div class='main-event sub-timeline-event '>
-                                <div class='main-parent {{!in_array($event->id,$ventids) ? "main-parent-add-child" :""}}' data-event-id="{{$event->id}}">
+                                <div class='main-parent {{!in_array($event->id,$ventids) ? "main-parent-add-child" :""}}' data-event-id="{{$event->id}}" parent-position="{{$event->postion_x}}">
                                     <span class='img-span' style='background-color:{{$event->back_color}}'>
                                         <img src="{{$event->icon}}">
                                     </span>
@@ -202,7 +202,7 @@
                                             <div class='doted-line'><span></span><span></span><span></span><span></span>
                                                 <span></span><span></span>
                                             </div>
-                                            <div class='sub-child-event-add flash' data-event-id="{{$event->id}}">
+                                            <div class='sub-child-event-add flash' parent-position="{{$event->postion_x}}" data-event-id="{{$event->id}}">
                                                 <span><i class='fa-light fa-plus'></i></span>
                                             </div>
                                         </div>
@@ -335,7 +335,7 @@
                      $(".timeline-parent .timeline-functionality").append(
                         "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
                                currentEventPosition +
-                               "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div><div class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' data-event-id="+res.id+"><span><i class='fa-light fa-plus'></i></span></div></div></div></div>"
+                               "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div><div class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span><i class='fa-light fa-plus'></i></span></div></div></div></div>"
                        );
                     }
                     else
