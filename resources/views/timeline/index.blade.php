@@ -323,6 +323,7 @@
                 'async': false,
             }).done(function(res) {
                 //success
+                toastr.success("Event saved successfully!");
                     if(trimVal=="Sub timeline"){
                      $(".timeline-parent .timeline-functionality").append(
                         "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
