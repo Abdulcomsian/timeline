@@ -77,13 +77,15 @@
                       @php $i++;@endphp
                       @endforeach
                     @else
-                    <div class='add-more-event'>
-                    <div class='doted-line'>
-                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                    </div>
-                    <div class='sub-child-event-add flash' parent-position="{{$ch->postion_x}}" data-event-id="{{$ch->id}}"><span><i class='fa-light fa-plus'></i></span>
-                    </div>
-                    </div>
+                     @if($assign==false)
+                        <div class='add-more-event'>
+                        <div class='doted-line'>
+                            <span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class='sub-child-event-add flash' parent-position="{{$ch->postion_x}}" data-event-id="{{$ch->id}}"><span><i class='fa-light fa-plus'></i></span>
+                        </div>
+                        </div>
+                     @endif
                     @endif
             </div>
         </div>
