@@ -35,7 +35,7 @@
 
         <div class='event-add animate__bounceOut {{$ch->class_name}}' style='left: 0px'>
             <div class='main-event sub-timeline-event'>
-                <span class='main-parent main-parent-add-child'  style='background-color:{{$ch->back_color}}' data-event-id="{{$ch->id}}">
+                <span class='main-parent {{ $assign == true ? "" :"main-parent-add-child"}}'  style='background-color:{{$ch->back_color}}' data-event-id="{{$ch->id}}">
                     <img src="{{$ch->icon}}"> 
                 </span>
                 <span class="functionality-div">
@@ -102,6 +102,7 @@
                 </span>
                 <span class='functionality-div'>
                     <span class='event-functionality' style='border-color:{{$ch->back_color}} '></span>
+                    @if($assign==false)
                     <div class='edit-delete-event'>
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
@@ -117,6 +118,7 @@
                             <button  onClick="shareEvent({{$ch->id}})" style='background-color:{{$ch->back_color}}'>Share Event</button>
                         </div>
                     </div>
+                    @endif
                 </span>
             </div>
     </div>
@@ -141,6 +143,7 @@
                         </span>
                         <span class='functionality-div'>
                     <span class='event-functionality' style='border-color:{{$ch->back_color}} '></span>
+                    @if($assign==false)
                     <div class='edit-delete-event'>
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
@@ -151,6 +154,7 @@
                             <button onClick="updateEvent({{$ch->id}})" style='background-color: {{$ch->back_color}}'>Save</button>
                         </div>
                     </div>
+                    @endif
                 </span>
                         <div class="horizontal-line-right">
                             <span></span><span></span><span></span><span></span>
@@ -180,6 +184,7 @@
                         </span>
                         <span class='functionality-div'>
                             <span class='event-functionality' style='border-color:{{$ch->back_color}} '></span>
+                            @if($assign==false)
                             <div class='edit-delete-event'>
                                 <ul>
                                     <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
@@ -190,6 +195,7 @@
                                     <button onClick="updateEvent({{$ch->id}},event)" style='background-color:{{$ch->back_color}}'>Save</button>
                                 </div>
                             </div>
+                            @endif
                         </span>
                         <div class="horizontal-line-right">
                             <span></span><span></span><span></span><span></span>

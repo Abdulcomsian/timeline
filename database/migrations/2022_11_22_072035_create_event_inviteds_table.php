@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->integer('user_id')->nullable();
             $table->unsignedBigInteger('event_id');
-            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -185,7 +185,14 @@
                                             $i=1;
                                             @endphp
                                             @foreach($event->child as $ch)
-                                                @include('timeline.partials.childevent',$ch)
+                                                @php
+                                                 $assign=false;
+                                                if(in_array($event->id,$ventids))
+                                                {
+                                                  $assign=true;
+                                                }
+                                                @endphp
+                                                @include('timeline.partials.childevent',['ch'=>$ch,'assign'=>$assign])
                                                 @php
                                                 $i++;
                                                 @endphp

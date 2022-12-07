@@ -19,14 +19,14 @@ class EventController extends Controller
     {
         $TimeLine = TimeLine::find($id);
         if ($TimeLine) {
-            if (Auth::user()->hasRole('admin')) {
-                $events = Event::whereNull('parent_id')->where(['time_line_id' => $id])->get();
-                $ventids=[];
-            } else {
+            // if (Auth::user()->hasRole('admin')) {
+            //     $events = Event::whereNull('parent_id')->where(['time_line_id' => $id])->get();
+            //     $ventids=[];
+            // } else {
                 $ventids = EventInvited::select('event_id')->where('user_id', Auth::user()->id)->pluck('event_id');
                 $events = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->get();
                 $ventids=$ventids->toArray();
-            }
+            //}
             $encryptid = crypt::encrypt($id);
             return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids'));
         } else {
