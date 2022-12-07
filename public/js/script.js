@@ -116,6 +116,7 @@ $(document).on('click','.sub-child-event-add',function(){
     console.log("Psotion",parentposition)
     parentposition=$(this).attr('parent-position')
     // subTimeLineLeft=$(this).parent().find(".event-add")[0].style.left;
+    $(".event-list").css("display", "none");
     $(".event-list-subtime-line").css("display", "block");
     $(".event-list-subtime-line").css("left", parentposition+"px");
     targetElem=$(this);
