@@ -40,7 +40,7 @@
                 </span>
                 <span class="functionality-div">
                         <span class="event-functionality" style="border-color:{{$ch->back_color}}"></span>
-                        <div class='edit-delete-event'>
+                       <!--  <div class='edit-delete-event'>
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
@@ -54,13 +54,21 @@
                             <input class='form-control' id="inputshareeventid{{$ch->id}}" placeholder='Enter Email'/>
                             <button  onClick="shareEvent({{$ch->id}})" style='background-color:{{$ch->back_color}}'>Share Event</button>
                         </div>
-                    </div>
+                    </div> -->
                 </span>
                 <div class='horizontal-line-right'>
                     <span></span><span></span><span></span><span></span>
                 </div>
                 <div class='horizontal-line-left'>
                     <span></span><span></span><span></span><span></span>
+                </div>
+                <div class='main-parent-edit-field editmodal{{$ch->id}}'>
+                    <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
+                    <button onClick="updateEvent({{$ch->id}},event)" style='background-color:{{$event->back_color}}'>Save</button>
+                </div>
+                <div class='main-parent-edit-field sharemodal{{$ch->id}}'>
+                    <input class='form-control' id="inputshareeventid{{$ch->id}}" placeholder='Enter Email'/>
+                    <button onClick="shareEvent({{$ch->id}},event)" style='background-color:{{$event->back_color}}'>Share Event</button>
                 </div>
                     @if(count($ch->Child)>0)
                       @php $i=1;@endphp

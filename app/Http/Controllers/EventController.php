@@ -59,7 +59,6 @@ class EventController extends Controller
     public function saveChildEvent(Request $request)
     {
         //get parent x position
-        
         try {
             $event=Event::find($request->eventId);
             $timelineid = Crypt::decrypt($request->time_line_id);
