@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\InvitePeopleMail;
-use App\Models\{Event, TimeLine, EventInvited};
+use App\Models\{Event, TimeLine, EventInvited,User};
 use Auth;
 use Mail;
 
@@ -58,12 +58,15 @@ class EventController extends Controller
     //save child event
     public function saveChildEvent(Request $request)
     {
+        //get parent x position
+        
         try {
+            $event=Event::find($request->eventId);
             $timelineid = Crypt::decrypt($request->time_line_id);
             $event = Event::create([
                 'event_title' => $request->label,
                 'event_title_updated' => $request->label,
-                'postion_x' => $request->postion,
+                'postion_x' => $event->postion_x,
                 'icon' => $request->icon,
                 'back_color'=>$request->back_color,
                 'class_name'=>$request->class_name,
@@ -170,6 +173,16 @@ class EventController extends Controller
                 $user_id=$user->id;
             }
             $EventId = $request->eventId;
+            //check event if event is parent delete all child event id from link table
+            $event=Event::find($EventId);
+            if($event->isParent)
+            {
+                $eventAllChild=Event::select('id')->where(['parent_id'=>$EventId])->pluck('id');
+                foreach($eventAllChild  as $child)
+                {
+                    EventInvited::where(['event_id'=>$child,'user_id'=>$user_id])->delete();
+                }
+            }
             $code = random_int(100000, 999999);
             $model = new EventInvited();
             $model->code = $code;
@@ -177,7 +190,7 @@ class EventController extends Controller
             $model->user_id=$user_id;
             if ($model->save()) {
                 $type = "Event";
-                Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));
+                //Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));
                 return response()->json("success");
             }
         } catch (\Exception $exception) {

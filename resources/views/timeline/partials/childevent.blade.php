@@ -36,8 +36,7 @@
         <div class='event-add animate__bounceOut {{$ch->class_name}}' style='left: 0px'>
             <div class='main-event sub-timeline-event'>
                 <span class='main-parent main-parent-add-child'  style='background-color:{{$ch->back_color}}' data-event-id="{{$ch->id}}">
-                    <img src="{{$ch->icon}}">
-                    
+                    <img src="{{$ch->icon}}"> 
                 </span>
                 <span class="functionality-div">
                         <span class="event-functionality" style="border-color:{{$ch->back_color}}"></span>
@@ -45,7 +44,7 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
-                           <!--  <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li> -->
+                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
                         </ul>
                         <div class='edit-field editfield'>
                             <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>
@@ -56,8 +55,7 @@
                             <button  onClick="shareEvent({{$ch->id}})" style='background-color:{{$ch->back_color}}'>Share Event</button>
                         </div>
                     </div>
-                    </span>
-
+                </span>
                 <div class='horizontal-line-right'>
                     <span></span><span></span><span></span><span></span>
                 </div>
@@ -100,7 +98,7 @@
                         <ul>
                             <li data-event-id="{{$ch->id}}">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li>
                             <li data-event-id="{{$ch->id}}">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li>
-                            <!-- <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li> -->
+                            <li data-event-id="{{$ch->id}}">Share Event <span><i class="fas fa-share"></i></span></li>
                         </ul>
                         <div class='edit-field editfield'>
                             <input class='form-control' id="inputeventid{{$ch->id}}" placeholder='Edit your Event Name' value="{{$ch->event_title_updated}}"/>

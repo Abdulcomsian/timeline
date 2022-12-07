@@ -353,6 +353,10 @@
      // save sub child event
      function saveChildEvent(class_name,back_color,imgSrc,trimVal,targetElem,eventId)
      {
+        isParent = 0;
+        if (trimVal == "Sub timeline") {
+            isParent = 1;
+        }
         // call ajax to save data in database
         $.ajax({
             "type": "POST",
@@ -366,6 +370,7 @@
                 "back_color":back_color,
                 "isParent": 0,
                 "eventId": eventId,
+                "isParent":isParent,
                 'time_line_id': $("#timelineid").val(),
             }, //Send to WebMethod
             'async': false,
