@@ -147,7 +147,22 @@
                     </li>
                 </ul>
             </div>
-            <div class="timeline-divider"></div>
+            <div class='date-time-divider'>
+                <div class="timeline-divider">
+                    @php 
+                      $count=31;
+                      $j=1;
+                    @endphp
+                    @for($i=0;$i<$count;$i++)
+                        <span class="date" style="left: {{$i*500}}px">0{{$j}}-Dec</span>
+                        @php 
+                            $j++;
+                        @endphp
+                    @endfor
+
+                </div>
+            </div>
+            
 
             <!-- php dynamic code here -->
             @if(count($events)>0)
@@ -305,6 +320,7 @@
           </div>
         </div>
     </div>
+   
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -331,27 +347,27 @@
             }).done(function(res) {
                 //success
                 toastr.success("Event saved successfully!");
-                    if(trimVal=="Sub timeline"){
+                    // if(trimVal=="Sub timeline"){
                      $(".timeline-parent .timeline-functionality").append(
                         "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
                                currentEventPosition +
-                               "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div><div class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span><i class='fa-light fa-plus'></i></span></div></div></div></div>"
+                               "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
                        );
-                    }
-                    else
-                    {
-                        if(currentEventPosition<0){
-                            $(".timeline-parent .timeline-functionality").append(
-                                "<div class='event-add animate__bounceOut "+class_name+"' style='left:0px'><div class='main-event'><span style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span style='border-color: "+back_color+"' class='functionality-div'></span><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
-                            );
-                        } else{
-                            $(".timeline-parent .timeline-functionality").append(
-                                "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
-                                       currentEventPosition +
-                                       "px'><div class='main-event'><span style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li><li data-event-id="+res.id+">Share Event <span><i class='fas fa-share'></i></span></li></ul><div class='edit-field editfield'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='edit-field sharefield'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div></div></span></div></div>"
-                            );
-                        }
-                    }
+                    // }
+                    // else
+                    // {
+                    //     if(currentEventPosition<0){
+                    //         $(".timeline-parent .timeline-functionality").append(
+                    //             "<div class='event-add animate__bounceOut "+class_name+"' style='left:0px'><div class='main-event'><span style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span style='border-color: "+back_color+"' class='functionality-div'></span><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
+                    //         );
+                    //     } else{
+                    //         $(".timeline-parent .timeline-functionality").append(
+                    //             "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
+                    //                    currentEventPosition +
+                    //                    "px'><div class='main-event'><span style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li><li data-event-id="+res.id+">Share Event <span><i class='fas fa-share'></i></span></li></ul><div class='edit-field editfield'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='edit-field sharefield'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div></div></span></div></div>"
+                    //         );
+                    //     }
+                    // }
             });
          
      }
@@ -359,8 +375,9 @@
 
 
      // save sub child event
-     function saveChildEvent(class_name,back_color,imgSrc,trimVal,targetElem,eventId)
+     function saveChildEvent(class_name,back_color,imgSrc,trimVal,targetElem,eventId,sibling_child)
      {
+        var pixelLeft=190;
         isParent = 0;
         if (trimVal == "Sub timeline") {
             isParent = 1;
@@ -389,13 +406,20 @@
             }
             else{
                 toastr.success("Event saved successfully!");
-                if(trimVal == "Sub timeline")
-                {
-                     $(targetElem).replaceWith("<div class='event-add animate__bounceOut "+class_name+"' style='left: 0px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child' data-event-id="+res.event.id+" style='background-color: "+back_color+"'><img src="+imgSrc+"></span><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div><div class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash'  data-event-id="+res.event.id+"><span><i class='fa-light fa-plus'></i></span></div></div></div></div>");
-                }
-                else{
-                     $(targetElem).replaceWith("<div class='new-child animate__bounceOut "+class_name+"'><span class='main-parent' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.event.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.event.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li></ul><div class='edit-field'><input class='form-control' id='inputeventid"+res.event.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.event.id+",event)' style='background-color: "+back_color+"'>Save</button></div></div></span></div>");
-                }
+                // if(trimVal == "Sub timeline")
+                // {
+                    console.log("Sibling :",sibling_child.length)
+                     if(sibling_child.length>=1){
+                        $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut "+class_name+"' style='left: "+(parseInt(pixelLeft)*parseInt(sibling_child.length)+190)+"px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id="+res.event.id+" style='background-color: "+back_color+"'><img src="+imgSrc+"></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
+                     }
+                      else{
+                        $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut "+class_name+"' style='left: 190px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id="+res.event.id+" style='background-color: "+back_color+"'><img src="+imgSrc+"></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
+                     }
+                     
+                // }
+                // else{
+                //      $(targetElem).replaceWith("<div class='new-child animate__bounceOut "+class_name+"'><span class='main-parent' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.event.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.event.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li></ul><div class='edit-field'><input class='form-control' id='inputeventid"+res.event.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.event.id+",event)' style='background-color: "+back_color+"'>Save</button></div></div></span></div>");
+                // }
             }
             
         });
@@ -485,5 +509,6 @@
         e.stopPropagation();
      })
      
+     $(".timeline-parent .timeline-divider").css('width',{{$count*500}})
 </script>
 @endsection

@@ -7,7 +7,8 @@ var targetElem,subTimeLineLeft,deleteEvent,subtimelineThis;
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion=0;
-var eventId,parentposition;
+var eventId,parentposition,class_name,trimVal,imgSrc,back_color;
+let eventDate,sibling_child;
 
 $('.timeline-parent').scroll(function () { 
     if(oldScrollTop == $(window).scrollTop()) {
@@ -50,17 +51,19 @@ $(".add-event-indicator").click(function () {
 /******************* Event-List-Item - Click */
 $(".event-list li").click(function (e) {
     var val = $(this).text();
-    var class_name=$(this)[0].classList;
-    console.log(class_name+"  this is classname");
-    var trimVal=val.trim();
-    var imgSrc = $(this).find("img").attr("src");
-    var back_color =$(this).find(".img-div").css("border-color");
-    if(trimVal=="Sub timeline"){
-        saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal);
-       subTimeLineLeft=currentEventPosition;
-    } else{
-        saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal);  
-    }
+    class_name=$(this)[0].classList;
+    trimVal=val.trim();
+    imgSrc = $(this).find("img").attr("src");
+    back_color =$(this).find(".img-div").css("border-color");
+    // if(trimVal=="Sub timeline"){
+    //     saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal);
+    //    subTimeLineLeft=currentEventPosition;
+    // } 
+    // else{
+    //     saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal);  
+    // }
+    
+    saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal);  
     let total_event_add=document.querySelectorAll(".event-add");
     let current_event_add=total_event_add[total_event_add.length-1];
     $(current_event_add);
@@ -68,6 +71,7 @@ $(".event-list li").click(function (e) {
 });
 /******************* Subtime - Line - Event - Add - More Child - Click */
 $(document).on('click','.main-parent-add-child',function(){
+    $(this).removeClass('main-parent-add-child')
     $(".edit-sublime-modal").css("display",'block');
     $(".sub-timeline-event .main-parent-edit-field ").css('display','none');
     subtimelineThis=$(this);
@@ -77,19 +81,27 @@ $(document).on('click','.main-parent-add-child',function(){
 });
 $('.edit-sublime-modal button').click(function(){
     $(".edit-sublime-modal").css("display",'none');
+
     let btnVal= $(this).text();
+    let hasChild;
     if(btnVal=="Add Child"){
-        let total_child=$(subtimelineThis).parent().children('.add-more-event');
-        if(total_child.length%2==0){
-            let totalLeft= total_child.length/2;
-            totalLeft=totalLeft-1;
-            let pixel=120+(totalLeft*120);
-            $(subtimelineThis).parent().append("<div style='position: absolute; right: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-left-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+        hasChild=$(subtimelineThis).hasClass("child-event");
+        if(hasChild){
+            $(subtimelineThis).parent().append("<div style='position: absolute; left: 210px; top: 0px !important;' class='add-more-event'><div class='horizontal-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
         } else{
-            let totalRight=Math.floor(total_child.length/2);
-            let pixel=120+(totalRight*120); 
-            $(subtimelineThis).parent().append("<div style='position: absolute; left: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-right-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+            let total_child=$(subtimelineThis).parent().children('.add-more-event');
+            if(total_child.length%2==0){
+                let totalLeft= total_child.length/2;
+                totalLeft=totalLeft-1;
+                let pixel=120+(totalLeft*120);
+                $(subtimelineThis).parent().append("<div style='position: absolute; right: "+pixel+"px; top: 68px;' class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+            } else{
+                let totalRight=Math.floor(total_child.length/2);
+                let pixel=120+(totalRight*120); 
+                $(subtimelineThis).parent().append("<div style='position: absolute; left: "+pixel+"px; top: 68px;' class='add-more-event'><div class='horizontal-right-child-line'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash' parent-position="+parentposition+" data-event-id="+eventId+"><span><i class='fa-light fa-plus'></i></span></div></div>")
+            }
         }
+        
     }
     else if(btnVal=="Edit Event"){
         $(".editmodal"+eventId+"").css('display','block');
@@ -114,6 +126,7 @@ $(document).on('click',".functionality-div .edit-delete-event button",function()
 /******************* Child - Add - More - Event - Click */
 $(document).on('click','.sub-child-event-add',function(){
     console.log("Psotion",parentposition)
+    sibling_child=$(this).parent().find('.sibling-child');
     parentposition=$(this).attr('parent-position')
     // subTimeLineLeft=$(this).parent().find(".event-add")[0].style.left;
     $(".event-list").css("display", "none");
@@ -131,11 +144,10 @@ $(".event-list-subtime-line li").click(function (e) {
     var trimVal=val.trim();
     var imgSrc = $(this).find("img").attr("src");
     var back_color =$(this).find(".img-div").css("border-color");
-
     console.log(val,class_name,imgSrc,back_color)
     console.log($(targetElem))
     // if(trimVal=="Sub timeline"){
-         saveChildEvent(class_name[0],back_color,imgSrc,trimVal,targetElem,eventId);
+         saveChildEvent(class_name[0],back_color,imgSrc,trimVal,targetElem,eventId,sibling_child);
         //$(targetElem).replaceWith("<div class='event-add animate__bounceOut "+class_name[0]+"' style='left: 0px'><div class='main-event sub-timeline-event'><span class='main-parent' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div><div class='add-more-event'><div class='doted-line'><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='sub-child-event-add flash'><span><i class='fa-light fa-plus'></i></span></div></div></div></div>")
     // }
     // else{
@@ -188,4 +200,20 @@ $('.modal-footer button').click(function(){
     } else{
         $(".delete-modal").css("display",'none');
     }
+})
+
+/******************* Event - Date - Get - Click */
+$('.event-date-btn').click(function(){
+    eventDate= $('#event-date').val()
+    if(eventDate!==null){
+        // let startDate='2022-12-01';
+        // var start = new Date("2022-12-01"),
+        // end   = new Date(eventDate),
+        // diff  = new Date(end - start),
+        // days  = diff/1000/60/60/24; 
+        // console.log(startDate,eventDate,days);
+        // currentEventPosition=days*500;
+        saveEvent(class_name[0],currentEventPosition,back_color,imgSrc,trimVal); 
+        $('.event-date-modal').css('display','none');
+    } 
 })

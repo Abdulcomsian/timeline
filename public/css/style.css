@@ -1,3 +1,6 @@
+body,p,h1,h2,h3,h4,h5,h6,label,a,span,button{
+    font-family: 'Montserrat', sans-serif !important;
+}
 .flash {
     animation: flash 900ms ease infinite alternate;
   }
@@ -13,8 +16,8 @@ input,button{
 }
 ul{
     list-style: none;
-    padding: 0px;
-    margin: 0px;
+    padding: 0px !important;
+    margin: 0px !important;
 }
 i{
     font-style: normal;
@@ -99,6 +102,7 @@ i{
 }
 .event-add{
     z-index: 999999 !important;
+    top: 0px;
 }
 .add-event-indicator{
     position: relative;
@@ -127,6 +131,10 @@ i{
     border-radius: 100%;
     z-index: -1;
     top: 7px;
+}
+.sub-child-event-add i{
+    position: relative;
+    top: -1px;
 }
 .sub-child-event-add{
     position: relative;
@@ -199,7 +207,7 @@ i{
 }
 .add-event-indicator span i{
     position: relative;
-    top: -2px;
+    top: -1px;
     font-style: normal;
 }
 .event-list,
@@ -210,6 +218,10 @@ i{
     left: 0px;
     transition: all .5s linear;
     display: none;
+}
+.event-list p,
+.event-list-subtime-line p{
+    margin: 0px;
 }
 .event-list .event-info,
 .event-list-subtime-line .event-info{
@@ -255,6 +267,17 @@ i{
     position: absolute;
     left: -96px;
 }
+.horizontal-child-line{
+    left: -140px;
+    top: 25px;
+    display: flex;
+    position: absolute;
+}
+.child-event .add-more-event{
+    position: absolute;
+    left: 210px;
+    top: 0px !important;
+}
 .horizontal-left-child-line{
     display: flex;
     position: absolute;
@@ -262,7 +285,10 @@ i{
 }
 .event-add .add-more-event .doted-line span,
 .horizontal-right-child-line span,
-.horizontal-left-child-line span{
+.horizontal-left-child-line span,
+.horizontal-child-line span,
+.horizontal-line-right span,
+.horizontal-line-left span{
     width: 15px;
     height: 15px;
     background: #9333943d;
@@ -392,7 +418,7 @@ i{
 }
 .edit-sublime-modal .modal-body button{
     border: none;
-    padding: 10px 30px;
+    padding: 10px 20px;
     border-radius: 4px;
 }
 .sub-timeline-event .main-parent-edit-field{
@@ -421,4 +447,46 @@ header{
 .timelineheader{
     position: fixed;
     width: 88% !important;
+}
+.event-date-modal .modal-body #event-date{
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+}
+.event-date-modal .modal-body button{
+    float: right;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #5997DD;
+    color: #fff;
+}
+.timelineheader h1{
+    text-transform: capitalize;
+}
+.sibling-child{
+    top: 90px;
+    left: 190px;
+    position: absolute !important;
+}
+.sibling-child .horizontal-line-left{
+    display: flex;
+    right: 70px;
+    bottom: 19px;
+    top: initial;
+}
+.date-time-divider .date{
+    position: absolute;
+    bottom: 47px;
+}
+span.date:after {
+    content: "";
+    width: 4px;
+    height: 40px;
+    background: #00000054;
+    position: absolute;
+    top: 26px;
+    left: 23px;
 }
