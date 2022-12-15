@@ -139,7 +139,7 @@ i{
 .sub-child-event-add{
     position: relative;
 }
-.event-add .main-event:before,
+/* .event-add .main-event:before,
 .new-child:before{
     content: "";
     width: 20px;
@@ -150,7 +150,7 @@ i{
     border-radius: 100%;
     z-index: -1;
     top: 20px;
-}
+} */
 .add-event-indicator::after,
 .sub-child-event-add::after{
     content: "";
@@ -163,7 +163,7 @@ i{
     z-index: -1;
     bottom: 7px;
 }
-.event-add .main-event:after,
+/* .event-add .main-event:after,
 .new-child:after{
     content: "";
     width: 20px;
@@ -174,9 +174,39 @@ i{
     border-radius: 100%;
     z-index: -1;
     bottom: 20px;
-}
-.main-event.sub-timeline-event:after{
+} */
+/* .main-event.sub-timeline-event:after{
     top: 20px;
+} */
+.left-parent-event,
+.left-child-event,
+.left-sibling-event{
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute;
+    background: #d3d3d391;
+    left: -8px;
+    border-radius: 100%;
+    z-index: -1;
+    top: 22px;
+    border: none !important;
+    opacity: .5 !important;
+    transition: all .5s linear;
+}
+.right-parent-event,
+.right-child-event,
+.right-sibling-event{
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute;
+    background: #d3d3d391;
+    right: -8px;
+    border-radius: 100%;
+    z-index: -1;
+    top: 22px;
+    border: none !important;
+    opacity: .5 !important;
+    transition: all .5s linear;
 }
 .add-event-indicator span,
 .sub-child-event-add span{
@@ -406,6 +436,11 @@ i{
     display: inline-block;
     border: 2px solid rgb(128, 0, 128);
     border-radius: 100%;
+    opacity: .5;
+    transition: all .5s linear;
+}
+.sub-timeline-event .main-parent .functionality-div .event-functionality:hover{
+    opacity: 1;
 }
 .sub-timeline-event .add-more-event{
     position: absolute;
@@ -489,4 +524,50 @@ span.date:after {
     position: absolute;
     top: 26px;
     left: 23px;
+}
+.vertical-lines{
+    position: absolute;
+    top: 75px;
+    left: 22px;
+}
+.vertical-lines span{
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    position: relative;
+    bottom: 4px;
+    opacity: 0;
+    transition: all .5s linear;
+}
+.sub-timeline-event .main-parent .functionality-div .event-functionality:hover + .vertical-lines span{
+    opacity: 1;
+}
+.main-parent .child{
+    top: 145px;
+}
+.timeline-divider-child{
+    width: 15500px;
+    position: absolute;
+    height: 4px;
+    background: #ddd;
+    left: 69px;
+    top: 29px;
+}
+.vertical-lines span.active{
+    opacity: 1 !important;
+}
+.modal{
+    z-index: 999999999999 !important;
+}
+.modal-body input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+.date-modal .modal-body span.error{
+    display: none;
+    color: red;
+    font-size: 12px;
+    font-weight: 700;
 }

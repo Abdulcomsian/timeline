@@ -154,7 +154,7 @@
                       $j=1;
                     @endphp
                     @for($i=0;$i<$count;$i++)
-                        <span class="date" style="left: {{$i*500}}px">0{{$j}}-Dec</span>
+                        <span class="date" style="left: {{$i*500}}px">{{$j}}-Dec</span>
                         @php 
                             $j++;
                         @endphp
@@ -287,44 +287,30 @@
             
         </div>
     </div>
-    <div class="modal delete-modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Delete Event</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>Are you want to delete Event?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-primary">Yes</button>
-            </div>
-          </div>
-        </div>
+
+<div class="modal date-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Select Event End Date</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="date">
+        <span class='error'>Please select end date</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
     </div>
-    <div class="modal edit-sublime-modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content" style="width: 600px">
-            <div class="modal-header">
-              <h5 class="modal-title">Subtime Line Event</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <button>Add Child</button>
-              <button>Edit Event</button>
-              <button>Delete Event</button>
-              <button>Share Event</button>
-            </div>
-          </div>
-        </div>
-    </div>
+  </div>
+</div>
    
 @endsection
 @section('script')
 <script type="text/javascript">
-     function saveEvent(class_name,currentEventPosition,back_color,imgSrc,trimVal) {
+     function saveEvent(class_name,currentEventPosition,back_color,imgSrc,trimVal,eventDate) {
          //save event in database====
             isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -348,11 +334,23 @@
                 //success
                 toastr.success("Event saved successfully!");
                     // if(trimVal=="Sub timeline"){
-                     $(".timeline-parent .timeline-functionality").append(
+
+                    /********** After Client Demo */
+
+                    //  $(".timeline-parent .timeline-functionality").append(
+                    //     "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
+                    //            currentEventPosition +
+                    //            "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
+                    //    );
+
+                    $(".timeline-parent .timeline-functionality").append(
                         "<div class='event-add animate__bounceOut "+class_name+"' style='left: " +
                                currentEventPosition +
-                               "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
+                               "px'><div class='main-event sub-timeline-event'><span class='left-parent-event' style='background-color: "+back_color+"'></span><div class='main-parent' parent-date="+eventDate+" parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='background-color: "+back_color+";border-color: "+back_color+"'></span></span><div class='vertical-lines'><span style='background-color: "+back_color+"'></span><span style='background-color: "+back_color+"'></span><span style='background-color: "+back_color+"'></span><span style='background-color: "+back_color+"'></span><span style='background-color: "+back_color+"'></span></div></div></div><span class='right-parent-event' style='background-color: "+back_color+"'></span></div>"
                        );
+
+
+
                     // }
                     // else
                     // {
@@ -371,9 +369,6 @@
             });
          
      }
-
-
-
      // save sub child event
      function saveChildEvent(class_name,back_color,imgSrc,trimVal,targetElem,eventId,sibling_child)
      {
@@ -425,8 +420,6 @@
         });
         
      }
-
-
      //delete event
      function Eventdelete(deleteEvent)
      {
@@ -451,8 +444,6 @@
         });
         
      }
-
-
      //updae event name
      function updateEvent(eventId,event=null)
      {
@@ -478,8 +469,6 @@
             }
         });
      }
-
-
      function shareEvent(eventId)
      {
         let inputvalue=$("#inputshareeventid"+eventId+"").val();
@@ -503,12 +492,9 @@
             }
         });
      }
-     
-
      $("input").click(function(e){
         e.stopPropagation();
      })
-     
      $(".timeline-parent .timeline-divider").css('width',{{$count*500}})
 </script>
 @endsection
