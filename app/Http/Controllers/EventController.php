@@ -112,7 +112,7 @@ class EventController extends Controller
                 'user_id' => Auth::user()->id,
                 'time_line_id' => $timelineid,
                 'event_date' => $request->event_date,
-                'child_line' => $request->child_line,
+//                'child_line' => $request->child_line,
             ]);
 
             $childeventCount = Event::where('parent_id', $request->eventId)->count();
@@ -124,6 +124,7 @@ class EventController extends Controller
             ]);
 
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Something Went Wrong!',

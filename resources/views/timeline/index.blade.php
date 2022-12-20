@@ -326,7 +326,12 @@
                                             <span style="background-color: {{$child_event->back_color}}"
                                                   class="right-child-event" data-child-event-id = "{{$child_event->id}}">
                                             </span>
-
+{{--                                            @php $total_siblings = count($child_event->child) @endphp--}}
+                                            @php $total_left = 0 @endphp
+                                            @foreach($child_event->child as $sibling_event)
+                                                @php $total_left = $total_left + 170; @endphp
+                                                @include('timeline.siblings',['sibling_event' => $sibling_event, 'total_left' => $total_left])
+                                            @endforeach
                                         </div>
                                         @endforeach
                                         {{--<div class="event-add child animate__bounceOut {{$event->class_name}}" child_parent_date="{{$event->event_date}}">
@@ -556,14 +561,14 @@
 
         }
 
-        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, child_line, eventId,) {
-            var pixelLeft = 190;
+        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId,) {
+            // var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
                 isParent = 1;
             }*/
 
-            isParent = 1;
+            // isParent = 1;
             // call ajax to save data in database
             $.ajax({
                 "type": "POST",
@@ -571,15 +576,14 @@
                 "data": {
                     "_token": "{{ csrf_token() }}",
                     "postion": "0",
-                    "label": trimVal,
+                    "label": "Hello",
                     "event_date": parent_date,
                     "icon": imgSrc,
-                    "child_line": child_line,
+                    // "child_line": child_line,
                     "class_name": class_name,
                     "back_color": back_color,
                     "isParent": 0,
-                    "eventId": eventId,
-                    "isParent": isParent,
+                    "eventId": childEventId,
                     'time_line_id': $("#timelineid").val(),
                 }, //Send to WebMethod
                 'async': false,

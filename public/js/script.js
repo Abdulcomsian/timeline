@@ -136,9 +136,10 @@ $(".event-list li").click(function (e) {
                     back_color +
                     "' class='right-sibling-event'></span></div>"
             );
+            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);
         } else {
             $(child_sibling_parent).append(
-                "<div style='left: 170px;' class='event-add child-sibling animate__bounceOut " +
+                "<div style='left: 170px;' class='event-add child-sibling animate__bounceOut aaaa " +
                     class_name +
                     "' child_parent_date=" +
                     parent_date +
@@ -152,8 +153,7 @@ $(".event-list li").click(function (e) {
                     back_color +
                     "' class='right-sibling-event'></span></div>"
             );
-            /*console.log(class_name[0], parent_date, back_color, imgSrc, childEventId);
-            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);*/
+            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);
         }
         child_sibling = false;
     } else {
@@ -183,7 +183,7 @@ $(document).on("click", ".event-functionality", function () {
     }
     parentposition = $(this).parent().parent().attr("parent-position");
     parent_date = $(this).parent().parent().attr("parent-date");
-    console.log("parent_date", parent_date)
+    console.log("date", parent_date)
     $(".event-list").css("display", "block");
     $(".event-list").css("left", parentposition + "px");
     add_sibling = true;
@@ -203,6 +203,7 @@ $(document).on("mouseout", ".event-functionality", function () {
 /******************* Child - Right - Event - Click */
 $(document).on("click", ".child .right-child-event", function () {
     var list_position = $(this).parent().parent().attr("parent-position");
+    parent_date = $(this).parent().parent().attr('parent-date')
     $(".event-list").css("display", "block");
     $(".event-list").css("left", list_position + "px");
     child_sibling = true;
