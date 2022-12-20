@@ -7,7 +7,7 @@ var targetElem, subTimeLineLeft, deleteEvent, subtimelineThis;
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion = 0;
-var eventId, parentposition, class_name, trimVal, imgSrc, back_color;
+var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId;
 let eventDate,
     sibling_child,
     add_sibling = false,
@@ -60,7 +60,6 @@ $(".event-list li").click(function (e) {
     back_color = $(this).find(".img-div").css("border-color");
     var count_child = document.querySelectorAll(".child");
     var current_day = currentEventPosition / 500;
-    // console.log(current_day)
     Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
@@ -72,7 +71,6 @@ $(".event-list li").click(function (e) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
         child_line = parseInt(child_line - 69);
-        // console.log(child_line)
         for (let i = 0; i < count_child.length; i++) {
             previousElement = count_child[i].previousElementSibling;
             currentTop = count_child.length - (i - 1);
@@ -93,7 +91,7 @@ $(".event-list li").click(function (e) {
             childrenLine[i].classList.add("active");
         }
         $(add_sibling_parent).append(
-            "<div class='event-add child animate__bounceOut " +
+            "<div class='event-add child animate__bounceOut dddd " +
                 class_name +
                 "' child_parent_date=" +
                 parent_date +
@@ -110,6 +108,7 @@ $(".event-list li").click(function (e) {
                 "' class='right-child-event'></span></div>"
         );
         add_sibling = false;
+        saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId)
     } else if (child_sibling) {
         sibling_child_parent_width = $(child_sibling_parent)
             .find(".timeline-divider-child")
@@ -123,7 +122,7 @@ $(".event-list li").click(function (e) {
             $(child_sibling_parent).append(
                 "<div style='left: " +
                     (parseInt(total_child_sibling.length * 170) + 170) +
-                    "px' class='event-add child-sibling animate__bounceOut " +
+                    "px' class='event-add child-sibling animate__bounceOut ssss" +
                     class_name +
                     "' child_parent_date=" +
                     parent_date +
@@ -153,6 +152,8 @@ $(".event-list li").click(function (e) {
                     back_color +
                     "' class='right-sibling-event'></span></div>"
             );
+            /*console.log(class_name[0], parent_date, back_color, imgSrc, childEventId);
+            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);*/
         }
         child_sibling = false;
     } else {
@@ -182,10 +183,12 @@ $(document).on("click", ".event-functionality", function () {
     }
     parentposition = $(this).parent().parent().attr("parent-position");
     parent_date = $(this).parent().parent().attr("parent-date");
+    console.log("parent_date", parent_date)
     $(".event-list").css("display", "block");
     $(".event-list").css("left", parentposition + "px");
     add_sibling = true;
     add_sibling_parent = $(this).parent().parent();
+    eventId = $(this).attr('data-event-id');
 });
 
 $(document).on("mouseover", ".event-functionality", function () {
@@ -204,6 +207,7 @@ $(document).on("click", ".child .right-child-event", function () {
     $(".event-list").css("left", list_position + "px");
     child_sibling = true;
     child_sibling_parent = $(this).parent();
+    childEventId = $(this).attr('data-child-event-id');
 });
 
 /******************* Child - Left - Event - Click */
@@ -250,7 +254,6 @@ $(".date-modal .modal-footer button").on("click", function () {
                 let difference = secondDate - firstDate;
                 let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
                 days_width = TotalDays * 500;
-                console.log("TotalDays :", TotalDays);
                 child_move_position = $(child_sibling_parent)
                     .parent()
                     .attr("parent-position");

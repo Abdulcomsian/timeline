@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [TimeLineController::class, 'index']);
     Route::get('/', [TimeLineController::class, 'index'])->name('home');
 
-    //create 
+    //create
     Route::get('/create', [TimeLineController::class, 'create'])->name('create');
     //save timeline
     Route::post('timeline-save', [TimeLineController::class, 'saveTimeLine']);
@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('events-save', [EventController::class, 'saveEvent']);
     //save child events
     Route::post('child-events-save', [EventController::class, 'saveChildEvent']);
+    //save sibling events
+    Route::post('sibling-events-save', [EventController::class, 'saveSiblingEvent']);
     //delete event
     Route::post('events-delete', [EventController::class, 'deleteEvent']);
     //update event name

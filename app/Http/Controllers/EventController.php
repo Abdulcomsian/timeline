@@ -48,8 +48,8 @@ class EventController extends Controller
             'class_name'=>$request->class_name,
             "isParent" => $request->isParent,
             'user_id' => Auth::user()->id,
-            'time_line_id' => $timelineid
-
+            'time_line_id' => $timelineid,
+            'event_date' => $request->event_date
         ]);
 
         return response()->json($event);
@@ -72,7 +72,9 @@ class EventController extends Controller
                 "isParent" => $request->isParent,
                 "parent_id" => $request->eventId,
                 'user_id' => Auth::user()->id,
-                'time_line_id' => $timelineid
+                'time_line_id' => $timelineid,
+                'event_date' => $request->event_date,
+                'child_line' => $request->child_line,
             ]);
 
             $childeventCount = Event::where('parent_id', $request->eventId)->count();
@@ -91,6 +93,44 @@ class EventController extends Controller
         }
     }
 
+    //save child event
+    public function saveSiblingEvent(Request $request)
+    {
+        //get parent x position
+        try {
+            $event=Event::find($request->eventId);
+            $timelineid = Crypt::decrypt($request->time_line_id);
+            $event = Event::create([
+                'event_title' => $request->label,
+                'event_title_updated' => $request->label,
+                'postion_x' => $event->postion_x,
+                'icon' => $request->icon,
+                'back_color'=>$request->back_color,
+                'class_name'=>$request->class_name,
+                "isParent" => $request->isParent,
+                "parent_id" => $request->eventId,
+                'user_id' => Auth::user()->id,
+                'time_line_id' => $timelineid,
+                'event_date' => $request->event_date,
+                'child_line' => $request->child_line,
+            ]);
+
+            $childeventCount = Event::where('parent_id', $request->eventId)->count();
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Event saved successfully',
+                'event' =>$event,
+                'count'=>$childeventCount,
+            ]);
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Something Went Wrong!',
+            ]);
+        }
+    }
+
     //delte event
     public function deleteEvent(Request $request)
     {
@@ -98,7 +138,7 @@ class EventController extends Controller
         if($res)
         {
             $eventDelete = Event::find($request->eventId)->delete();
-            if ($eventDelete) 
+            if ($eventDelete)
             {
                 $events = Event::where('parent_id', $request->eventId)->get();
                 foreach ($events as $ev) {
@@ -140,7 +180,7 @@ class EventController extends Controller
                     'status' => 'Success',
                     'message' => 'Event updated successfully',
                     'data' => null,
-                 ]); 
+                 ]);
             }
             else{
                 return response()->json([
@@ -149,8 +189,8 @@ class EventController extends Controller
                 'data' => null,
                  ]);
             }
-            
-            
+
+
         } catch (\Exception $exception) {
             return response()->json([
                     'status' => 'Error',

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('icon');
             $table->string('back_color')->nullable();
             $table->string('class_name')->nullable();
+            $table->date('event_date')->nullable();
+            $table->string('child_line')->nullable();
             $table->integer('parent_id')->nullable();
             $table->tinyInteger('isParent')->default(0);
             $table->unsignedBigInteger('user_id');
