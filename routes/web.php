@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('child-events-save', [EventController::class, 'saveChildEvent']);
     //save sibling events
     Route::post('sibling-events-save', [EventController::class, 'saveSiblingEvent']);
+    //save event end date
+    Route::post('save-end-date', [EventController::class, 'saveEndDate']);
     //delete event
     Route::post('events-delete', [EventController::class, 'deleteEvent']);
     //update event name

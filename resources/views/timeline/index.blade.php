@@ -312,7 +312,7 @@
                                         @foreach($event->child as $child_event)
 {{--                                            @dd($event)--}}
                                         <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" style="top:{{$top}}px">
-                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event'>
+                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
 
                                             </span>
                                             <div class='main-event sub-timeline-event'>
@@ -448,7 +448,6 @@
 @section('script')
     <script type="text/javascript">
         function saveEvent(class_name, currentEventPosition, back_color, imgSrc, trimVal, eventDate) {
-            console.log("Date", eventDate)
             //save event in database====
             isParent = 1;
             /*if (trimVal == "Sub timeline") {
@@ -510,7 +509,7 @@
 
         // save sub child event
         // function saveChildEvent(class_name, back_color, imgSrc, trimVal, targetElem, eventId, sibling_child) {
-        function saveChildEvent(class_name, parent_date, back_color, imgSrc, child_line, eventId,) {
+        function saveChildEvent(class_name, parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent) {
             var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -542,26 +541,31 @@
                     toastr.error(res.message);
                 } else {
                     toastr.success("Event saved successfully!");
-                    /* // if(trimVal == "Sub timeline")
-                     // {
-                     console.log("Sibling :", sibling_child.length)
-                     if (sibling_child.length >= 1) {
-                         $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut " + class_name + "' style='left: " + (parseInt(pixelLeft) * parseInt(sibling_child.length) + 190) + "px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id=" + res.event.id + " style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
-                     } else {
-                         $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut " + class_name + "' style='left: 190px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id=" + res.event.id + " style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
-                     }*/
-
-                    // }
-                    // else{
-                    //      $(targetElem).replaceWith("<div class='new-child animate__bounceOut "+class_name+"'><span class='main-parent' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.event.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.event.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li></ul><div class='edit-field'><input class='form-control' id='inputeventid"+res.event.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.event.id+",event)' style='background-color: "+back_color+"'>Save</button></div></div></span></div>");
-                    // }
+                    console.log(res.event.id)
+                    $(add_sibling_parent).append(
+                        "<div class='event-add child animate__bounceOut " +
+                        class_name +
+                        "' child_parent_date=" +
+                        parent_date +
+                        " ><span style='background-color: " +
+                        back_color +
+                        "' class='left-child-event' data-child-event-id = "+res.event.id+"></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
+                        back_color +
+                        "'><img src=" +
+                        imgSrc +
+                        "></span><div style='width: " +
+                        child_line +
+                        "px; background-color: "+back_color+"' class='timeline-divider-child'></div></div><span style='background-color: " +
+                        back_color +
+                        "' class='right-child-event' data-child-event-id = "+res.event.id+"></span></div>"
+                    );
                 }
 
             });
 
         }
 
-        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId,) {
+        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent) {
             // var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -591,24 +595,67 @@
                 if (res.status == "Error") {
                     toastr.error(res.message);
                 } else {
+                    console.log(res)
                     toastr.success("Event saved successfully!");
-                    /* // if(trimVal == "Sub timeline")
-                     // {
-                     console.log("Sibling :", sibling_child.length)
-                     if (sibling_child.length >= 1) {
-                         $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut " + class_name + "' style='left: " + (parseInt(pixelLeft) * parseInt(sibling_child.length) + 190) + "px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id=" + res.event.id + " style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
-                     } else {
-                         $(targetElem).parent().append("<div class='event-add sibling-child animate__bounceOut " + class_name + "' style='left: 190px'><div class='main-event sub-timeline-event'><span class='main-parent main-parent-add-child child-event' data-event-id=" + res.event.id + " style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><div class='horizontal-line-left'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>");
-                     }*/
-
-                    // }
-                    // else{
-                    //      $(targetElem).replaceWith("<div class='new-child animate__bounceOut "+class_name+"'><span class='main-parent' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span><div class='edit-delete-event'><ul><li data-event-id="+res.event.id+">Edit Event <span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+res.event.id+">Delete Event <span><i class='fa-regular fa-trash-can'></i></span></li></ul><div class='edit-field'><input class='form-control' id='inputeventid"+res.event.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.event.id+",event)' style='background-color: "+back_color+"'>Save</button></div></div></span></div>");
-                    // }
+                    /*if (total_child_sibling.length >= 1) {
+                        $(child_sibling_parent).append(
+                            "<div style='left: " +
+                            (parseInt(total_child_sibling.length * 170) + 170) +
+                            "px' class='event-add child-sibling animate__bounceOut" +
+                            class_name +
+                            "' child_parent_date=" +
+                            parent_date +
+                            "><span style='background-color: " +
+                            back_color +
+                            "' class='left-sibling-event'></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
+                            back_color +
+                            "'><img src=" +
+                            imgSrc +
+                            "></span></div><span style='background-color: " +
+                            back_color +
+                            "' class='right-sibling-event'></span></div>"
+                        );
+                        } else {
+                        $(child_sibling_parent).append(
+                            "<div style='left: 170px;' class='event-add child-sibling animate__bounceOut" +
+                            class_name +
+                            "' child_parent_date=" +
+                            parent_date +
+                            "><span style='background-color: " +
+                            back_color +
+                            "' class='left-sibling-event'></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
+                            back_color +
+                            "'><img src=" +
+                            imgSrc +
+                            "></span></div><span style='background-color: " +
+                            back_color +
+                            "' class='right-sibling-event'></span></div>"
+                        );
+                       }*/
                 }
 
             });
 
+        }
+
+        function saveEndDate(eventId, eventEndDate) {
+            // call ajax to save data in database
+            $.ajax({
+                "type": "POST",
+                "url": "{{url('/save-end-date')}}",
+                "data": {
+                    "_token": "{{ csrf_token() }}",
+                    "eventId": eventId,
+                    "eventEndDate": eventEndDate,
+                }, //Send to WebMethod
+                'async': false,
+            }).done(function (res) {
+                if (res.status == "Error") {
+                    toastr.error(res.message);
+                } else {
+                    toastr.success("Event saved successfully!");
+                }
+            });
         }
 
 

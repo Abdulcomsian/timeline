@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('event_title');
             $table->string('event_title_updated')->nullable();
-            $table->string('postion_x');
+            $table->string('postion_x')->nullable();
             $table->string('icon');
             $table->string('back_color')->nullable();
             $table->string('class_name')->nullable();
             $table->date('event_date')->nullable();
+            $table->date('event_end_date')->nullable();
             $table->string('child_line')->nullable();
             $table->integer('parent_id')->nullable();
             $table->tinyInteger('isParent')->default(0);

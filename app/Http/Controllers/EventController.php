@@ -103,7 +103,7 @@ class EventController extends Controller
             $event = Event::create([
                 'event_title' => $request->label,
                 'event_title_updated' => $request->label,
-                'postion_x' => $event->postion_x,
+//                'postion_x' => $event->postion_x,
                 'icon' => $request->icon,
                 'back_color'=>$request->back_color,
                 'class_name'=>$request->class_name,
@@ -125,6 +125,26 @@ class EventController extends Controller
 
         } catch (\Exception $exception) {
             dd($exception->getMessage());
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Something Went Wrong!',
+            ]);
+        }
+    }
+
+    //save child event
+    public function saveEndDate(Request $request)
+    {
+        //get parent x position
+        try {
+            $event=Event::find($request->eventId);
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Event saved successfully',
+                'event' =>$event,
+            ]);
+
+        } catch (\Exception $exception) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Something Went Wrong!',

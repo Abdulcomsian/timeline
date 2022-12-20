@@ -90,7 +90,7 @@ $(".event-list li").click(function (e) {
             childrenLine[i].style.opacity = 1;
             childrenLine[i].classList.add("active");
         }
-        $(add_sibling_parent).append(
+        /*$(add_sibling_parent).append(
             "<div class='event-add child animate__bounceOut dddd " +
                 class_name +
                 "' child_parent_date=" +
@@ -106,9 +106,9 @@ $(".event-list li").click(function (e) {
                 "px; background-color: "+back_color+"' class='timeline-divider-child'></div></div><span style='background-color: " +
                 back_color +
                 "' class='right-child-event'></span></div>"
-        );
+        );*/
         add_sibling = false;
-        saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId)
+        saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent)
     } else if (child_sibling) {
         sibling_child_parent_width = $(child_sibling_parent)
             .find(".timeline-divider-child")
@@ -132,11 +132,12 @@ $(".event-list li").click(function (e) {
                     back_color +
                     "'><img src=" +
                     imgSrc +
-                    "></span></div></div><span style='background-color: " +
+                    "></span></div><span style='background-color: " +
                     back_color +
                     "' class='right-sibling-event'></span></div>"
             );
-            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);
+            console.log("first", class_name[0], parent_date, back_color, imgSrc, childEventId);
+            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
         } else {
             $(child_sibling_parent).append(
                 "<div style='left: 170px;' class='event-add child-sibling animate__bounceOut aaaa " +
@@ -153,7 +154,8 @@ $(".event-list li").click(function (e) {
                     back_color +
                     "' class='right-sibling-event'></span></div>"
             );
-            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId);
+            console.log("second", class_name[0], parent_date, back_color, imgSrc, childEventId);
+            saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
         }
         child_sibling = false;
     } else {
@@ -183,7 +185,6 @@ $(document).on("click", ".event-functionality", function () {
     }
     parentposition = $(this).parent().parent().attr("parent-position");
     parent_date = $(this).parent().parent().attr("parent-date");
-    console.log("date", parent_date)
     $(".event-list").css("display", "block");
     $(".event-list").css("left", parentposition + "px");
     add_sibling = true;
@@ -209,6 +210,7 @@ $(document).on("click", ".child .right-child-event", function () {
     child_sibling = true;
     child_sibling_parent = $(this).parent();
     childEventId = $(this).attr('data-child-event-id');
+    console.log("Child Event Id", childEventId)
 });
 
 /******************* Child - Left - Event - Click */
@@ -216,6 +218,7 @@ $(document).on("click", ".child .left-child-event", function () {
     $(".date-modal").css("display", "block");
     start_child_date = $(this).parent().parent().attr("parent-date");
     child_sibling_parent = $(this).parent();
+    eventId = $(this).attr('data-child-event-id')
 });
 /******************* Sibling - Child - Left - Event - Click */
 $(document).on("click", ".child .left-sibling-event", function () {
@@ -249,6 +252,9 @@ $(".date-modal .modal-footer button").on("click", function () {
                 $(child_sibling_parent).css('left',new_sibling_starting_point+'px');
                 sibling_left_event=false;
             } else {
+                // console.log(eventEndDate)
+                console.log(eventId)
+                saveEndDate(eventId,eventEndDate)
                 $(".date-modal").css("display", "none");
                 const firstDate = new Date(start_child_date).getTime();
                 const secondDate = new Date(eventEndDate).getTime();
@@ -264,14 +270,6 @@ $(".date-modal .modal-footer button").on("click", function () {
                 $(child_sibling_parent)
                     .find(".timeline-divider-child")
                     .css("width", new_child_width + "px");
-                // if($(child_sibling_parent).find('.child-sibling').length>=1){
-                //     for (let i = 0; i < $(child_sibling_parent).find('.child-sibling').length; i++) {
-                //         sibling_position_left=parseInt($(child_sibling_parent).find('.child-sibling')[i].style.left.split('px')[0]);
-                //         sibling_timeline_width=$(child_sibling_parent).find('.child-sibling')[i].children[1].children[1].style.width;
-                //         sibling_timeline_width=parseInt(sibling_timeline_width.split('px')[0]-sibling_position_left);
-                //         $(child_sibling_parent).find('.child-sibling')[i].children[1].children[1].style.width=sibling_timeline_width+'px';
-                //     }
-                // }
             }
         }
     } else {
