@@ -555,7 +555,7 @@
                         imgSrc +
                         "></span><div style='width: " +
                         child_line +
-                        "px; background-color: "+back_color+"' class='timeline-divider-child'></div></div><span style='background-color: " +
+                        "px; background-color: "+back_color+"' class='timeline-divider-child'><div class='add-child-event-indicator animate__bounceOut'><span><i class='fa-light fa-plus'></i></span></div></div></div><span style='background-color: " +
                         back_color +
                         "' class='right-child-event' data-child-event-id = "+res.event.id+"></span></div>"
                     );
