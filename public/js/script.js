@@ -202,9 +202,8 @@ $(".event-list li").click(function (e) {
                 "' class='right-sibling-event'></span></div>"
         );
         // childEventId = $(this).attr('data-child-event-id');
-        console.log("sibling id", childEventId)
-        console.log(class_name[0], parent_date, back_color, imgSrc, childEventId);
-        saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId,);
+        position_x=parseInt(parseInt(currentEventChildPosition)+parseInt(68));
+        saveSiblingEvent(class_name[0], back_color, imgSrc, childEventId, position_x);
         child_sibling = false;
     } else {
         eventDate = new Date(eventDate);

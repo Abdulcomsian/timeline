@@ -312,14 +312,14 @@
                                         @foreach($event->child as $child_event)
 {{--                                            @dd($event)--}}
                                         <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" data-child-event-id = "{{$child_event->id}}" style="top:{{$top}}px">
-                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event'>
+                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
 
                                             </span>
                                             <div class='main-event sub-timeline-event'>
                                                 <span class='main-parent child-event' style="background-color: {{$child_event->back_color}}">
                                                      <img src="{{$child_event->icon}}">
                                                 </span>
-                                                <div style="width: {{$child_event->child_line}}px; background-color: {{$child_event->back_color}}" class="timeline-divider-child">
+                                                <div style="width: {{$child_event->child_line}}px; background-color: {{$child_event->back_color}}" class="timeline-divider-child" data-child-event-id = "{{$child_event->id}}">
                                                     <div class='add-child-event-indicator animate__bounceOut' data-child-event-id="{{$child_event->id}}">
                                                         <span><i class='fa-light fa-plus' ></i></span>
                                                     </div>
@@ -567,7 +567,7 @@
 
         }
 
-        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId,) {
+        function saveSiblingEvent(class_name, back_color, imgSrc, childEventId, position_x) {
             // var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -581,9 +581,9 @@
                 "url": "{{url('/sibling-events-save')}}",
                 "data": {
                     "_token": "{{ csrf_token() }}",
-                    "postion": "0",
+                    "position_x": position_x,
                     "label": "Hello",
-                    "event_date": parent_date,
+                    // "event_date": parent_date,
                     "icon": imgSrc,
                     // "child_line": child_line,
                     "class_name": class_name,

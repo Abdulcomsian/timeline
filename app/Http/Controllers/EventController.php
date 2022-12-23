@@ -103,7 +103,7 @@ class EventController extends Controller
             $event = Event::create([
                 'event_title' => $request->label,
                 'event_title_updated' => $request->label,
-//                'postion_x' => $event->postion_x,
+                'postion_x' => $request->position_x,
                 'icon' => $request->icon,
                 'back_color'=>$request->back_color,
                 'class_name'=>$request->class_name,
