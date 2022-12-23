@@ -167,7 +167,7 @@
             <!-- php dynamic code here -->
             @if(count($events)>0)
                 @php
-                    $total_span = count($events)*9;
+                    $total_span = count($events)*9.5;
                     $top = count($events)*145;
                 @endphp
 {{--                @dd($total_span)--}}
@@ -311,8 +311,8 @@
                                     @if(count($event->child))
                                         @foreach($event->child as $child_event)
 {{--                                            @dd($event)--}}
-                                        <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" style="top:{{$top}}px">
-                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
+                                        <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" data-child-event-id = "{{$child_event->id}}" style="top:{{$top}}px">
+                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event'>
 
                                             </span>
                                             <div class='main-event sub-timeline-event'>
@@ -320,7 +320,9 @@
                                                      <img src="{{$child_event->icon}}">
                                                 </span>
                                                 <div style="width: {{$child_event->child_line}}px; background-color: {{$child_event->back_color}}" class="timeline-divider-child">
-
+                                                    <div class='add-child-event-indicator animate__bounceOut' data-child-event-id="{{$child_event->id}}">
+                                                        <span><i class='fa-light fa-plus' ></i></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <span style="background-color: {{$child_event->back_color}}"
@@ -415,7 +417,7 @@
                     @endif
                     {{--                    @endif--}}
                     @php
-                        $total_span = $total_span - 10;
+                        $total_span = $total_span - 9.5;
                         $top = $top - 145;
                     @endphp
                 @endforeach
@@ -547,7 +549,7 @@
                         class_name +
                         "' child_parent_date=" +
                         parent_date +
-                        " ><span style='background-color: " +
+                        " data-child-event-id = "+res.event.id+"><span style='background-color: " +
                         back_color +
                         "' class='left-child-event' data-child-event-id = "+res.event.id+"></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
                         back_color +
@@ -555,7 +557,7 @@
                         imgSrc +
                         "></span><div style='width: " +
                         child_line +
-                        "px; background-color: "+back_color+"' class='timeline-divider-child'><div class='add-child-event-indicator animate__bounceOut'><span><i class='fa-light fa-plus'></i></span></div></div></div><span style='background-color: " +
+                        "px; background-color: "+back_color+"' class='timeline-divider-child'><div class='add-child-event-indicator animate__bounceOut' data-child-event-id = "+res.event.id+"><span><i class='fa-light fa-plus' ></i></span></div></div></div><span style='background-color: " +
                         back_color +
                         "' class='right-child-event' data-child-event-id = "+res.event.id+"></span></div>"
                     );
@@ -565,7 +567,7 @@
 
         }
 
-        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent) {
+        function saveSiblingEvent(class_name, parent_date, back_color, imgSrc, childEventId,) {
             // var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
