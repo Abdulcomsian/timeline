@@ -35,6 +35,7 @@ $(".timeline-parent").scroll(function () {
 $(".timeline-parent .timeline-divider").mousemove(function (e) {
     mouseXPosition = e.pageX + scrollPostion;
     currentEventPosition = mouseXPosition - 68;
+    console.log(currentEventPosition)
     if (currentEventPosition < 0) {
         $(".add-event-indicator").css("left", 0);
         $(".event-list").css("left", 0);
@@ -333,3 +334,90 @@ $(".date-modal .modal-footer button").on("click", function () {
 });
 
 
+
+
+$('.zoom-in').click(function() {
+    updateZoom(0.1);
+ });
+ 
+ $('.zoom-out').click(function() {
+    updateZoom(-0.1);
+ });
+ $('.reset').click(function() {
+    $('body').css({ zoom: 1, '-moz-transform': 'scale(' + 1 + ')' });
+ });
+ 
+ 
+ zoomLevel = 1;
+ var updateZoom = function(zoom) {
+    zoomLevel += zoom;
+    $('body').css({ zoom: zoomLevel, '-moz-transform': 'scale(' + zoomLevel + ')' });
+ }
+
+ const slider = document.querySelector('.vertical-indicator');
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+var pin = document.getElementById("verticalIndicator");
+var mouseStartPosition = {x: 0, y: 0};
+var pinStartPosition = {x: 0, y: 0};
+var targetPosition = {x: 0, y: 0};
+var pinPosition = {x: 0, y: 0};
+var velocityX = 0;
+
+pin.addEventListener("mousedown", mousedown);
+
+function mousedown(e) {
+  // get mouse position
+  mouseStartPosition.x = e.pageX;
+  mouseStartPosition.y = e.pageY;
+  // update the pin start position
+  pinStartPosition.x = targetPosition.x;
+  pinStartPosition.y = targetPosition.y;
+  
+  // add listeners for mousemove, mouseup
+  window.addEventListener("mousemove", mousemove);
+  window.addEventListener("mouseup", mouseup);
+}
+
+function mousemove(e) {
+  // get velocity of x (affects rotation)
+  velocityX = pinStartPosition.x + e.pageX - mouseStartPosition.x - targetPosition.x;
+  if (velocityX < -25) velocityX = -25;
+  if (velocityX > 25) velocityX = 25;
+  
+  // update position - pin start + (current mouse - start mouse)
+  targetPosition.x = pinStartPosition.x + e.pageX - mouseStartPosition.x;
+  targetPosition.y = pinStartPosition.y + e.pageY - mouseStartPosition.y;
+
+}
+
+function mouseup(e) {
+  // reset rotation to 0
+  velocityX = 0;
+  // update position for final time
+  targetPosition.x = pinStartPosition.x + e.pageX - mouseStartPosition.x;
+  targetPosition.y = pinStartPosition.y + e.pageY - mouseStartPosition.y;
+  // "drop" pin
+//   targetPosition.y += 15;
+  
+  // remove listeners
+  window.removeEventListener("mousemove", mousemove);
+  window.removeEventListener("mouseup", mouseup);
+}
+
+function loop() {
+  requestAnimationFrame(loop);
+  
+  // lerp pin to target -  https://codepen.io/rachsmith/post/animation-tip-lerp
+  pinPosition.x += (targetPosition.x - pinPosition.x)*0.2;
+  pinPosition.y += (targetPosition.y - pinPosition.y)*0.2;
+  $(".timeline-parent").css("right",pinPosition.x+'px')
+  // update CSS of pin
+  var pos = pinPosition.x + "px, " + pinPosition.y + "px, 0px";
+  pin.style.transform =  "translate3d("+pos+") rotateZ("+-velocityX+"deg)"; 
+}
+
+loop();

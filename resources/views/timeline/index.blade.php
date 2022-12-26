@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="timeline-parent">
+    <div class="timeline-parent" id="timelineParent">
         <div class="timeline-functionality">
             <div class="add-event-indicator animate__bounceOut">
                 <span><i class="fa-light fa-plus"></i></span>
@@ -425,7 +425,20 @@
             @endif
 
         </div>
+       
     </div>
+    <div class='scroll-zoom-effect'>
+        <div class='parent'>
+            <div class='scroll-line'></div>
+            <div id="verticalIndicator" class='vertical-indicator'></div>
+        </div>
+        <div class='zooming-functionality'>
+            <a id="reset" class='reset'>Reset</a>
+            <a id="zoomIn" class='zoom-in'><i class="fa-solid fa-magnifying-glass-plus"></i></a>
+            <a id="zoomOut" class='zoom-out'><i class="fa-solid fa-magnifying-glass-minus"></i></a>
+        </div>
+    </div>
+   
 
     <div class="modal date-modal" tabindex="-1">
         <div class="modal-dialog">

@@ -583,3 +583,63 @@ span.date:after {
     font-size: 12px;
     font-weight: 700;
 }
+.zooming-functionality{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+}
+.zooming-functionality a,
+.zooming-functionality a:hover{
+    color: #333;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 0px 10px;
+}
+.zooming-functionality .reset,
+.zooming-functionality .reset:hover{
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.scroll-zoom-effect{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    height: 10%;
+    padding: 20px;
+}
+.scroll-zoom-effect .scroll-line{
+    width: 100%;
+    height: 2px;
+    background-color: #d3d3d3;
+    position: relative;
+    top: 15px;
+}
+.parent{
+    width: 80%;
+    height: 100%;
+    overflow: scroll;
+}
+.vertical-indicator{
+    height: 50px;
+    width: 6px;
+    background: #d3d3d3;
+    position: absolute;
+    top: 10px;
+    z-index: 99999;
+    cursor: pointer;
+}
+.active{
+    /* background: rgba(255, 255, 255, 0.3);
+          cursor: grabbing;
+          cursor: -webkit-grabbing;
+          transform: scale(1); */
+}
