@@ -19,11 +19,11 @@ let eventDate,
 
 var mouseWheelEvt = function (event) {
     if (document.body.doScroll){
-    console.log("if")
+    // console.log("if")
         document.body.doScroll(event.wheelDelta>0?"left":"right");
     }
     else if ((event.wheelDelta || event.detail) > 0){
-        console.log("else if")
+        // console.log("else if")
         // document.body.scrollLeft -= 10;
         total_right=parseInt($(".timeline-parent").css("right").split('px')[0])
         if(total_right<0 || total_right==-100 || total_right==0){
@@ -53,10 +53,10 @@ $(".timeline-parent").scroll(function () {
 $(".timeline-parent .timeline-divider").mousemove(function (e) {
     mouseXPosition = e.pageX + scrollPostion;
     currentEventPosition = mouseXPosition - 68;
-    console.log(currentEventPosition);
+    // console.log(currentEventPosition);
     if(indicator_move){
         if(scroll_left){
-            console.log("currentEventPosition",currentEventPosition,total_right)
+            // console.log("currentEventPosition",currentEventPosition,total_right)
             if (total_right < 0) {
                 $(".add-event-indicator").css("left", 0);
                 $(".event-list").css("left", 0);
@@ -389,16 +389,36 @@ $(".date-modal .modal-footer button").on("click", function () {
                 const secondDate = new Date(eventEndDate).getTime();
                 let difference = secondDate - firstDate;
                 let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+                if(TotalDays<10){
+                    console.log("TotalDays",TotalDays)
+                    days_width = TotalDays * 500;
+                    
+                    child_move_position = $(child_sibling_parent)
+                        .parent()
+                        .attr("parent-position");
+                        console.log(days_width,child_move_position)
+                    new_child_width = parseInt(
+                        days_width + parseInt(child_move_position) - 69
+                    );
+                    $(child_sibling_parent)
+                        .find(".timeline-divider-child")
+                        .css("width", new_child_width + "px");
+                } else{
+                    console.log("TotalDays",TotalDays)
                 days_width = TotalDays * 500;
+                
                 child_move_position = $(child_sibling_parent)
                     .parent()
                     .attr("parent-position");
+                    console.log(days_width,child_move_position)
                 new_child_width = parseInt(
-                    days_width - child_move_position - 69
+                    days_width + parseInt(child_move_position) - 50
                 );
                 $(child_sibling_parent)
                     .find(".timeline-divider-child")
                     .css("width", new_child_width + "px");
+                }
+                
             }
         }
     } else {
