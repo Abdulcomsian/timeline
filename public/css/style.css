@@ -73,7 +73,7 @@ i{
 .timeline-parent{
     position: relative;
     width: 100%;
-    /*overflow-x: scroll;*/
+    /* overflow-x: scroll; */
     height: 100vh;
     width: 200%;
 }
@@ -621,12 +621,13 @@ span.date:after {
     height: 2px;
     background-color: #d3d3d3;
     position: relative;
-    top: 15px;
 }
 .parent{
     width: 80%;
     height: 100%;
     overflow: scroll;
+    display: flex;
+    align-items: center;
 }
 .vertical-indicator{
     height: 50px;

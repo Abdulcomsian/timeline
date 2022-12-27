@@ -1,15 +1,11 @@
 /******************* Add-Event-Indicator - Scrolling */
 var mouseXPosition = 0,mouseXChildPosition = 0;
-var subTimeLinePosition = 0;
 var currentEventPosition = 0,currentEventChildPosition = 0, subtimeline_child_parent_position=0;
-var targetElem, subTimeLineLeft, deleteEvent, subtimelineThis;
-
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion = 0;
 var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId;
 let eventDate,
-    sibling_child,
     add_sibling = false,
     add_sibling_parent,
     parent_date,
@@ -18,8 +14,30 @@ let eventDate,
     eventEndDate = null,
     start_child_date,
     sibling_left_event = false,
-    main_child;
+    main_child,indicator_move=false,
+    total_mouse_move=0,scroll_left=false;
 
+var mouseWheelEvt = function (event) {
+    if (document.body.doScroll){
+    console.log("if")
+        document.body.doScroll(event.wheelDelta>0?"left":"right");
+    }
+    else if ((event.wheelDelta || event.detail) > 0){
+        console.log("else if")
+        // document.body.scrollLeft -= 10;
+        total_right=parseInt($(".timeline-parent").css("right").split('px')[0])
+        if(total_right<0 || total_right==-100 || total_right==0){
+            $(".timeline-parent").css("right",'0px')
+        } else{
+            $(".timeline-parent").css("right",total_right-100+'px');
+            scroll_left=true;
+        }
+       
+    }
+    
+    return false;
+    }
+document.body.addEventListener("mousewheel", mouseWheelEvt);    
 $(".timeline-parent").scroll(function () {
     if (oldScrollTop == $(window).scrollTop()) {
         scrollPostion = $(".timeline-parent").scrollLeft();
@@ -35,27 +53,82 @@ $(".timeline-parent").scroll(function () {
 $(".timeline-parent .timeline-divider").mousemove(function (e) {
     mouseXPosition = e.pageX + scrollPostion;
     currentEventPosition = mouseXPosition - 68;
-    console.log(currentEventPosition)
-    if (currentEventPosition < 0) {
-        $(".add-event-indicator").css("left", 0);
-        $(".event-list").css("left", 0);
-    } else {
-        $(".add-event-indicator").css("left", currentEventPosition);
-        $(".event-list").css("left", currentEventPosition);
+    console.log(currentEventPosition);
+    if(indicator_move){
+        if(scroll_left){
+            console.log("currentEventPosition",currentEventPosition,total_right)
+            if (total_right < 0) {
+                $(".add-event-indicator").css("left", 0);
+                $(".event-list").css("left", 0);
+            } else {
+                $(".add-event-indicator").css("left", total_right+currentEventPosition-100+'px');
+                $(".event-list").css("left", total_right+currentEventPosition-100+'px');
+            }
+        } else{
+            if(total_mouse_move<0){
+                $(".add-event-indicator").css("left", parseInt(currentEventPosition));
+                $(".event-list").css("left", parseInt(currentEventPosition));
+            }
+            else{
+                if(parseInt(currentEventPosition)+parseInt(total_mouse_move)-parseInt(305)<0){
+                    $(".add-event-indicator").css("left", parseInt(currentEventPosition)+parseInt(total_mouse_move));
+                    $(".event-list").css("left", parseInt(currentEventPosition)+parseInt(total_mouse_move));
+                } else{
+                    $(".add-event-indicator").css("left", parseInt(currentEventPosition)+parseInt(total_mouse_move)-parseInt(305));
+                    $(".event-list").css("left", parseInt(currentEventPosition)+parseInt(total_mouse_move)-parseInt(305));
+                }
+            }
+        }
+    } else{
+        if (currentEventPosition < 0) {
+            $(".add-event-indicator").css("left", 0);
+            $(".event-list").css("left", 0);
+        } else {
+            $(".add-event-indicator").css("left", currentEventPosition);
+            $(".event-list").css("left", currentEventPosition);
+        }
     }
+    
 });
 $(document).on("mousemove", ".timeline-divider-child", function (e) {
     subtimeline_child_parent_position=$(this).parent().parent().parent().attr("parent-position");
     main_child=$(this).parent().parent();
     mouseXChildPosition = e.pageX + scrollPostion;
     currentEventChildPosition=mouseXChildPosition - subtimeline_child_parent_position - 135;
-    if (currentEventChildPosition < 0) {
-        $(this).children().css("left", 0);
-        $(".event-list").css("left", 0);
-    } else {
-        $(this).children().css("left", currentEventChildPosition);
-        $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+'px');
+    if(indicator_move){
+        if(scroll_left){
+            if (total_right < 0) {
+                $(this).children().css("left", 0);
+                $(".event-list").css("left", 0);
+            } else {
+                $(this).children().css("left", total_right+currentEventChildPosition-100+'px');
+                $(".event-list").css("left", total_right+currentEventChildPosition-100+'px');
+            }
+        } else{
+            if(total_mouse_move<0){
+                $(this).children().css("left", parseInt(currentEventChildPosition));
+                $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+'px');
+            }
+            else{
+                if(parseInt(currentEventChildPosition)+parseInt(total_mouse_move)-parseInt(305)<0){
+                    $(this).children().css("left", parseInt(currentEventChildPosition)+parseInt(total_mouse_move));
+                    $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+parseInt(total_mouse_move)+'px');
+                } else{
+                    $(this).children().css("left", parseInt(currentEventChildPosition)+parseInt(total_mouse_move)-parseInt(305));
+                    $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+parseInt(total_mouse_move)-parseInt(305)+'px');
+                }
+            }
+        }
+    } else{
+        if (currentEventChildPosition < 0) {
+            $(this).children().css("left", 0);
+            $(".event-list").css("left", 0);
+        } else {
+            $(this).children().css("left", currentEventChildPosition);
+            $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+'px');
+        }
     }
+    
 })
 /******************* Add Child Event Indicator - Click */
 $(document).on("click", ".add-child-event-indicator ", function (e) {
@@ -335,7 +408,7 @@ $(".date-modal .modal-footer button").on("click", function () {
 
 
 
-
+/***************** Zoom - In - Out - Functionality */
 $('.zoom-in').click(function() {
     updateZoom(0.1);
  });
@@ -354,6 +427,8 @@ $('.zoom-in').click(function() {
     $('body').css({ zoom: zoomLevel, '-moz-transform': 'scale(' + zoomLevel + ')' });
  }
 
+
+ /***************** Vertical - Indicator - Functionality */
  const slider = document.querySelector('.vertical-indicator');
 
 let isDown = false;
@@ -370,54 +445,51 @@ var velocityX = 0;
 pin.addEventListener("mousedown", mousedown);
 
 function mousedown(e) {
-  // get mouse position
   mouseStartPosition.x = e.pageX;
   mouseStartPosition.y = e.pageY;
-  // update the pin start position
   pinStartPosition.x = targetPosition.x;
   pinStartPosition.y = targetPosition.y;
-  
-  // add listeners for mousemove, mouseup
   window.addEventListener("mousemove", mousemove);
   window.addEventListener("mouseup", mouseup);
 }
 
 function mousemove(e) {
-  // get velocity of x (affects rotation)
+    indicator_move=true;
   velocityX = pinStartPosition.x + e.pageX - mouseStartPosition.x - targetPosition.x;
   if (velocityX < -25) velocityX = -25;
   if (velocityX > 25) velocityX = 25;
-  
-  // update position - pin start + (current mouse - start mouse)
   targetPosition.x = pinStartPosition.x + e.pageX - mouseStartPosition.x;
   targetPosition.y = pinStartPosition.y + e.pageY - mouseStartPosition.y;
+  pinPosition.x += (targetPosition.x - pinPosition.x)*0.2;
+  pinPosition.y += (targetPosition.y - pinPosition.y)*0.2;
+  screen_width= parseInt($(window).width()-50)
+  current_pixel=parseInt(parseInt(80*screen_width)/100);
+  time_line_Divider_width=parseInt($(".timeline-divider").css("width").split('px')[0]);
+  time_line_Divider_width=time_line_Divider_width-500;
+  new_pixel=parseInt(time_line_Divider_width/current_pixel);
+  add_event_indicator_current_left=$(".add-event-indicator").css("left").split("px")[0];    
+  if(pinPosition.x<=current_pixel){
+    if(parseInt(pinPosition.x*new_pixel)-parseInt(305)<0){
+        $(".timeline-parent").css("right",'0px');
+    } else{
+        $(".timeline-parent").css("right",parseInt(pinPosition.x*new_pixel)-parseInt(305)+'px');
+    }
+    total_mouse_move=parseInt(pinPosition.x*new_pixel);
+  }
+  if(pinPosition.x<0){
+    pinPosition.x=0;
+  } else if(pinPosition.x>current_pixel){
+    pinPosition.x=current_pixel;
+  } 
+  var pos = pinPosition.x + "px,0px, 0px";
+  pin.style.transform =  "translate3d("+pos+") rotateZ("+-velocityX+"deg)"; 
 
 }
 
 function mouseup(e) {
-  // reset rotation to 0
   velocityX = 0;
-  // update position for final time
   targetPosition.x = pinStartPosition.x + e.pageX - mouseStartPosition.x;
   targetPosition.y = pinStartPosition.y + e.pageY - mouseStartPosition.y;
-  // "drop" pin
-//   targetPosition.y += 15;
-  
-  // remove listeners
   window.removeEventListener("mousemove", mousemove);
   window.removeEventListener("mouseup", mouseup);
 }
-
-function loop() {
-  requestAnimationFrame(loop);
-  
-  // lerp pin to target -  https://codepen.io/rachsmith/post/animation-tip-lerp
-  pinPosition.x += (targetPosition.x - pinPosition.x)*0.2;
-  pinPosition.y += (targetPosition.y - pinPosition.y)*0.2;
-  $(".timeline-parent").css("right",pinPosition.x+'px')
-  // update CSS of pin
-  var pos = pinPosition.x + "px, " + pinPosition.y + "px, 0px";
-  pin.style.transform =  "translate3d("+pos+") rotateZ("+-velocityX+"deg)"; 
-}
-
-loop();
