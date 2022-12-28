@@ -221,6 +221,39 @@ class EventController extends Controller
         }
     }
 
+    //update event
+    public function updateEventPositionX(Request $request)
+    {
+        try {
+            $eventId=$request->eventId;
+            $res=Event::where(['id'=>$request->eventId,'user_id'=>Auth::user()->id])->first();
+            if($res)
+            {
+                Event::find($eventId)->update(['child_line'=>$request->child_line]);
+                return response()->json([
+                    'status' => 'Success',
+                    'message' => 'Event updated successfully',
+                    'data' => null,
+                ]);
+            }
+            else{
+                return response()->json([
+                    'status' => 'Error',
+                    'message' => 'You are not allowed to do it',
+                    'data' => null,
+                ]);
+            }
+
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => $exception->getMessage(),
+                'data' => null,
+            ]);
+        }
+    }
+
     //Invite Event to user
     public function InviteEvent(Request $request)
     {

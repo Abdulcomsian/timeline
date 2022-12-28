@@ -425,7 +425,7 @@
             @endif
 
         </div>
-       
+
     </div>
     <div class='scroll-zoom-effect'>
         <div class='parent'>
@@ -438,7 +438,7 @@
             <a id="zoomOut" class='zoom-out'><i class="fa-solid fa-magnifying-glass-minus"></i></a>
         </div>
     </div>
-   
+
 
     <div class="modal date-modal" tabindex="-1">
         <div class="modal-dialog">
@@ -739,6 +739,25 @@
                 } else {
                     $(".functionality-div .edit-delete-event .sharefield").css('display', 'none');
                     toastr.error("something went wrong");
+                }
+            });
+        }
+
+        function updateEventPositionX(eventId,child_line) {
+            $.ajax({
+                "type": "POST",
+                "url": "{{url('update-event-position')}}",
+                "data": {
+                    "_token": "{{ csrf_token() }}",
+                    "eventId": eventId,
+                    "child_line": child_line,
+                }, //Send to WebMethod
+                'async': false,
+            }).done(function (res) {
+                if (res.status == "Success") {
+                    toastr.success(res.message);
+                } else {
+                    toastr.error(res.message);
                 }
             });
         }

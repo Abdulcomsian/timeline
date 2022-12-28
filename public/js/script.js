@@ -32,12 +32,12 @@ var mouseWheelEvt = function (event) {
             $(".timeline-parent").css("right",total_right-100+'px');
             scroll_left=true;
         }
-       
+
     }
-    
+
     return false;
     }
-document.body.addEventListener("mousewheel", mouseWheelEvt);    
+document.body.addEventListener("mousewheel", mouseWheelEvt);
 $(".timeline-parent").scroll(function () {
     if (oldScrollTop == $(window).scrollTop()) {
         scrollPostion = $(".timeline-parent").scrollLeft();
@@ -88,7 +88,7 @@ $(".timeline-parent .timeline-divider").mousemove(function (e) {
             $(".event-list").css("left", currentEventPosition);
         }
     }
-    
+
 });
 $(document).on("mousemove", ".timeline-divider-child", function (e) {
     subtimeline_child_parent_position=$(this).parent().parent().parent().attr("parent-position");
@@ -128,7 +128,7 @@ $(document).on("mousemove", ".timeline-divider-child", function (e) {
             $(".event-list").css("left", parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)+68+'px');
         }
     }
-    
+
 })
 /******************* Add Child Event Indicator - Click */
 $(document).on("click", ".add-child-event-indicator ", function (e) {
@@ -338,6 +338,7 @@ $(document).on("mouseout", ".event-functionality", function () {
 
 /******************* Child - Left - Event - Click */
 $(document).on("click", ".child .left-child-event", function () {
+    childEventId = $(this).attr("data-child-event-id")
     $(".date-modal").css("display", "block");
     start_child_date = $(this).parent().parent().attr("parent-date");
     child_sibling_parent = $(this).parent();
@@ -356,7 +357,7 @@ $(document).on("click", ".child .left-sibling-event", function () {
 $(".date-modal .modal-footer button").on("click", function () {
     btnText = $(this).text();
     if (btnText == "Save") {
-        
+
         eventEndDate = new Date($(".date-modal .modal-body input").val());
         eventEndDay = eventEndDate.getDate();
         eventEndMonth = eventEndDate.getMonth() + 1;
@@ -393,7 +394,7 @@ $(".date-modal .modal-footer button").on("click", function () {
                 let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
                 days_width = TotalDays * 500;
                 console.log("TotalDays :", TotalDays,days_width);
-                
+
                 child_move_position = $(child_sibling_parent)
                     .parent()
                     .attr("parent-position");
@@ -405,17 +406,17 @@ $(".date-modal .modal-footer button").on("click", function () {
                 console.log("total_decimal_part",total_decimal_part)
                 total_move_pixel = 500-(total_decimal_part*500);
                 console.log("total_move_pixel",total_move_pixel)
-                
+
                 // new_child_width = parseInt(parseInt(days_width)-parseInt(child_move_position)) - 69;
                 new_child_width = parseInt(parseInt(days_width))+total_move_pixel - 45;
-                
+
                     $(child_sibling_parent)
                         .find(".timeline-divider-child")
                         .css("width", new_child_width + "px");
                     }
-                
-                
-                
+
+                updateEventPositionX(childEventId, new_child_width)
+
              }
     } else {
         $(".date-modal").css("display", "none");
@@ -428,15 +429,15 @@ $(".date-modal .modal-footer button").on("click", function () {
 $('.zoom-in').click(function() {
     updateZoom(0.1);
  });
- 
+
  $('.zoom-out').click(function() {
     updateZoom(-0.1);
  });
  $('.reset').click(function() {
     $('body').css({ zoom: 1, '-moz-transform': 'scale(' + 1 + ')' });
  });
- 
- 
+
+
  zoomLevel = 1;
  var updateZoom = function(zoom) {
     zoomLevel += zoom;
@@ -483,7 +484,7 @@ function mousemove(e) {
   time_line_Divider_width=parseInt($(".timeline-divider").css("width").split('px')[0]);
   time_line_Divider_width=time_line_Divider_width-500;
   new_pixel=parseInt(time_line_Divider_width/current_pixel);
-  add_event_indicator_current_left=$(".add-event-indicator").css("left").split("px")[0];    
+  add_event_indicator_current_left=$(".add-event-indicator").css("left").split("px")[0];
   if(pinPosition.x<=current_pixel){
     if(parseInt(pinPosition.x*new_pixel)-parseInt(305)<0){
         $(".timeline-parent").css("right",'0px');
@@ -496,9 +497,9 @@ function mousemove(e) {
     pinPosition.x=0;
   } else if(pinPosition.x>current_pixel){
     pinPosition.x=current_pixel;
-  } 
+  }
   var pos = pinPosition.x + "px,0px, 0px";
-  pin.style.transform =  "translate3d("+pos+") rotateZ("+-velocityX+"deg)"; 
+  pin.style.transform =  "translate3d("+pos+") rotateZ("+-velocityX+"deg)";
 
 }
 

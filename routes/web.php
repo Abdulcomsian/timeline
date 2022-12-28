@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('events-delete', [EventController::class, 'deleteEvent']);
     //update event name
     Route::post('events-update', [EventController::class, 'updateEvent']);
+    //update position x in database
+    Route::post('update-event-position', [EventController::class, 'updateEventPositionX']);
 });
 
 // without atuhenticated routes here=====================================================================================
