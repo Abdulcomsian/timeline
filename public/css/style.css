@@ -259,6 +259,7 @@ i{
     left: 0px;
     transition: all .5s linear;
     display: none;
+    z-index: 99999999999999999999999;
 }
 .event-list p,
 .event-list-subtime-line p{
@@ -483,7 +484,11 @@ header{
     width: auto;
     position: fixed;
     width: 100%;
-    z-index: 999;
+    z-index: 99999999999999999;
+}
+.timelineheader{
+    z-index: 999999999999;
+    background: #fff;
 }
 
 .container{
@@ -611,10 +616,12 @@ span.date:after {
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 30px;
+    bottom: 0px;
     width: 100%;
     height: 10%;
     padding: 20px;
+    background-color: #fff;
+    z-index: 999999;
 }
 .scroll-zoom-effect .scroll-line{
     width: 100%;

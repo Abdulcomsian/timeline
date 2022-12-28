@@ -160,6 +160,7 @@ $(".event-list li").click(function (e) {
     };
     var date = new Date("1-December-2022");
     var eventDate = date.addDays(current_day).toLocaleDateString();
+    // console.log("eventDate",eventDate)
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
@@ -280,11 +281,12 @@ $(".event-list li").click(function (e) {
         saveSiblingEvent(class_name[0], back_color, imgSrc, childEventId, position_x);
         child_sibling = false;
     } else {
-        eventDate = new Date(eventDate);
-        eventDay = eventDate.getDate();
-        eventMonth = eventDate.getMonth() + 1;
-        eventYear = eventDate.getFullYear();
-        eventDate = eventYear + "-" + eventDay + "-" + eventMonth;
+        console.log(eventDate.toString().split("/"));
+        eventDay=eventDate.toString().split("/")[0];
+        eventMonth=eventDate.toString().split("/")[1];
+        eventYear=eventDate.toString().split("/")[2];
+        eventDate = eventYear + "-" + eventMonth + "-" + eventDay;
+        console.log(eventDate,eventDay, eventMonth, eventYear)
         saveEvent(
             class_name[0],
             currentEventPosition,
@@ -354,6 +356,7 @@ $(document).on("click", ".child .left-sibling-event", function () {
 $(".date-modal .modal-footer button").on("click", function () {
     btnText = $(this).text();
     if (btnText == "Save") {
+        
         eventEndDate = new Date($(".date-modal .modal-body input").val());
         eventEndDay = eventEndDate.getDate();
         eventEndMonth = eventEndDate.getMonth() + 1;
@@ -381,46 +384,39 @@ $(".date-modal .modal-footer button").on("click", function () {
                 $(current_sibling).css('left',new_sibling_starting_position+'px')
                 sibling_left_event=false;
             } else {
-                // console.log(eventEndDate)
-                console.log(eventId)
-                saveEndDate(eventId,eventEndDate)
                 $(".date-modal").css("display", "none");
+                console.log(start_child_date,eventEndDate)
                 const firstDate = new Date(start_child_date).getTime();
                 const secondDate = new Date(eventEndDate).getTime();
                 let difference = secondDate - firstDate;
+                console.log("difference :", difference);
                 let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-                if(TotalDays<10){
-                    console.log("TotalDays",TotalDays)
-                    days_width = TotalDays * 500;
-                    
-                    child_move_position = $(child_sibling_parent)
-                        .parent()
-                        .attr("parent-position");
-                        console.log(days_width,child_move_position)
-                    new_child_width = parseInt(
-                        days_width + parseInt(child_move_position) - 69
-                    );
-                    $(child_sibling_parent)
-                        .find(".timeline-divider-child")
-                        .css("width", new_child_width + "px");
-                } else{
-                    console.log("TotalDays",TotalDays)
                 days_width = TotalDays * 500;
+                console.log("TotalDays :", TotalDays,days_width);
                 
                 child_move_position = $(child_sibling_parent)
                     .parent()
                     .attr("parent-position");
-                    console.log(days_width,child_move_position)
-                new_child_width = parseInt(
-                    days_width + parseInt(child_move_position) - 50
-                );
-                $(child_sibling_parent)
-                    .find(".timeline-divider-child")
-                    .css("width", new_child_width + "px");
-                }
+                console.log(parseInt(parseInt(days_width)+parseInt(child_move_position)))
+                child_move_left=parseInt(child_move_position)/500;
+                split_with_decimal=child_move_left.toString().split(".")[1];
+                console.log("split_with_decimal",split_with_decimal)
+                total_decimal_part=("0." + split_with_decimal);
+                console.log("total_decimal_part",total_decimal_part)
+                total_move_pixel = 500-(total_decimal_part*500);
+                console.log("total_move_pixel",total_move_pixel)
                 
-            }
-        }
+                // new_child_width = parseInt(parseInt(days_width)-parseInt(child_move_position)) - 69;
+                new_child_width = parseInt(parseInt(days_width))+total_move_pixel - 45;
+                
+                    $(child_sibling_parent)
+                        .find(".timeline-divider-child")
+                        .css("width", new_child_width + "px");
+                    }
+                
+                
+                
+             }
     } else {
         $(".date-modal").css("display", "none");
     }
