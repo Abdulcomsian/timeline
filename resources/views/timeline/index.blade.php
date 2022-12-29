@@ -260,7 +260,7 @@
                                         <span class="event-functionality" data-event-id="{{$event->id}}"
                                               style="background-color: {{$event->back_color}};border-color: {{$event->back_color}}; {{(count($event->child)) ? 'pointer-events:none' : ''}}">
                                         </span>
-                                        @if(!in_array($event->id,$ventids))
+{{--                                        @if(!in_array($event->id,$ventids))--}}
                                             <div class='edit-delete-event'>
                                                 <ul>
                                                     <li data-event-id="{{$event->id}}">Edit Event
@@ -273,7 +273,7 @@
                                                             <i class='fa-regular fa-trash-can'></i>
                                                         </span>
                                                     </li>
-                                                    <li data-event-id="{{$event->id}}">Share Event
+                                                    <li data-event-id="{{$event->id}}" class="share-event">Share Event
                                                         <span>
                                                            <i class="fas fa-share"></i>
                                                         </span>
@@ -287,14 +287,14 @@
                                                     <button onClick="updateEvent({{$event->id}},event)"
                                                             style='background-color:{{$event->back_color}}'>Save</button>
                                                 </div>
-                                                <div class='edit-field sharefield'>
+                                                <div class='edit-field sharefield-{{$event->id}}'>
                                                     <input class='form-control' id="inputshareeventid{{$event->id}}"
                                                            placeholder='Enter Email'/>
                                                     <button onClick="shareEvent({{$event->id}})"
                                                             style='background-color:{{$event->back_color}}'>Share Event</button>
                                                 </div>
                                             </div>
-                                        @endif
+{{--                                        @endif--}}
                                     </span>
                                     <div class="vertical-lines">
                                        {{-- <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
@@ -484,6 +484,7 @@
                 }, //Send to WebMethod
                 'async': false,
             }).done(function (res) {
+                console.log(res)
                 //success
                 toastr.success("Event saved successfully!");
                 // if(trimVal=="Sub timeline"){
@@ -496,10 +497,11 @@
                 //            "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
                 //    );
 
+                var markup = "<div class='edit-delete-event'><ul><li data-event-id="+ res.id + ">Edit Event<span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+ res.id +">Delete Event<span><i class='fa-regular fa-trash-can'></i></span></li><li data-event-id="+ res.id +" class='share-event'>Share Event<span><i class='fas fa-share'></i></span></li></ul><div class='edit-field editfield'><input class='form-control' id='inputeventid" + res.id + "' placeholder='Edit your Event Name' value='" +res.event_title_updated + "'/><button onClick='updateEvent(" + res.id +")' style='background-color:" + res.back_color + "'>Save</button></div><div class='edit-field sharefield-" + res.id +"'><input class='form-control' id='inputshareeventid"+ res.id +"' placeholder='Enter Email'/><button onClick='shareEvent("+ res.id +")' style='background-color:"+res.back_color+"'>Share Event</button></div></div>"
                 $(".timeline-parent .timeline-functionality").append(
                     "<div class='event-add animate__bounceOut " + class_name + "' style='left: " +
                     currentEventPosition +
-                    "px'><div class='main-event sub-timeline-event'><span class='left-parent-event' style='background-color: " + back_color + "'></span><div class='main-parent' parent-date=" + eventDate + " parent-position=" + currentEventPosition + " data-event-id=" + res.id + "><span class='img-span' style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><span class='functionality-div'><span class='event-functionality' data-event-id=" + res.id + " style='background-color: " + back_color + ";border-color: " + back_color + "'></span></span><div class='vertical-lines'><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span></div></div></div><span class='right-parent-event' style='background-color: " + back_color + "'></span></div>"
+                    "px'><div class='main-event sub-timeline-event'><span class='left-parent-event' style='background-color: " + back_color + "'></span><div class='main-parent' parent-date=" + eventDate + " parent-position=" + currentEventPosition + " data-event-id=" + res.id + "><span class='img-span' style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><span class='functionality-div'><span class='event-functionality' data-event-id=" + res.id + " style='background-color: " + back_color + ";border-color: " + back_color + "'></span>"+markup+"</span><div class='vertical-lines'><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span></div></div></div><span class='right-parent-event' style='background-color: " + back_color + "'></span></div>"
                 );
 
 
@@ -556,7 +558,6 @@
                     toastr.error(res.message);
                 } else {
                     toastr.success("Event saved successfully!");
-                    console.log(res.event.id)
                     $(add_sibling_parent).append(
                         "<div class='event-add child animate__bounceOut " +
                         class_name +
@@ -610,7 +611,6 @@
                 if (res.status == "Error") {
                     toastr.error(res.message);
                 } else {
-                    console.log(res)
                     toastr.success("Event saved successfully!");
                     /*if (total_child_sibling.length >= 1) {
                         $(child_sibling_parent).append(
@@ -685,10 +685,8 @@
                 }, //Send to WebMethod
                 'async': false,
             }).done(function (res) {
-                console.log(res.status);
                 if (res.status == "Success") {
                     toastr.success(res.message);
-                    //deleteEvent.remove();
                     location.reload();
                 } else {
                     toastr.error(res.message);

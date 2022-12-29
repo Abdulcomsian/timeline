@@ -5,7 +5,7 @@ body,p,h1,h2,h3,h4,h5,h6,label,a,span,button{
     animation: flash 900ms ease infinite alternate;
   }
 @keyframes flash {
-      from { opacity: 1; }	
+      from { opacity: 1; }
       to { opacity: 0; }
 }
 body,p,h1,h2,h3,h4,h5,h6,a,label,span,
@@ -382,11 +382,12 @@ i{
 .functionality-div .edit-delete-event{
     position: absolute;
     width: 200px;
-    top: 20px;
-    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    bottom: 65px;
+    box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 10%);
     border-radius: 8px;
     padding: 5px;
     display: none;
+    background-color: white;
 }
 .functionality-div .edit-delete-event ul li{
     font-size: 14px;
@@ -487,7 +488,7 @@ header{
     z-index: 99999999999999999;
 }
 .timelineheader{
-    z-index: 999999999999;
+    /*z-index: 999999999999;*/
     background: #fff;
 }
 
@@ -496,7 +497,7 @@ header{
 }
 
 .timelineheader{
-    position: fixed;
+    /*position: fixed;*/
     width: 100% !important;
     left: 0px;
 }

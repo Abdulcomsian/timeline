@@ -283,11 +283,11 @@ class EventController extends Controller
             $model->user_id=$user_id;
             if ($model->save()) {
                 $type = "Event";
-                Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));
+//                Mail::to($request->inputvalue)->send(new InvitePeopleMail($EventId, $code, $type));
                 return response()->json("success");
             }
         } catch (\Exception $exception) {
-             return response()->json("error");
+             return response()->json($exception->getMessage());
         }
     }
 

@@ -19,11 +19,9 @@ let eventDate,
 
 var mouseWheelEvt = function (event) {
     if (document.body.doScroll){
-    // console.log("if")
         document.body.doScroll(event.wheelDelta>0?"left":"right");
     }
     else if ((event.wheelDelta || event.detail) > 0){
-        // console.log("else if")
         // document.body.scrollLeft -= 10;
         total_right=parseInt($(".timeline-parent").css("right").split('px')[0])
         if(total_right<0 || total_right==-100 || total_right==0){
@@ -53,10 +51,8 @@ $(".timeline-parent").scroll(function () {
 $(".timeline-parent .timeline-divider").mousemove(function (e) {
     mouseXPosition = e.pageX + scrollPostion;
     currentEventPosition = mouseXPosition - 68;
-    // console.log(currentEventPosition);
     if(indicator_move){
         if(scroll_left){
-            // console.log("currentEventPosition",currentEventPosition,total_right)
             if (total_right < 0) {
                 $(".add-event-indicator").css("left", 0);
                 $(".event-list").css("left", 0);
@@ -160,7 +156,6 @@ $(".event-list li").click(function (e) {
     };
     var date = new Date("1-December-2022");
     var eventDate = date.addDays(current_day).toLocaleDateString();
-    // console.log("eventDate",eventDate)
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
@@ -205,9 +200,7 @@ $(".event-list li").click(function (e) {
         saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent)
     } else if (child_sibling) {
         var current_child_day = parseInt(parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)) / 500;
-        // console.log(currentEventChildPosition,current_child_day)
         var eventChildDate = date.addDays(current_child_day).toLocaleDateString();
-        // console.log(eventChildDate)
         childDate = new Date(eventChildDate);
         eventChildDay = childDate.getDate();
         eventChildMonth = childDate.getMonth() + 1;
@@ -239,7 +232,6 @@ $(".event-list li").click(function (e) {
         //             back_color +
         //             "' class='right-sibling-event'></span></div>"
         //     );
-        //     console.log("first", class_name[0], parent_date, back_color, imgSrc, childEventId);
         //     saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
         // } else {
         //     $(child_sibling_parent).append(
@@ -257,7 +249,6 @@ $(".event-list li").click(function (e) {
         //             back_color +
         //             "' class='right-sibling-event'></span></div>"
         //     );
-        //     console.log("second", class_name[0], parent_date, back_color, imgSrc, childEventId);
         //     saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
         // }
 
@@ -281,12 +272,10 @@ $(".event-list li").click(function (e) {
         saveSiblingEvent(class_name[0], back_color, imgSrc, childEventId, position_x);
         child_sibling = false;
     } else {
-        console.log(eventDate.toString().split("/"));
         eventDay=eventDate.toString().split("/")[0];
         eventMonth=eventDate.toString().split("/")[1];
         eventYear=eventDate.toString().split("/")[2];
         eventDate = eventYear + "-" + eventMonth + "-" + eventDay;
-        console.log(eventDate,eventDay, eventMonth, eventYear)
         saveEvent(
             class_name[0],
             currentEventPosition,
@@ -333,7 +322,6 @@ $(document).on("mouseout", ".event-functionality", function () {
     child_sibling = true;
     child_sibling_parent = $(this).parent();
     childEventId = $(this).attr('data-child-event-id');
-    console.log("Child Event Id", childEventId)
 });*/
 
 /******************* Child - Left - Event - Click */
@@ -343,6 +331,27 @@ $(document).on("click", ".child .left-child-event", function () {
     start_child_date = $(this).parent().parent().attr("parent-date");
     child_sibling_parent = $(this).parent();
     eventId = $(this).attr('data-child-event-id')
+});
+
+/******************* Parent - Left - Event - Click */
+$(document).on("click", ".left-parent-event", function () {
+    if($(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display')=='block'){
+
+        $(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','none');
+    } else{
+        $('.edit-delete-event').css('display','none')
+        $(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','block');
+    }
+
+        eventId = $(this).attr('data-child-event-id')
+        //left_parent=$(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','block');
+});
+
+$(document).on("click", ".share-event", function () {
+    var id = $(this).attr('data-event-id');
+    console.log('.sharefield-'+id)
+    $('.sharefield-'+id).css('display','block')
+    console.log($('.sharefield-'+id).css('display','block'))
 });
 /******************* Sibling - Child - Left - Event - Click */
 $(document).on("click", ".child .left-sibling-event", function () {
@@ -371,7 +380,6 @@ $(".date-modal .modal-footer button").on("click", function () {
                 const startDate = new Date(eventEndDate).getDate();
                 totalDay=parseInt(startDate*500);
                 new_starting_date=parseInt(totalDay)-parseInt(child_sibling_parent_position);
-                // console.log(child_sibling_parent_position,startDate,totalDay,new_starting_date);
                 // total_sibling_move=parseInt(child_sibling_parent_position)+parseInt(sibling_current_position);
                 new_sibling_starting_position=parseInt(parseInt(new_starting_date)-parseInt(500));
                 // sibling_child_parent_position=$(child_sibling_parent).parent().parent().attr('parent-position');
@@ -386,26 +394,19 @@ $(".date-modal .modal-footer button").on("click", function () {
                 sibling_left_event=false;
             } else {
                 $(".date-modal").css("display", "none");
-                console.log(start_child_date,eventEndDate)
                 const firstDate = new Date(start_child_date).getTime();
                 const secondDate = new Date(eventEndDate).getTime();
                 let difference = secondDate - firstDate;
-                console.log("difference :", difference);
                 let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
                 days_width = TotalDays * 500;
-                console.log("TotalDays :", TotalDays,days_width);
 
                 child_move_position = $(child_sibling_parent)
                     .parent()
                     .attr("parent-position");
-                console.log(parseInt(parseInt(days_width)+parseInt(child_move_position)))
                 child_move_left=parseInt(child_move_position)/500;
                 split_with_decimal=child_move_left.toString().split(".")[1];
-                console.log("split_with_decimal",split_with_decimal)
                 total_decimal_part=("0." + split_with_decimal);
-                console.log("total_decimal_part",total_decimal_part)
                 total_move_pixel = 500-(total_decimal_part*500);
-                console.log("total_move_pixel",total_move_pixel)
 
                 // new_child_width = parseInt(parseInt(days_width)-parseInt(child_move_position)) - 69;
                 new_child_width = parseInt(parseInt(days_width))+total_move_pixel - 45;
