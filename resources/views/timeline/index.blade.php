@@ -260,7 +260,7 @@
                                         <span class="event-functionality" data-event-id="{{$event->id}}"
                                               style="background-color: {{$event->back_color}};border-color: {{$event->back_color}}; {{(count($event->child)) ? 'pointer-events:none' : ''}}">
                                         </span>
-{{--                                        @if(!in_array($event->id,$ventids))--}}
+                                        @if(!in_array($event->id,$ventids))
                                             <div class='edit-delete-event'>
                                                 <ul>
                                                     <li data-event-id="{{$event->id}}">Edit Event
@@ -294,7 +294,7 @@
                                                             style='background-color:{{$event->back_color}}'>Share Event</button>
                                                 </div>
                                             </div>
-{{--                                        @endif--}}
+                                        @endif
                                     </span>
                                     <div class="vertical-lines">
                                        {{-- <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
