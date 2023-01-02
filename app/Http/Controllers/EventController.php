@@ -9,6 +9,7 @@ use App\Mail\InvitePeopleMail;
 use App\Models\{Event, TimeLine, EventInvited,User};
 use Auth;
 use Mail;
+use Carbon\Carbon;
 
 
 class EventController extends Controller
@@ -26,9 +27,17 @@ class EventController extends Controller
                 $ventids = EventInvited::select('event_id')->where('user_id', Auth::user()->id)->pluck('event_id');
                 $events = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->get();
                 $ventids=$ventids->toArray();
-            //}
+
+            $smallest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->min('event_date');
+            $largest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->max('event_date');
+            $last_day_month = Carbon::parse($largest_date)->endOfMonth()->format('Y-m-d');
+            $start_day_month = Carbon::parse($smallest_date)->startOfMonth()->format('Y-m-d');
+
+            $timeline_last_day_month = Carbon::parse($TimeLine->end_date)->endOfMonth()->format('Y-m-d');
+            $timeline_start_day_month = Carbon::parse($TimeLine->start_date)->startOfMonth()->format('Y-m-d');
+//            dd($last_day_month);
             $encryptid = crypt::encrypt($id);
-            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids'));
+            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids','smallest_date','largest_date','start_day_month','last_day_month'));
         } else {
             toastr()->error('No Timeline Created');
             return Redirect::back();

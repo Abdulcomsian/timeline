@@ -4,7 +4,7 @@ var currentEventPosition = 0,currentEventChildPosition = 0, subtimeline_child_pa
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion = 0;
-var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId;
+var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId, start_date;
 let eventDate,
     add_sibling = false,
     add_sibling_parent,
@@ -154,7 +154,11 @@ $(".event-list li").click(function (e) {
         date.setDate(date.getDate() + days);
         return date;
     };
-    var date = new Date("1-December-2022");
+     start_date = $('#start_date').attr('start_date');
+    // start_date = $('.timeline-divider').attr('start_date')
+    // var date = new Date("1-February-2023");
+    console.log(start_date)
+    var date = new Date(start_date);
     var eventDate = date.addDays(current_day).toLocaleDateString();
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];

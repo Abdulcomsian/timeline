@@ -3,6 +3,9 @@
 
 @endsection
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <input type="hidden" name="timelineid" value="{{$encryptid}}" id="timelineid">
     <div class="container">
         <div class="row">
@@ -149,7 +152,23 @@
             </div>
             <div class='date-time-divider'>
                 <div class="timeline-divider">
+                    <?php
+                    $firstDate = $start_day_month;
+                    $lastDate = $last_day_month;
+
+                    $firstTime =  strtotime($firstDate);
+                    $lastTime =  strtotime($lastDate);
+
+                    ?>
                     @php
+                        $j = 1;
+                    @endphp
+                    @for($i=$firstTime; $i<=$lastTime; $i+=86400)
+                            <span class="date" @if($j == 1) start_date = {{date("d-M-y" , $i)}} id = "start_date"  @endif style="left: {{$j*500}}px">{{date("M-d-Y" , $i)}}</span>
+                        @php $j++  @endphp
+{{--                            echo date("Y-m-d" , $i)."<br>";--}}
+                    @endfor
+                    {{--@php
                         $count=31;
                         $j=1;
                     @endphp
@@ -158,7 +177,7 @@
                         @php
                             $j++;
                         @endphp
-                    @endfor
+                    @endfor--}}
 
                 </div>
             </div>
@@ -172,6 +191,11 @@
                 @endphp
 {{--                @dd($total_span)--}}
                 @foreach($events as $event)
+                    @php
+                        $days_diff = Carbon::parse($firstDate)->diffInDays(Carbon::parse($event->event_date));
+                        /*$days_diff = $days_diff + 1;*/
+                   @endphp
+{{--                    @dd($days_diff)--}}
                     {{-- @if($event->event_title=="Sub timeline")
                          <div class="event-add animate__bounceOut {{$event->class_name}}"  style="left:{{$event->postion_x}}px">
                              <div class='main-event sub-timeline-event '>
@@ -246,8 +270,9 @@
                             </div>
                         </div>
                     @else
+
                         <div class="event-add animate__bounceOut {{$event->class_name}}"
-                             style="left: {{$event->postion_x}}px">
+                             style="left: {{$days_diff*500}}px">
                             <div class="main-event sub-timeline-event"><span class="left-parent-event"
                                                                              style="background-color: {{$event->back_color}}"></span>
                                 <div class="main-parent" parent-date="{{$event->event_date}}"
@@ -763,6 +788,6 @@
         $("input").click(function (e) {
             e.stopPropagation();
         })
-        $(".timeline-parent .timeline-divider").css('width', {{$count*500}})
+        $(".timeline-parent .timeline-divider").css('width', {{$j*500}})
     </script>
 @endsection
