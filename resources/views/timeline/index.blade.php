@@ -201,11 +201,8 @@
                             $count = 0;
                         }
                         array_push($array, $event->event_date);
-                        /*$eventids = App\Models\EventInvited::select('event_id')->where('user_id', Auth::user()->id)->pluck('event_id');
-                        $repeat_events = App\Models\Event::whereNull('parent_id')->where(['time_line_id' => $TimeLine->id, 'user_id' => Auth::user()->id])->where('event_date', $event->event_date)->orWhereIn('id', $eventids)->get();
-                        */
-                        $days_diff = Carbon::parse($firstDate)->diffInDays(Carbon::parse($event->event_date));
-                        $days_diff = $days_diff + 1;
+                        $days_diff = Carbon::parse($firstDate)->diffInDays(Carbon::parse($event->event_date)) + 1;
+                        /*$days_diff = $days_diff + 1;*/
                         $repeat_event = $count * 80;
                         $position_x = $days_diff*500-$repeat_event;
                    @endphp

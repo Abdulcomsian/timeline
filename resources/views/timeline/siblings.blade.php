@@ -1,4 +1,4 @@
-<div style="left: {{$sibling_event->postion_x}}px;" class="event-add child-sibling animate__bounceOut {{$sibling_event->class_name}}" child_parent_date="{{$sibling_event->parent_date}}">
+<div style="left: {{$sibling_event->postion_x}}px;@if(in_array($event->id,$ventids)) pointer-events:none @endif" class="event-add child-sibling animate__bounceOut {{$sibling_event->class_name}}" child_parent_date="{{$sibling_event->parent_date}}">
     <span style="background-color: {{$sibling_event->back_color}}" class='left-sibling-event'>
 
     </span>
