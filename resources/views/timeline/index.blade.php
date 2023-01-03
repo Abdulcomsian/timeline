@@ -193,6 +193,8 @@
 {{--                @dd($total_span)--}}
 {{--            @dd($events)--}}
                 @foreach($events as $event)
+{{--                    @dd(strtotime($event->event_date))--}}
+                    @if(strtotime($event->event_date) >= $firstTime)
                     @php
                         if(in_array($event->event_date,$array)){
                         $count = array_count_values($array);
@@ -456,6 +458,7 @@
                         $total_span = $total_span - 9.5;
                         $top = $top - 145;
                     @endphp
+                    @endif
                 @endforeach
 
             @endif
