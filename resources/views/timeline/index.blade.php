@@ -207,7 +207,7 @@
                         $days_diff = Carbon::parse($firstDate)->diffInDays(Carbon::parse($event->event_date));
                         $days_diff = $days_diff + 1;
                         $repeat_event = $count * 80;
-                        $position_x = $days_diff*500+$repeat_event;
+                        $position_x = $days_diff*500-$repeat_event;
                    @endphp
 {{--                    @dd($days_diff)--}}
                     {{-- @if($event->event_title=="Sub timeline")
@@ -351,7 +351,7 @@
                                         @foreach($event->child as $child_event)
 {{--                                            @dd($event)--}}
                                         <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" data-child-event-id = "{{$child_event->id}}" style="top:{{$top}}px">
-                                            <span style="background-color: {{$child_event->back_color}}" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
+                                            <span style="background-color: {{$child_event->back_color}}; @if(in_array($event->id,$ventids)) pointer-events:none @endif" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
 
                                             </span>
                                             <div class='main-event sub-timeline-event'>
@@ -465,7 +465,7 @@
         </div>
 
     </div>
-    <div class='scroll-zoom-effect'>
+    {{--<div class='scroll-zoom-effect'>
         <div class='parent'>
             <div class='scroll-line'></div>
             <div id="verticalIndicator" class='vertical-indicator'></div>
@@ -475,7 +475,7 @@
             <a id="zoomIn" class='zoom-in'><i class="fa-solid fa-magnifying-glass-plus"></i></a>
             <a id="zoomOut" class='zoom-out'><i class="fa-solid fa-magnifying-glass-minus"></i></a>
         </div>
-    </div>
+    </div>--}}
 
 
     <div class="modal date-modal" tabindex="-1">
