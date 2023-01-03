@@ -153,12 +153,11 @@
             <div class='date-time-divider'>
                 <div class="timeline-divider">
                     <?php
-                    $firstDate = $start_day_month;
-                    $lastDate = $last_day_month;
+                        $firstDate = $start_day_month;
+                        $lastDate = $last_day_month;
 
-                    $firstTime =  strtotime($firstDate);
-                    $lastTime =  strtotime($lastDate);
-
+                        $firstTime =  strtotime($firstDate);
+                        $lastTime =  strtotime($lastDate);
                     ?>
                     @php
                         $j = 1;
@@ -188,12 +187,27 @@
                 @php
                     $total_span = count($events)*9.5;
                     $top = count($events)*145;
+                    $array = [];
+                    $count = 0;
                 @endphp
 {{--                @dd($total_span)--}}
+{{--            @dd($events)--}}
                 @foreach($events as $event)
                     @php
+                        if(in_array($event->event_date,$array)){
+                        $count = array_count_values($array);
+                        $count = $count[$event->event_date];
+                        } else{
+                            $count = 0;
+                        }
+                        array_push($array, $event->event_date);
+                        /*$eventids = App\Models\EventInvited::select('event_id')->where('user_id', Auth::user()->id)->pluck('event_id');
+                        $repeat_events = App\Models\Event::whereNull('parent_id')->where(['time_line_id' => $TimeLine->id, 'user_id' => Auth::user()->id])->where('event_date', $event->event_date)->orWhereIn('id', $eventids)->get();
+                        */
                         $days_diff = Carbon::parse($firstDate)->diffInDays(Carbon::parse($event->event_date));
-                        /*$days_diff = $days_diff + 1;*/
+                        $days_diff = $days_diff + 1;
+                        $repeat_event = $count * 80;
+                        $position_x = $days_diff*500+$repeat_event;
                    @endphp
 {{--                    @dd($days_diff)--}}
                     {{-- @if($event->event_title=="Sub timeline")
@@ -270,9 +284,9 @@
                             </div>
                         </div>
                     @else
-
-                        <div class="event-add animate__bounceOut {{$event->class_name}}"
-                             style="left: {{$days_diff*500}}px">
+                       {{-- <div class="event-add animate__bounceOut {{$event->class_name}}"
+                             style="left: {{$days_diff*500}}px">--}}
+                            <div class="event-add animate__bounceOut {{$event->class_name}}" style="left: {{$position_x}}px">
                             <div class="main-event sub-timeline-event"><span class="left-parent-event"
                                                                              style="background-color: {{$event->back_color}}"></span>
                                 <div class="main-parent" parent-date="{{$event->event_date}}"
@@ -448,7 +462,6 @@
                 @endforeach
 
             @endif
-
         </div>
 
     </div>

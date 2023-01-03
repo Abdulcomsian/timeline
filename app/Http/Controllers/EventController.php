@@ -28,16 +28,45 @@ class EventController extends Controller
                 $events = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->get();
                 $ventids=$ventids->toArray();
 
-            $smallest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->min('event_date');
-            $largest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->max('event_date');
-            $last_day_month = Carbon::parse($largest_date)->endOfMonth()->format('Y-m-d');
-            $start_day_month = Carbon::parse($smallest_date)->startOfMonth()->format('Y-m-d');
+          /*  $smallest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->min('event_date');
+            $largest_date = Event::whereNull('parent_id')->where(['time_line_id' => $id, 'user_id' => Auth::user()->id])->orWhereIn('id', $ventids)->max('event_date');*/
 
-            $timeline_last_day_month = Carbon::parse($TimeLine->end_date)->endOfMonth()->format('Y-m-d');
+//            ($smallest_date != null) ? $smallest_date : $smallest_date = "hello";
+
+
+
+            /*if($smallest_date == null)
+            {
+                $start_day_month = Carbon::parse($TimeLine->start_date)->startOfMonth()->format('Y-m-d');
+
+                if($TimeLine->end_date)
+                {
+                    $last_day_month = Carbon::parse($TimeLine->end_date)->endOfMonth()->format('Y-m-d');
+                } else {
+                    $last_day_month = Carbon::parse($TimeLine->start_date)->endOfYear()->format('Y-m-d');
+                }
+            } else {
+                $start_day_month = Carbon::parse($smallest_date)->startOfMonth()->format('Y-m-d');
+                $last_day_month = Carbon::parse($largest_date)->endOfMonth()->format('Y-m-d');
+
+            }*/
+
+            $start_day_month = Carbon::parse($TimeLine->start_date)->startOfMonth()->format('Y-m-d');
+
+            if($TimeLine->end_date)
+            {
+                $last_day_month = Carbon::parse($TimeLine->end_date)->endOfMonth()->format('Y-m-d');
+            } else {
+                $last_day_month = Carbon::parse($TimeLine->start_date)->endOfYear()->format('Y-m-d');
+            }
+
             $timeline_start_day_month = Carbon::parse($TimeLine->start_date)->startOfMonth()->format('Y-m-d');
-//            dd($last_day_month);
+            $timeline_last_day_month = Carbon::parse($TimeLine->end_date)->endOfMonth()->format('Y-m-d');
+
             $encryptid = crypt::encrypt($id);
-            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids','smallest_date','largest_date','start_day_month','last_day_month'));
+//            dd(count($TimeLine->events));
+//            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids','smallest_date','largest_date','start_day_month','last_day_month','timeline_start_day_month','timeline_last_day_month'));
+            return view('timeline/index', compact('events', 'TimeLine', 'encryptid','ventids','start_day_month','last_day_month','timeline_start_day_month','timeline_last_day_month'));
         } else {
             toastr()->error('No Timeline Created');
             return Redirect::back();
