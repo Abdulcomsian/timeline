@@ -38,6 +38,6 @@
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-<script src="{{ asset('js/script.js?v=6767676') }}"></script>
+<script src="{{ asset('js/script.js?v=121212') }}"></script>
 @yield('script')
 </html>

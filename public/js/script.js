@@ -161,7 +161,7 @@ $(".event-list li").click(function (e) {
     var date = new Date(start_date);
     // var date = new Date(start_date);
     var eventDate = date.addDays(current_day).toLocaleDateString();
-    console.log(eventDate)
+    console.log("Event Date:", eventDate)
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
