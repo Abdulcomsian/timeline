@@ -163,7 +163,7 @@
                         $j = 1;
                     @endphp
                     @for($i=$firstTime; $i<=$lastTime; $i+=86400)
-                            <span class="date" date="{{date("d-M-y" , $i)}}" pixel="{{$j*500}}" @if($j == 1) start_date = {{date("d-M-y" , $i)}} id = "start_date"  @endif style="left: {{$j*500}}px">{{date("M-d-Y" , $i)}}</span>
+                            <span class="date" date="{{date("d/m/Y" , $i)}}" pixel="{{$j*500}}" @if($j == 1) start_date = {{date("d-M-y" , $i)}} id = "start_date"  @endif style="left: {{$j*500}}px">{{date("M-d-Y" , $i)}}</span>
                         @php $j++  @endphp
 {{--                            echo date("Y-m-d" , $i)."<br>";--}}
                     @endfor

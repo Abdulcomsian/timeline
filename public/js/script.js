@@ -150,18 +150,19 @@ $(".event-list li").click(function (e) {
     back_color = $(this).find(".img-div").css("border-color");
     var count_child = document.querySelectorAll(".child");
     console.log("current position:", currentEventPosition)
-    var current_day = currentEventPosition / 500;
+   /* var current_day = currentEventPosition / 500;
     Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
         return date;
-    };
-     start_date = $('#start_date').attr('start_date');
-    // start_date = $('.timeline-divider').attr('start_date')
+    };*/
+    /* start_date = $('#start_date').attr('start_date');
     var date = new Date(start_date);
-    // var date = new Date(start_date);
-    var eventDate = date.addDays(current_day).toLocaleDateString();
-    console.log("Event Date:", eventDate)
+    var eventDate = date.addDays(current_day).toLocaleDateString();*/
+    var rounded = roundToNextMultipleOf500(currentEventPosition);
+    var eventDate = $('.date').filter('[pixel=' + rounded + ']').attr('date');
+    console.log(rounded); // Output: 500
+    console.log("Old Event Date:", eventDate)
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
@@ -516,4 +517,8 @@ function mouseup(e) {
   targetPosition.y = pinStartPosition.y + e.pageY - mouseStartPosition.y;
   window.removeEventListener("mousemove", mousemove);
   window.removeEventListener("mouseup", mouseup);
+}
+
+function roundToNextMultipleOf500(num) {
+    return Math.ceil(num / 500) * 500;
 }
