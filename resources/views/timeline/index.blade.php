@@ -165,19 +165,7 @@
                     @for($i=$firstTime; $i<=$lastTime; $i+=86400)
                             <span class="date" date="{{date("d/m/Y" , $i)}}" pixel="{{$j*500}}" @if($j == 1) start_date = {{date("d-M-y" , $i)}} id = "start_date"  @endif style="left: {{$j*500}}px">{{date("M-d-Y" , $i)}}</span>
                         @php $j++  @endphp
-{{--                            echo date("Y-m-d" , $i)."<br>";--}}
                     @endfor
-                    {{--@php
-                        $count=31;
-                        $j=1;
-                    @endphp
-                    @for($i=0;$i<$count;$i++)
-                        <span class="date" style="left: {{$i*500}}px">{{$j}}-Dec</span>
-                        @php
-                            $j++;
-                        @endphp
-                    @endfor--}}
-
                 </div>
             </div>
 
@@ -190,10 +178,8 @@
                     $array = [];
                     $count = 0;
                 @endphp
-{{--                @dd($total_span)--}}
-{{--            @dd($events)--}}
+
                 @foreach($events as $event)
-{{--                    @dd(strtotime($event->event_date))--}}
                     @if(strtotime($event->event_date) >= $firstTime)
                     @php
                         if(in_array($event->event_date,$array)){
@@ -208,68 +194,6 @@
                         $repeat_event = $count * 80;
                         $position_x = $days_diff*500-$repeat_event;
                    @endphp
-{{--                    @dd($days_diff)--}}
-                    {{-- @if($event->event_title=="Sub timeline")
-                         <div class="event-add animate__bounceOut {{$event->class_name}}"  style="left:{{$event->postion_x}}px">
-                             <div class='main-event sub-timeline-event '>
-                                 <div class='main-parent {{!in_array($event->id,$ventids) ? "main-parent-add-child" :""}}' data-event-id="{{$event->id}}" parent-position="{{$event->postion_x}}">
-                                     <span class='img-span' style='background-color:{{$event->back_color}}'>
-                                         <img src="{{$event->icon}}">
-                                     </span>
-                                     <span class='functionality-div'>
-                                         <span class='event-functionality' style='border-color:{{$event->back_color}}'></span>
-
-                                     </span>
-                                 </div>
-                                 <div class='horizontal-line-right'>
-                                     <span></span><span></span><span></span><span></span>
-                                 </div>
-                                 <div class='main-parent-edit-field editmodal{{$event->id}}'>
-                                     <input class='form-control' id="inputeventid{{$event->id}}" placeholder='Edit your Event Name' value="{{$event->event_title_updated}}"/>
-                                     <button onClick="updateEvent({{$event->id}},event)" style='background-color:{{$event->back_color}}'>Save</button>
-                                 </div>
-                                 <div class='main-parent-edit-field sharemodal{{$event->id}}'>
-                                     <input class='form-control' id="inputshareeventid{{$event->id}}" placeholder='Enter Email'/>
-                                     <button onClick="shareEvent({{$event->id}},event)" style='background-color:{{$event->back_color}}'>Share Event</button>
-                                 </div>
-                                 <div class='horizontal-line-left'><span></span><span></span><span></span><span></span>
-                                 </div>
-
-                                     <!-- if child is exist -->
-                                      <!-- append child element -->
-                                         @if(count($event->Child)>0)
-                                             @php
-                                             $i=1;
-                                             @endphp
-                                             @foreach($event->child as $ch)
-                                                 @php
-                                                  $assign=false;
-                                                 if(in_array($event->id,$ventids))
-                                                 {
-                                                   $assign=true;
-                                                 }
-                                                 @endphp
-                                                 @include('timeline.partials.childevent',['ch'=>$ch,'assign'=>$assign])
-                                                 @php
-                                                 $i++;
-                                                 @endphp
-                                             @endforeach
-                                         @else
-                                         <div class='add-more-event'>
-                                             <div class='doted-line'><span></span><span></span><span></span><span></span>
-                                                 <span></span><span></span>
-                                             </div>
-                                             <div class='sub-child-event-add flash' parent-position="{{$event->postion_x}}" data-event-id="{{$event->id}}">
-                                                 <span><i class='fa-light fa-plus'></i></span>
-                                             </div>
-                                         </div>
-                                         @endif
-
-
-                             </div>
-                         </div>
-                     @else--}}
-                    {{--                @dd($event)--}}
                     @if($event->position_x<0)
                         <div class='event-add animate__bounceOut {{$event->class_name}}' style='left:0px'>
                             <div class='main-event'>
@@ -283,13 +207,12 @@
                             </div>
                         </div>
                     @else
-                       {{-- <div class="event-add animate__bounceOut {{$event->class_name}}"
-                             style="left: {{$days_diff*500}}px">--}}
+                            <span style="position: absolute;top: -18px;left:  {{$position_x+10}}px;font-size:13px;">{{date('h:i A', strtotime($event->event_time));}}</span>
                             <div class="event-add animate__bounceOut {{$event->class_name}}" style="left: {{$position_x}}px">
                             <div class="main-event sub-timeline-event"><span class="left-parent-event"
                                                                              style="background-color: {{$event->back_color}}"></span>
                                 <div class="main-parent" parent-date="{{$event->event_date}}"
-                                     parent-position="{{$event->postion_x}}"
+                                     parent-position="{{$position_x}}"
                                      data-event-id="{{$event->id}}">
                                     <span class="img-span" style="background-color: {{$event->back_color}}">
                                         <img src="{{$event->icon}}">
@@ -335,11 +258,6 @@
                                         @endif
                                     </span>
                                     <div class="vertical-lines">
-                                       {{-- <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
-                                        <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
-                                        <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
-                                        <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>
-                                        <span style="background-color: {{$event->back_color}}; opacity: {{(count($event->child) > 0) ? '1' : 0}};"></span>--}}
                                         @if(count($event->child) != 0)
                                             @for($i=1; $i<=$total_span; $i++)
                                                 <span style="background-color: {{$event->back_color}};" class="active"></span>
@@ -348,7 +266,6 @@
                                     </div>
                                     @if(count($event->child))
                                         @foreach($event->child as $child_event)
-{{--                                            @dd($event)--}}
                                         <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" data-child-event-id = "{{$child_event->id}}" style="top:{{$top}}px">
                                             <span style="background-color: {{$child_event->back_color}}; @if(in_array($event->id,$ventids)) pointer-events:none @endif" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
 
@@ -358,7 +275,7 @@
                                                      <img src="{{$child_event->icon}}">
                                                 </span>
                                                 <div style="width: {{$child_event->child_line}}px; background-color: {{$child_event->back_color}}" class="timeline-divider-child" data-child-event-id = "{{$child_event->id}}">
-                                                    <div class='add-child-event-indicator animate__bounceOut' data-child-event-id="{{$child_event->id}}">
+                                                    <div class='add-child-event-indicator animate__bounceOut' data-child-event-id="{{$child_event->id}}" data-child-event-date={{$child_event->event_date}}>
                                                         <span><i class='fa-light fa-plus' ></i></span>
                                                     </div>
                                                 </div>
@@ -366,7 +283,6 @@
                                             <span style="background-color: {{$child_event->back_color}}"
                                                   class="right-child-event" data-child-event-id = "{{$child_event->id}}">
                                             </span>
-{{--                                            @php $total_siblings = count($child_event->child) @endphp--}}
                                             @php $total_left = 0 @endphp
                                             @foreach($child_event->child as $sibling_event)
                                                 @php $total_left = $total_left + 170; @endphp
@@ -374,86 +290,12 @@
                                             @endforeach
                                         </div>
                                         @endforeach
-                                        {{--<div class="event-add child animate__bounceOut {{$event->class_name}}" child_parent_date="{{$event->event_date}}">
-                                            <span style="background-color: {{$event->back_color}}" class="left-child-event">
-                                            </span>
-                                            <div class="main-event sub-timeline-event">
-                                                <span class="main-parent child-event" style="background-color: {{$event->back_color}}">
-                                                    <img src="{{$event->icon}}">
-                                                </span>
-                                                <div style="width: 14930px; background-color: {{$event->back_color}}" class="timeline-divider-child">
-                                                </div>
-                                            </div>
-                                            <span style="background-color: {{$event->back_color}}"
-                                                  class="right-child-event">
-                                            </span>
-                                        </div>--}}
                                     @endif
                                 </div>
                             </div>
                             <span class="right-parent-event" style="background-color: {{$event->back_color}}"></span>
                         </div>
-                        {{--<div class='event-add animate__bounceOut {{$event->class_name}}'
-                             style='left:{{$event->postion_x}}px'>
-                            <div class='main-event'>
-                                <span class="left-parent-event" style="background-color: {{$event->back_color}}"></span>
-                                <span class="img-span" style='background-color:{{$event->back_color}}'>
-                                    <img src="{{$event->icon}}">
-                                </span>
-                                <span class='functionality-div'>
-                                    <span class='event-functionality'
-                                          style='background-color:{{$event->back_color}};border-color:{{$event->back_color}}'>
-
-                                    </span>
-                                    @if(!in_array($event->id,$ventids))
-                                        <div class='edit-delete-event'>
-                                        <ul>
-                                            <li data-event-id="{{$event->id}}">Edit Event
-                                                <span>
-                                                    <i class='fa-regular fa-pen-to-square'></i>
-                                                </span>
-                                            </li>
-                                            <li data-event-id="{{$event->id}}">Delete Event
-                                                <span>
-                                                    <i class='fa-regular fa-trash-can'></i>
-                                                </span>
-                                            </li>
-                                            <li data-event-id="{{$event->id}}">Share Event
-                                                <span>
-                                                   <i class="fas fa-share"></i>
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                        <div class='edit-field editfield'>
-                                            <input class='form-control' id="inputeventid{{$event->id}}"
-                                                   placeholder='Edit your Event Name'
-                                                   value="{{$event->event_title_updated}}"/>
-                                            <button onClick="updateEvent({{$event->id}},event)"
-                                                    style='background-color:{{$event->back_color}}'>Save</button>
-                                        </div>
-                                        <div class='edit-field sharefield'>
-                                            <input class='form-control' id="inputshareeventid{{$event->id}}"
-                                                   placeholder='Enter Email'/>
-                                            <button onClick="shareEvent({{$event->id}})"
-                                                    style='background-color:{{$event->back_color}}'>Share Event</button>
-                                        </div>
-                                    </div>
-                                    @endif
-                                </span>
-                                --}}{{--                                @if(count($event->Child)>0)--}}{{--
-                                <div class="vertical-lines">
-                                    <span style="background-color: {{$event->back_color}}; opacity: 0;"></span>
-                                    <span style="background-color: {{$event->back_color}}; opacity: 0;"></span>
-                                    <span style="background-color: {{$event->back_color}}; opacity: 0;"></span>
-                                    <span style="background-color: {{$event->back_color}}; opacity: 0;"></span>
-                                    <span style="background-color: {{$event->back_color}}; opacity: 0;"></span>
-                                </div>
-                                --}}{{--                                @endif--}}{{--
-                            </div>
-                        </div>--}}
                     @endif
-                    {{--                    @endif--}}
                     @php
                         $total_span = $total_span - 9.5;
                         $top = $top - 145;
@@ -496,11 +338,29 @@
             </div>
         </div>
     </div>
+    <div class="modal time-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Event Time</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="eventTime" type="time">
+                    <span class='error timeerror'>Please Time</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary saveTimeclick">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('script')
     <script type="text/javascript">
-        function saveEvent(class_name, currentEventPosition, back_color, imgSrc, trimVal, eventDate) {
+        function saveEvent(class_name, currentEventPosition, back_color, imgSrc, trimVal, eventDate,eventTime) {
             //save event in database====
             isParent = 1;
             /*if (trimVal == "Sub timeline") {
@@ -518,6 +378,7 @@
                     "back_color": back_color,
                     "class_name": class_name,
                     "event_date": eventDate,
+                    "event_time":eventTime,
                     'time_line_id': $("#timelineid").val(),
                 }, //Send to WebMethod
                 'async': false,
@@ -525,6 +386,7 @@
                 console.log(res)
                 //success
                 toastr.success("Event saved successfully!");
+                location.reload();
                 // if(trimVal=="Sub timeline"){
 
                 /********** After Client Demo */
@@ -535,12 +397,16 @@
                 //            "px'><div class='main-event sub-timeline-event'><div class='main-parent main-parent-add-child' parent-position="+currentEventPosition+" data-event-id="+res.id+"><span class='img-span' style='background-color: "+back_color+"'><img src="+imgSrc+"></span><span class='functionality-div'><span class='event-functionality' style='border-color: "+back_color+"'></span></span></div><div class='horizontal-line-right'><span></span><span></span><span></span><span></span></div><div class='main-parent-edit-field editmodal"+res.id+"'><input class='form-control' id='inputeventid"+res.id+"' placeholder='Edit your Event Name' value="+trimVal+"/><button onClick='updateEvent("+res.id+")' style='background-color: "+back_color+"'>Save</button></div><div class='main-parent-edit-field sharemodal"+res.id+"'><input class='form-control' id='inputshareeventid"+res.id+"' placeholder='Enter Email' /><button onClick='shareEvent("+res.id+")' style='background-color: "+back_color+"'>Share Event</button></div><div class='horizontal-line-left'><span></span><span></span><span></span><span></span></div></div></div>"
                 //    );
 
-                var markup = "<div class='edit-delete-event'><ul><li data-event-id="+ res.id + ">Edit Event<span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+ res.id +">Delete Event<span><i class='fa-regular fa-trash-can'></i></span></li><li data-event-id="+ res.id +" class='share-event'>Share Event<span><i class='fas fa-share'></i></span></li></ul><div class='edit-field editfield'><input class='form-control' id='inputeventid" + res.id + "' placeholder='Edit your Event Name' value='" +res.event_title_updated + "'/><button onClick='updateEvent(" + res.id +")' style='background-color:" + res.back_color + "'>Save</button></div><div class='edit-field sharefield-" + res.id +"'><input class='form-control' id='inputshareeventid"+ res.id +"' placeholder='Enter Email'/><button onClick='shareEvent("+ res.id +")' style='background-color:"+res.back_color+"'>Share Event</button></div></div>"
-                $(".timeline-parent .timeline-functionality").append(
-                    "<div class='event-add animate__bounceOut " + class_name + "' style='left: " +
-                    currentEventPosition +
-                    "px'><div class='main-event sub-timeline-event'><span class='left-parent-event' style='background-color: " + back_color + "'></span><div class='main-parent' parent-date=" + eventDate + " parent-position=" + currentEventPosition + " data-event-id=" + res.id + "><span class='img-span' style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><span class='functionality-div'><span class='event-functionality' data-event-id=" + res.id + " style='background-color: " + back_color + ";border-color: " + back_color + "'></span>"+markup+"</span><div class='vertical-lines'><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span></div></div></div><span class='right-parent-event' style='background-color: " + back_color + "'></span></div>"
-                );
+
+
+                // latest code commented
+
+                // var markup = "<div class='edit-delete-event'><ul><li data-event-id="+ res.id + ">Edit Event<span><i class='fa-regular fa-pen-to-square'></i></span></li><li data-event-id="+ res.id +">Delete Event<span><i class='fa-regular fa-trash-can'></i></span></li><li data-event-id="+ res.id +" class='share-event'>Share Event<span><i class='fas fa-share'></i></span></li></ul><div class='edit-field editfield'><input class='form-control' id='inputeventid" + res.id + "' placeholder='Edit your Event Name' value='" +res.event_title_updated + "'/><button onClick='updateEvent(" + res.id +")' style='background-color:" + res.back_color + "'>Save</button></div><div class='edit-field sharefield-" + res.id +"'><input class='form-control' id='inputshareeventid"+ res.id +"' placeholder='Enter Email'/><button onClick='shareEvent("+ res.id +")' style='background-color:"+res.back_color+"'>Share Event</button></div></div>"
+                // $(".timeline-parent .timeline-functionality").append(
+                //     "<div class='event-add animate__bounceOut " + class_name + "' style='left: " +
+                //     currentEventPosition +
+                //     "px'><div class='main-event sub-timeline-event'><span class='left-parent-event' style='background-color: " + back_color + "'></span><div class='main-parent' parent-date=" + eventDate + " parent-position=" + currentEventPosition + " data-event-id=" + res.id + "><span class='img-span' style='background-color: " + back_color + "'><img src=" + imgSrc + "></span><span class='functionality-div'><span class='event-functionality' data-event-id=" + res.id + " style='background-color: " + back_color + ";border-color: " + back_color + "'></span>"+markup+"</span><div class='vertical-lines'><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span><span style='background-color: " + back_color + "'></span></div></div></div><span class='right-parent-event' style='background-color: " + back_color + "'></span></div>"
+                // );
 
 
                 // }
@@ -564,7 +430,7 @@
 
         // save sub child event
         // function saveChildEvent(class_name, back_color, imgSrc, trimVal, targetElem, eventId, sibling_child) {
-        function saveChildEvent(class_name, parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent) {
+        function saveChildEvent(class_name, parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent,eventTime) {
             var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -588,6 +454,7 @@
                     "isParent": 0,
                     "eventId": eventId,
                     "isParent": isParent,
+                    "event_time":eventTime,
                     'time_line_id': $("#timelineid").val(),
                 }, //Send to WebMethod
                 'async': false,
@@ -596,23 +463,24 @@
                     toastr.error(res.message);
                 } else {
                     toastr.success("Event saved successfully!");
-                    $(add_sibling_parent).append(
-                        "<div class='event-add child animate__bounceOut " +
-                        class_name +
-                        "' child_parent_date=" +
-                        parent_date +
-                        " data-child-event-id = "+res.event.id+"><span style='background-color: " +
-                        back_color +
-                        "' class='left-child-event' data-child-event-id = "+res.event.id+"></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
-                        back_color +
-                        "'><img src=" +
-                        imgSrc +
-                        "></span><div style='width: " +
-                        child_line +
-                        "px; background-color: "+back_color+"' class='timeline-divider-child'><div class='add-child-event-indicator animate__bounceOut' data-child-event-id = "+res.event.id+"><span><i class='fa-light fa-plus' ></i></span></div></div></div><span style='background-color: " +
-                        back_color +
-                        "' class='right-child-event' data-child-event-id = "+res.event.id+"></span></div>"
-                    );
+                    location.reload();
+                    // $(add_sibling_parent).append(
+                    //     "<div class='event-add child animate__bounceOut " +
+                    //     class_name +
+                    //     "' child_parent_date=" +
+                    //     parent_date +
+                    //     " data-child-event-id = "+res.event.id+"><span style='background-color: " +
+                    //     back_color +
+                    //     "' class='left-child-event' data-child-event-id = "+res.event.id+"></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
+                    //     back_color +
+                    //     "'><img src=" +
+                    //     imgSrc +
+                    //     "></span><div style='width: " +
+                    //     child_line +
+                    //     "px; background-color: "+back_color+"' class='timeline-divider-child'><div class='add-child-event-indicator animate__bounceOut' data-child-event-id = "+res.event.id+"><span><i class='fa-light fa-plus' ></i></span></div></div></div><span style='background-color: " +
+                    //     back_color +
+                    //     "' class='right-child-event' data-child-event-id = "+res.event.id+"></span></div>"
+                    // );
                 }
 
             });

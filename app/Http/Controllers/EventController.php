@@ -87,7 +87,8 @@ class EventController extends Controller
             "isParent" => $request->isParent,
             'user_id' => Auth::user()->id,
             'time_line_id' => $timelineid,
-            'event_date' => $request->event_date
+            'event_date' => $request->event_date,
+            'event_time'=>$request->event_time
         ]);
 
         return response()->json($event);
@@ -113,6 +114,7 @@ class EventController extends Controller
                 'time_line_id' => $timelineid,
                 'event_date' => $request->event_date,
                 'child_line' => $request->child_line,
+                'event_time' => $request->event_time,
             ]);
 
             $childeventCount = Event::where('parent_id', $request->eventId)->count();

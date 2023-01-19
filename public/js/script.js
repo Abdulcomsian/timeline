@@ -4,7 +4,7 @@ var currentEventPosition = 0,currentEventChildPosition = 0, subtimeline_child_pa
 var oldScrollTop = $(window).scrollTop();
 var oldScrollLeft = $(window).scrollLeft();
 var scrollPostion = 0;
-var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId, start_date;
+var eventId, parentposition, class_name, trimVal, imgSrc, back_color, childEventId, start_date,eventTime="",currentClick,date;
 let eventDate,
     add_sibling = false,
     add_sibling_parent,
@@ -88,7 +88,7 @@ $(".timeline-parent .timeline-divider").mousemove(function (e) {
 
 });
 $(document).on("mousemove", ".timeline-divider-child", function (e) {
-    subtimeline_child_parent_position=$(this).parent().parent().parent().attr("parent-position");
+    subtimeline_child_parent_position=Number($(this).parent().parent().parent().attr("parent-position"));
     main_child=$(this).parent().parent();
     mouseXChildPosition = e.pageX + scrollPostion;
     currentEventChildPosition=mouseXChildPosition - subtimeline_child_parent_position - 135;
@@ -132,6 +132,7 @@ $(document).on("click", ".add-child-event-indicator ", function (e) {
     $(".event-list").css("display", "block");
     child_sibling=true;
     childEventId = $(this).attr('data-child-event-id');
+    date=$(this).attr('data-child-event-date');
 })
 /******************* Add-Event-Indicator - Click */
 $(".add-event-indicator").click(function () {
@@ -141,28 +142,37 @@ $(".add-event-indicator").click(function () {
     $(".event-list").css("display", "block");
 });
 
+$(".saveTimeclick").click(function(){
+        eventTime=$("#eventTime").val();
+        if(eventTime=="")
+        {
+            $(".timeerror").css("color","red");
+            return false;
+        }
+        $(".time-modal").css("display", "none");
+        currentClick.trigger('click');
+
+    })
+
 /******************* Event-List-Item - Click */
 $(".event-list li").click(function (e) {
+    //open time modal
+    if(!add_sibling && !child_sibling &&  eventTime=="")
+    {
+          $(".time-modal").css("display", "block");
+          currentClick=$(this);
+          return false;
+    }
+  
+    
     var val = $(this).text();
     class_name = $(this)[0].classList;
     trimVal = val.trim();
     imgSrc = $(this).find("img").attr("src");
     back_color = $(this).find(".img-div").css("border-color");
     var count_child = document.querySelectorAll(".child");
-    console.log("current position:", currentEventPosition)
-   /* var current_day = currentEventPosition / 500;
-    Date.prototype.addDays = function (days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    };*/
-    /* start_date = $('#start_date').attr('start_date');
-    var date = new Date(start_date);
-    var eventDate = date.addDays(current_day).toLocaleDateString();*/
     var rounded = roundToNextMultipleOf500(currentEventPosition);
     var eventDate = $('.date').filter('[pixel=' + rounded + ']').attr('date');
-    console.log(rounded); // Output: 500
-    console.log("Old Event Date:", eventDate)
     if (add_sibling) {
         timeline_divider = $(".timeline-divider").css("width").split("px")[0];
         child_line = parseInt(timeline_divider - parentposition);
@@ -186,79 +196,20 @@ $(".event-list li").click(function (e) {
             childrenLine[i].style.opacity = 1;
             childrenLine[i].classList.add("active");
         }
-        /*$(add_sibling_parent).append(
-            "<div class='event-add child animate__bounceOut dddd " +
-                class_name +
-                "' child_parent_date=" +
-                parent_date +
-                " ><span style='background-color: " +
-                back_color +
-                "' class='left-child-event'></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
-                back_color +
-                "'><img src=" +
-                imgSrc +
-                "></span><div style='width: " +
-                child_line +
-                "px; background-color: "+back_color+"' class='timeline-divider-child'></div></div><span style='background-color: " +
-                back_color +
-                "' class='right-child-event'></span></div>"
-        );*/
         add_sibling = false;
-        saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent)
+        saveChildEvent(class_name[0], parent_date, back_color, imgSrc, child_line, eventId, add_sibling_parent,eventTime)
     } else if (child_sibling) {
         var current_child_day = parseInt(parseInt(subtimeline_child_parent_position)+parseInt(currentEventChildPosition)) / 500;
-        var eventChildDate = date.addDays(current_child_day).toLocaleDateString();
+        var eventChildDate = new Date(date);
+        eventChildDate.setDate(eventChildDate.getDate() + current_child_day);
+        eventChildDate = eventChildDate.toISOString().substring(0, 10);
+        console.log(eventChildDate);
+        //var eventChildDate = date.addDays(current_child_day).toLocaleDateString();
         childDate = new Date(eventChildDate);
         eventChildDay = childDate.getDate();
         eventChildMonth = childDate.getMonth() + 1;
         eventChildYear = childDate.getFullYear();
         childDate = eventChildYear + "-" + eventChildDay + "-" + eventChildMonth;
-        // sibling_child_parent_width = $(child_sibling_parent)
-        //     .find(".timeline-divider-child")
-        //     .css("width");
-        // new_sibling_width = parseInt(
-        //     sibling_child_parent_width.split("px")[0] - 170
-        // );
-        // var total_child_sibling =
-        //     $(child_sibling_parent).find(".child-sibling");
-        // if (total_child_sibling.length >= 1) {
-        //     $(child_sibling_parent).append(
-        //         "<div style='left: " +
-        //             (parseInt(total_child_sibling.length * 170) + 170) +
-        //             "px' class='event-add child-sibling animate__bounceOut ssss" +
-        //             class_name +
-        //             "' child_parent_date=" +
-        //             parent_date +
-        //             "><span style='background-color: " +
-        //             back_color +
-        //             "' class='left-sibling-event'></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
-        //             back_color +
-        //             "'><img src=" +
-        //             imgSrc +
-        //             "></span></div><span style='background-color: " +
-        //             back_color +
-        //             "' class='right-sibling-event'></span></div>"
-        //     );
-        //     saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
-        // } else {
-        //     $(child_sibling_parent).append(
-        //         "<div style='left: 170px;' class='event-add child-sibling animate__bounceOut aaaa " +
-        //             class_name +
-        //             "' child_parent_date=" +
-        //             parent_date +
-        //             "><span style='background-color: " +
-        //             back_color +
-        //             "' class='left-sibling-event'></span><div class='main-event sub-timeline-event'><span class='main-parent child-event' style='background-color: " +
-        //             back_color +
-        //             "'><img src=" +
-        //             imgSrc +
-        //             "></span></div><span style='background-color: " +
-        //             back_color +
-        //             "' class='right-sibling-event'></span></div>"
-        //     );
-        //     saveSiblingEvent(class_name[0], parent_date, back_color, imgSrc, childEventId, total_child_sibling, child_sibling_parent);
-        // }
-
         $(main_child).append(
             "<div style='left: "+parseInt(parseInt(currentEventChildPosition)+parseInt(68))+"px;' class='event-add child-sibling animate__bounceOut" +
                 class_name +
@@ -289,7 +240,8 @@ $(".event-list li").click(function (e) {
             back_color,
             imgSrc,
             trimVal,
-            eventDate
+            eventDate,
+            eventTime
         );
     }
     let total_event_add = document.querySelectorAll(".event-add");
@@ -301,6 +253,15 @@ $(".event-list li").click(function (e) {
 $(document).on("click", ".event-functionality", function () {
     if ($(".event-list-subtime-line").css("display") == "block") {
         $(".event-list-subtime-line").css("display", "none");
+    }
+
+
+    if($(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display')=='block'){
+
+        $(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','none');
+    } else{
+        $('.edit-delete-event').css('display','none')
+        $(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','block');
     }
     parentposition = $(this).parent().parent().attr("parent-position");
     parent_date = $(this).parent().parent().attr("parent-date");
@@ -342,6 +303,9 @@ $(document).on("click", ".child .left-child-event", function () {
 
 /******************* Parent - Left - Event - Click */
 $(document).on("click", ".left-parent-event", function () {
+    if ($(".event-list").css("display") == "block") {
+        $(".event-list").css("display", "none");
+    }
     if($(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display')=='block'){
 
         $(this).parent().children('.main-parent').children('.functionality-div').children('.edit-delete-event').css('display','none');

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('back_color')->nullable();
             $table->string('class_name')->nullable();
             $table->date('event_date')->nullable();
+            $table->time('event_time')->nullable();
             $table->date('event_end_date')->nullable();
             $table->string('child_line')->nullable();
             $table->integer('parent_id')->nullable();
