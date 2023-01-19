@@ -266,6 +266,7 @@
                                     </div>
                                     @if(count($event->child))
                                         @foreach($event->child as $child_event)
+
                                         <div class='event-add child animate__bounceOut {{$child_event->class_name}}' child_parent_date="{{$event->event_date}}" data-child-event-id = "{{$child_event->id}}" style="top:{{$top}}px">
                                             <span style="background-color: {{$child_event->back_color}}; @if(in_array($event->id,$ventids)) pointer-events:none @endif" class='left-child-event' data-child-event-id = "{{$child_event->id}}">
 
@@ -487,7 +488,7 @@
 
         }
 
-        function saveSiblingEvent(class_name, back_color, imgSrc, childEventId, position_x) {
+        function saveSiblingEvent(class_name, back_color, imgSrc, childEventId, position_x,eventTime) {
             // var pixelLeft = 190;
             /*isParent = 0;
             if (trimVal == "Sub timeline") {
@@ -511,6 +512,7 @@
                     "isParent": 0,
                     "eventId": childEventId,
                     'time_line_id': $("#timelineid").val(),
+                    "event_time":eventTime,
                 }, //Send to WebMethod
                 'async': false,
             }).done(function (res) {
@@ -518,6 +520,7 @@
                     toastr.error(res.message);
                 } else {
                     toastr.success("Event saved successfully!");
+                    location.reload();
                     /*if (total_child_sibling.length >= 1) {
                         $(child_sibling_parent).append(
                             "<div style='left: " +
@@ -647,7 +650,7 @@
             });
         }
 
-        function updateEventPositionX(eventId,child_line) {
+        function updateEventPositionX(eventId,child_line,event_end_date) {
             $.ajax({
                 "type": "POST",
                 "url": "{{url('update-event-position')}}",
@@ -655,6 +658,7 @@
                     "_token": "{{ csrf_token() }}",
                     "eventId": eventId,
                     "child_line": child_line,
+                    'event_end_date':event_end_date,
                 }, //Send to WebMethod
                 'async': false,
             }).done(function (res) {
@@ -669,6 +673,19 @@
         $("input").click(function (e) {
             e.stopPropagation();
         })
-        $(".timeline-parent .timeline-divider").css('width', {{$j*500}})
+        $(".timeline-parent .timeline-divider").css('width', {{$j*500}});
+
+
+$(document).mouseup(function(e) 
+{
+    var container = $(".event-list");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
+
     </script>
 @endsection

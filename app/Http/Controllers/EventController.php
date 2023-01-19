@@ -152,6 +152,7 @@ class EventController extends Controller
                 'user_id' => Auth::user()->id,
                 'time_line_id' => $timelineid,
                 'event_date' => $request->event_date,
+                'event_time' => $request->event_time,
 //                'child_line' => $request->child_line,
             ]);
 
@@ -269,7 +270,7 @@ class EventController extends Controller
             $res=Event::where(['id'=>$request->eventId,'user_id'=>Auth::user()->id])->first();
             if($res)
             {
-                Event::find($eventId)->update(['child_line'=>$request->child_line]);
+                Event::find($eventId)->update(['child_line'=>$request->child_line,'event_end_date'=>$request->event_end_date]);
                 return response()->json([
                     'status' => 'Success',
                     'message' => 'Event updated successfully',
