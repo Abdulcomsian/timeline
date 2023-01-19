@@ -89,7 +89,6 @@ $(".timeline-parent .timeline-divider").mousemove(function (e) {
 
 });
 $(document).on("mousemove", ".timeline-divider-child", function (e) {
-    $(".event-list").css("display", "none");
     subtimeline_child_parent_position=Number($(this).parent().parent().parent().attr("parent-position"));
     main_child=$(this).parent().parent();
     mouseXChildPosition = e.pageX + scrollPostion;
